@@ -1,0 +1,831 @@
+.headline-large {
+  font-size: 5rem;
+  line-height: 1
+}
+
+.headline-small {
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-bottom:10px
+}
+
+.container {
+  z-index: 5;
+  width: 100%;
+  max-width: 85rem;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative
+}
+
+.container.small {
+  max-width: 60rem
+}
+
+.page-padding {
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem
+}
+
+.paragraph-regular {
+  font-size: 1.125rem;
+  line-height: 1.3
+}
+
+.grid-12cols {
+  width: 100%;
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  display: grid
+}
+
+.no-margin {
+  margin-bottom: 0
+}
+
+.text-align-center {
+  text-align: center
+}
+
+.grid-features {
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
+  grid-template-rows: 1fr;
+  grid-template-columns: 4fr 3fr 3fr;
+  grid-auto-columns: 1fr;
+  margin-top: 3rem;
+  display: grid
+}
+
+.bento-card {
+  min-height: 20rem;
+  border-radius: 2.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2rem;
+  display: flex;
+  position: relative
+}
+
+.bento-card.customization {
+  background-color: #D2C6FA;
+  color: #604E88;
+  justify-content: space-between
+}
+
+.bento-card.scheduling {
+  background-color: #F8D075;
+  color: #0F172A;
+  justify-content: flex-end
+}
+
+.bento-card.wallet {
+  background-color: #FAA6B0;
+  color: #2f426b;
+  justify-content: flex-end
+}
+
+.bento-card.inbox {
+  background-color: #49479F;
+  color: #FFFFFF
+}
+
+.bento-card.gifts {
+  background-color: #F8D075;
+  color: #0F172A;
+  justify-content: flex-end
+}
+
+.bento-card.reminders {
+  background-color: #D2C6FA;
+  color: #0F172A
+}
+
+.bento-card.purple {
+  background-color: var(--creativity);
+  color: var(--creativity-dark)
+}
+
+.bento-card.blue {
+  background-color: var(--heart);
+  color: var(--heart-dark)
+}
+
+.bento-card.align-center {
+  justify-content: center
+}
+
+.bento-card.pink {
+  background-color: #f682a5;
+  color: #52225e
+}
+
+.bento-card.padding-big {
+  align-items: center;
+  padding: 5rem
+}
+
+.bento-card-description {
+  max-width: 14rem
+}
+
+.bento-card-description.big {
+  max-width: 18rem
+}
+
+.bento-card-description.full-height {
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex
+}
+
+.bento-card-description.full {
+  max-width: none
+}
+
+.bento-card-details.customization {
+  position: absolute;
+  top: 8rem;
+  bottom: 8rem;
+  left: 0;
+  right: 0
+}
+
+.bento-card-details.scheduling {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0
+}
+
+.bento-card-details.wallet {
+  height: 40%;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  right: 2rem
+}
+
+.bento-card-details.inbox {
+  padding-top: 5%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  position: absolute;
+  top: 45%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden
+}
+
+.bento-card-details.reminders {
+  border-bottom-right-radius: 2.5rem;
+  padding-top: 5%;
+  position: absolute;
+  top: 45%;
+  bottom: 0;
+  left: 2rem;
+  right: 0;
+  overflow: hidden
+}
+
+.bento-card-details.gifts {
+  width: 70%;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden
+}
+
+.bento-card-details.sent {
+  width: 70%;
+  height: 100%;
+  border-top-right-radius: 2.5rem;
+  border-bottom-right-radius: 2.5rem;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden
+}
+
+.customization-card {
+  width: 40%;
+  max-width: none;
+  display: block;
+  position: absolute;
+  box-shadow: 0 0 transparent, 0 1px .4px rgba(0, 0, 0, .03), 0 2px .8px rgba(0, 0, 0, .04), 0 3px 1.6px rgba(0, 0, 0, .043), 0 5px 2.9px rgba(0, 0, 0, .047), 0 9px 5.3px rgba(0, 0, 0, .047), 0 15px 10.4px rgba(0, 0, 0, .05), 0 31px 22.8px rgba(0, 0, 0, .055)
+}
+
+.customization-card._01 {
+  z-index: 1;
+  transform-origin: 50% 100%;
+  top: 0;
+  left: 21%;
+  transform: rotate(-15deg)
+}
+
+.customization-card._02 {
+  z-index: 0;
+  transform-origin: 50% 100%;
+  top: 0;
+  left: 41%;
+  transform: rotate(1deg)
+}
+
+.customization-ui {
+  z-index: 2;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 1rem;
+  padding-top: .5rem;
+  padding-bottom: 1rem;
+  position: absolute;
+  bottom: 1%;
+  left: -4%;
+  overflow: hidden;
+  box-shadow: 0 0 transparent, 0 1px .4px rgba(0, 0, 0, .03), 0 2px .8px rgba(0, 0, 0, .04), 0 3px 1.6px rgba(0, 0, 0, .043), 0 5px 2.9px rgba(0, 0, 0, .047), 0 9px 5.3px rgba(0, 0, 0, .047), 0 15px 10.4px rgba(0, 0, 0, .05), 0 31px 22.8px rgba(0, 0, 0, .055)
+}
+
+.customization-ui-img {
+  width: 140%;
+  max-width: none
+}
+
+.customization-ui-overlay {
+  width: 20%;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 33%, #fff);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0
+}
+
+.scheduling-card {
+  width: 60%;
+  max-width: none;
+  transform-origin: 50% 100%;
+  display: block;
+  position: absolute;
+  top: -11%;
+  left: 4%;
+  transform: rotate(-26deg);
+  box-shadow: 0 0 transparent, 0 1px .4px rgba(0, 0, 0, .03), 0 2px .8px rgba(0, 0, 0, .04), 0 3px 1.6px rgba(0, 0, 0, .043), 0 5px 2.9px rgba(0, 0, 0, .047), 0 9px 5.3px rgba(0, 0, 0, .047), 0 15px 10.4px rgba(0, 0, 0, .05), 0 31px 22.8px rgba(0, 0, 0, .055)
+}
+
+.scheduling-ui {
+  z-index: 1;
+  width: 80%;
+  transform-origin: 50% 100%;
+  border-radius: 1rem;
+  position: absolute;
+  top: -1%;
+  right: 10%;
+  transform: rotate(9deg);
+  box-shadow: 0 0 transparent, 0 1px .4px rgba(0, 0, 0, .03), 0 2px .8px rgba(0, 0, 0, .04), 0 3px 1.6px rgba(0, 0, 0, .043), 0 5px 2.9px rgba(0, 0, 0, .047), 0 9px 5.3px rgba(0, 0, 0, .047), 0 15px 10.4px rgba(0, 0, 0, .05), 0 31px 22.8px rgba(0, 0, 0, .055)
+}
+
+.wallet-givingli-cash {
+  z-index: 4;
+  width: 100%;
+  max-width: none;
+  background-color: #333;
+  border-radius: 1rem;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  box-shadow: 0 0 transparent, 0 1px .4px rgba(0, 0, 0, .03), 0 2px .8px rgba(0, 0, 0, .04), 0 3px 1.6px rgba(0, 0, 0, .043), 0 5px 2.9px rgba(0, 0, 0, .047), 0 9px 5.3px rgba(0, 0, 0, .047), 0 15px 10.4px rgba(0, 0, 0, .05), 0 31px 22.8px rgba(0, 0, 0, .055)
+}
+
+.wallet-card {
+  width: 90%;
+  height: auto;
+  max-width: none;
+  transform-origin: 0;
+  border-radius: 1rem;
+  display: block;
+  position: absolute
+}
+
+.wallet-card.starbucks {
+  z-index: 3;
+  width: 85%;
+  bottom: -25%;
+  left: 10%;
+  transform: rotate(-4deg);
+  box-shadow: 0 0 transparent, 0 1px .4px rgba(0, 0, 0, .03), 0 2px .8px rgba(0, 0, 0, .04), 0 3px 1.6px rgba(0, 0, 0, .043), 0 5px 2.9px rgba(0, 0, 0, .047), 0 9px 5.3px rgba(0, 0, 0, .047), 0 15px 10.4px rgba(0, 0, 0, .05), 0 31px 22.8px rgba(0, 0, 0, .055)
+}
+
+.wallet-card.nike {
+  z-index: 2;
+  width: 80%;
+  bottom: -23%;
+  left: 13%;
+  transform: rotate(-12deg);
+  box-shadow: 0 0 transparent, 0 1px .4px rgba(0, 0, 0, .03), 0 2px .8px rgba(0, 0, 0, .04), 0 3px 1.6px rgba(0, 0, 0, .043), 0 5px 2.9px rgba(0, 0, 0, .047), 0 9px 5.3px rgba(0, 0, 0, .047), 0 15px 10.4px rgba(0, 0, 0, .05), 0 31px 22.8px rgba(0, 0, 0, .055)
+}
+
+.wallet-card.victoria {
+  z-index: 1;
+  width: 75%;
+  bottom: -23%;
+  left: 13%;
+  transform: rotate(-20deg);
+  box-shadow: 0 0 transparent, 0 1px .4px rgba(0, 0, 0, .03), 0 2px .8px rgba(0, 0, 0, .04), 0 3px 1.6px rgba(0, 0, 0, .043), 0 5px 2.9px rgba(0, 0, 0, .047), 0 9px 5.3px rgba(0, 0, 0, .047), 0 15px 10.4px rgba(0, 0, 0, .05), 0 31px 22.8px rgba(0, 0, 0, .055)
+}
+
+.wallet-cards-group {
+  position: absolute;
+  top: -4rem;
+  bottom: 1rem;
+  left: -1rem;
+  right: 0;
+  overflow: hidden
+}
+
+.inbox-ui-img {
+  width: 100%;
+  max-width: none;
+  display: block
+}
+
+.reminders-ui {
+  width: 100%;
+  max-width: none;
+  display: block
+}
+
+.inbox-ui {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 0 transparent, 0 1px .4px rgba(0, 0, 0, .03), 0 2px .8px rgba(0, 0, 0, .04), 0 3px 1.6px rgba(0, 0, 0, .043), 0 5px 2.9px rgba(0, 0, 0, .047), 0 9px 5.3px rgba(0, 0, 0, .047), 0 15px 10.4px rgba(0, 0, 0, .05), 0 31px 22.8px rgba(0, 0, 0, .055)
+}
+
+@media screen and (max-width:991px) {
+  .grid-12cols {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+  }
+
+  .grid-features {
+    grid-template-columns: 1fr 1fr
+  }
+
+  .bento-card.padding-big {
+    padding: 2.5rem
+  }
+
+  .bento-card-details.scheduling {
+    top: -10%;
+    bottom: 0;
+    left: 23%;
+    right: 13%
+  }
+
+  .bento-card-details.wallet {
+    top: 2rem;
+    left: 3rem;
+    right: 3rem
+  }
+
+  .bento-card-details.inbox,
+  .bento-card-details.reminders {
+    top: 50%
+  }
+
+  .bento-card-details.gifts {
+    width: 70%;
+    top: 0
+  }
+
+  .customization-card._01 {
+    width: 50%;
+    left: 16%
+  }
+
+  .customization-card._02 {
+    width: 50%;
+    left: 43%
+  }
+
+  .customization-ui {
+    bottom: 9%
+  }
+
+  .wallet-card,
+  .wallet-givingli-cash {
+    border-radius: .5rem
+  }
+
+  .wallet-cards-group {
+    left: -1rem
+  }
+
+  .inbox-ui {
+    border-radius: 2vw
+  }
+
+}
+
+@media screen and (max-width:767px) {
+
+  .page-padding {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem
+  }
+
+  .grid-12cols {
+    grid-template-columns: 1fr
+  }
+
+  .grid-features {
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1.5rem;
+    grid-template-columns: 1fr
+  }
+
+  .bento-card {
+    min-height: 31.25rem
+  }
+
+  .bento-card.customization {
+    justify-content: flex-start
+  }
+
+  .bento-card.scheduling {
+    justify-content: flex-start;
+    top: 11rem
+  }
+
+  .bento-card.scheduling.m-sticky {
+    top: 11rem
+  }
+
+  .bento-card.wallet {
+    justify-content: flex-start;
+    top: 12rem
+  }
+
+  .bento-card.wallet.m-sticky {
+    top: 12rem
+  }
+
+  .bento-card.inbox,
+  .bento-card.inbox.m-sticky {
+    top: 13rem
+  }
+
+  .bento-card.gifts {
+    justify-content: flex-start;
+    top: 14rem
+  }
+
+  .bento-card.gifts.m-sticky {
+    top: 14rem
+  }
+
+  .bento-card.reminders,
+  .bento-card.reminders.m-sticky {
+    top: 15rem
+  }
+
+  .bento-card.align-center {
+    justify-content: flex-start
+  }
+
+  .bento-card.padding-big {
+    min-height: auto;
+    position: relative;
+    top: 0
+  }
+
+  .bento-card.m-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10rem
+  }
+
+  .bento-card-description.big {
+    max-width: 100%
+  }
+
+  .bento-card-description.full-height.big {
+    height: auto;
+    justify-content: flex-start
+  }
+
+  .bento-card-details.scheduling {
+    top: 33%;
+    left: 8.8rem;
+    right: 4.7rem
+  }
+
+  .bento-card-details.wallet {
+    height: 60%;
+    top: auto;
+    bottom: 3rem
+  }
+
+  .bento-card-details.gifts {
+    width: 100%
+  }
+
+  .bento-card-details.sent {
+    width: 100%;
+    height: 60%;
+    top: auto;
+    overflow: visible
+  }
+
+  .customization-card._01 {
+    width: 30%;
+    left: 43%
+  }
+
+  .customization-card._02 {
+    width: 30%;
+    left: 55%
+  }
+
+  .customization-ui {
+    width: 80%;
+    bottom: -41%;
+    left: 14%
+  }
+
+  .wallet-card,
+  .wallet-givingli-cash {
+    border-radius: 1rem
+  }
+
+  .gifts-grid {
+    margin-top: 20rem;
+    margin-left: -2rem;
+    padding-left: 0
+  }
+
+  .m-align-center {
+    text-align: center
+  }
+}
+
+@media screen and (max-width:479px) {
+  .headline-large {
+    font-size: 2.5rem
+  }
+
+  .paragraph-regular {
+    font-size: 1.125rem
+  }
+
+  .paragraph-regular.features {
+    font-size: 1.25rem
+  }
+
+  .grid-12cols {
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1.5rem;
+    grid-template-columns: 1fr
+  }
+
+  .grid-features {
+    margin-top: 0
+  }
+
+  .bento-card {
+    min-height: 140vw;
+    border-radius: 1.5rem;
+    padding: 2.5rem 1.5rem 1.5rem;
+    overflow: hidden
+  }
+
+  .bento-card.customization {
+    top: 8rem
+  }
+
+  .bento-card.scheduling {
+    top: 9rem
+  }
+
+  .bento-card.wallet {
+    top: 10rem
+  }
+
+  .bento-card.inbox {
+    top: 11rem
+  }
+
+  .bento-card.gifts {
+    top: 12rem
+  }
+
+  .bento-card.reminders {
+    top: 13rem
+  }
+
+  .bento-card-description.big.m-align-center {
+    width: 100%
+  }
+
+  .bento-card-details.customization {
+    height: 60%;
+    top: auto;
+    bottom: 2rem
+  }
+
+  .bento-card-details.scheduling {
+    height: 55%;
+    border-bottom-right-radius: 2rem;
+    border-bottom-left-radius: 2px;
+    top: auto;
+    bottom: 2rem;
+    left: 0;
+    right: 0
+  }
+
+  .bento-card-details.wallet {
+    height: 60%;
+    top: auto;
+    bottom: 5rem;
+    left: 1rem;
+    right: 1rem
+  }
+
+  .bento-card-details.inbox {
+    border-bottom-right-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    top: 40%
+  }
+
+  .bento-card-details.reminders {
+    top: auto
+  }
+
+  .bento-card-details.gifts {
+    width: 100%;
+    top: 10rem;
+    left: 0;
+    overflow: visible
+  }
+
+  .bento-card-details.sent {
+    height: 45%
+  }
+
+  .customization-card._01 {
+    width: 40%;
+    top: 5%;
+    left: 22%
+  }
+
+  .customization-card._02 {
+    width: 40%;
+    top: 6%;
+    left: 46%
+  }
+
+  .customization-ui {
+    width: 90%;
+    bottom: 0;
+    left: 5%
+  }
+
+  .scheduling-card {
+    width: 50%;
+    top: 4%;
+    left: 16%
+  }
+
+  .scheduling-ui {
+    width: 70%;
+    top: 14%;
+    right: 12%
+  }
+
+  .wallet-card,
+  .wallet-givingli-cash {
+    border-radius: 2vw
+  }
+
+  .wallet-card.starbucks {
+    bottom: -18%
+  }
+
+  .wallet-card.nike {
+    bottom: -17%
+  }
+
+  .wallet-card.victoria {
+    bottom: -14%
+  }
+
+  .wallet-cards-group {
+    top: 0
+  }
+
+  .reminders-ui {
+    width: 120%
+  }
+
+  .inbox-ui {
+    border-radius: 5vw
+  }
+
+  .givingli-cash-card {
+    width: 50vw
+  }
+}
+
+#head {
+  grid-area: 1/3/2/11
+}
+
+#feat {
+  grid-area: 2/2/3/12
+}
+
+#grid_custom {
+  grid-area: 1/1/3/2
+}
+
+#schedul {
+  grid-area: 1/2/2/4
+}
+
+#wallet {
+  grid-area: 2/2/3/3
+}
+
+#inbox {
+  grid-area: 2/3/3/4
+}
+
+#gifts {
+  grid-area: 3/1/4/3
+}
+
+#reminders {
+  grid-area: 3/3/4/4
+}
+
+@media screen and (max-width:991px) {
+  #head {
+    grid-column: 2/8
+  }
+
+  #feat {
+    grid-area: span 1/span 8/span 1/span 8
+  }
+
+  #grid_custom {
+    grid-column-end: 2
+  }
+
+  #schedul {
+    grid-column: 2/3
+  }
+
+  #wallet {
+    grid-row: 2/3;
+    grid-column-start: 2
+  }
+
+  #inbox {
+    grid-area: 3/1/4/2
+  }
+
+  #gifts {
+    grid-row: 4/5;
+    grid-column-end: 3
+  }
+
+  #reminders {
+    grid-column: 2/3
+  }
+}
+
+@media screen and (max-width:767px) {
+
+  #gifts,
+  #grid_custom,
+  #inbox,
+  #reminders,
+  #schedul,
+  #wallet {
+    grid-area: span 1/span 1/span 1/span 1
+  }
+}

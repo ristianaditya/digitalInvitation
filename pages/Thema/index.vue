@@ -1,0 +1,3 @@
+<template>
+  <ThemaMainNikahan />
+</template>
