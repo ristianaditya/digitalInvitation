@@ -19,6 +19,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-prettier": "^5.1.2",
+    "next-auth": "4.22.5",
     "nuxt": "^3.8.2",
     "nuxt-icon": "^0.6.8",
     "postcss": "^8.4.32",
@@ -30,6 +31,10 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "next-auth": "4.22.5"
+    "@headlessui/vue": "^1.7.19",
+    "@pinia/nuxt": "^0.5.1",
+    "@vee-validate/nuxt": "^4.12.5",
+    "@vee-validate/yup": "^4.12.5",
+    "pinia": "^2.1.7"
   }
 }

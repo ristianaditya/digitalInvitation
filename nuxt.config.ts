@@ -1,6 +1,4 @@
-
-// https://nuxt.com/docs/api/configuration/nuxt-config
-export default defineNuxtConfig({
+export default {
   ssr: false,
   devtools: { enabled: true },
   css: [
@@ -11,6 +9,8 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-icon',
     '@sidebase/nuxt-auth',
+    '@pinia/nuxt',
+    '@vee-validate/nuxt',
     [
       '@nuxtjs/google-fonts',
       {
@@ -24,17 +24,20 @@ export default defineNuxtConfig({
     ],
   ],
   auth: {
-      provider: {
-          type: 'local'
-      }
+    globalAppMiddleware: true,
   },
   app: {
     head: {
       title: "Invite Plus",
       link: [
-        { rel: "icon", type: "image/svg", href: "/logos/invitations.svg" }
+        { rel: "icon", type: "image/svg", href: "/logos/main_icon.svg" }
       ]
     }
   },
-
-})
+  runtimeConfig: {
+    // Public keys that are exposed to the client
+    public: {
+      baseURLService: process.env.BASE_URL_API_SERVICE,
+    }
+  },
+}

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="header z-30 bg-transparent absolute top-0 inset-x-0 navbar bg-base-100  max-w-[1630px] md:px-14 mx-auto md:py-8 font-inter font-bold">
+    class="header z-10 bg-transparent absolute top-0 inset-x-0 navbar bg-base-100  max-w-[1630px] md:px-14 mx-auto md:py-8 font-inter font-bold">
     <div class="navbar-start">
       <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -40,8 +40,44 @@
         </ul>
       </div>
       <div class="hidden lg:ml-8 lg:flex lg:items-center lg:border-l lg:border-slate-900/15 lg:pl-8">
+        <div v-if="statusUser === 'authenticated'">
+          <div class="dropdown dropdown-hover">
+            <div tabindex="0" role="button">
+              <div class=" w-8 h-8 p-[1px] rounded-full ring-2 ring-[#D2C6FA] avatar online placeholder">
+                <div class="bg-neutral text-neutral-content rounded-full w-16">
+                  <span class="text-sm">{{ dataUser.name }}</span>
+                </div>
+              </div>
+            </div>
+            <div tabindex="0" class="dropdown-content z-[1] menu bg-base-100 bg-transparent">
+              <div
+                class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                  <div class=" text-[#49479F] truncate">{{ dataUser.name }}</div>
+                  <div class="font-medium truncate">{{ dataUser.email }}</div>
+                </div>
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+                  <li>
+                    <a href="#"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                  </li>
+                  <li>
+                    <a href="#"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                  </li>
+                </ul>
+                <div class="py-1">
+                  <a @click="openModal"
+                    class="block px-4 py-2 text-sm text-[#FAA6B0] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer">Sign
+                    out</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <NuxtLink to="/login" class=" w-15 text-lg">Sign in</NuxtLink>
+        <NuxtLink v-else to="/login" class=" w-15 text-lg">Sign in</NuxtLink>
+
 
         <NuxtLink :to="{ path: '/', hash: '#pricing' }"
           class="inline-flex justify-center rounded-lg text-sm font-semibold -my-2.5 ml-8" href="/all-access">
@@ -54,7 +90,39 @@
       </div>
     </div>
   </div>
+  <BaseModals :open-modal="isOpen" @close="isOpen = false" @confirm="handleSignOut()" />
 </template>
+<script setup>
+import {
+  useGetSession,
+} from '~/composables/useFetchData'
+
+const { signOut, status, getSession } = useAuth()
+
+const session = await getSession()
+const statusUser = status.value
+const dataUser = reactive({
+  name: '',
+  email: ''
+})
+
+const isOpen = ref(false)
+
+function openModal() {
+  isOpen.value = true
+}
+
+async function handleSignOut() {
+  await signOut();
+}
+
+if (statusUser === 'authenticated') {
+  useGetSession('/api/getSession', session.accessToken).then((res) => {
+    dataUser.name = res.data.username
+    dataUser.email = res.data.email
+  })
+}
+</script>
 <style scoped>
 .header {
   transform: translateY(0);

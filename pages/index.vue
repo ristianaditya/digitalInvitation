@@ -11,12 +11,18 @@
 
 <script setup>
 
-import { ref, onMounted, onUnmounted } from 'vue';
+definePageMeta({
+  auth: {
+    unauthenticatedOnly: false,
+  }
+})
+
+const { getSession, status } = useAuth()
+const session = await getSession()
 
 const color = reactive({
   bg: 'bg-[#F4F0FD]',
 })
-
 
 const handleScroll = () => {
   const scrollPosition = window.scrollY || window.pageYOffset;
