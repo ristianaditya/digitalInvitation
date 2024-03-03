@@ -45,7 +45,7 @@
             <div tabindex="0" role="button">
               <div class=" w-8 h-8 p-[1px] rounded-full ring-2 ring-[#D2C6FA] avatar online placeholder">
                 <div class="bg-neutral text-neutral-content rounded-full w-16">
-                  <span class="text-sm">{{ dataUser.name }}</span>
+                  <UAvatar :alt="dataUser.name" size="sm" />
                 </div>
               </div>
             </div>
@@ -58,17 +58,16 @@
                 </div>
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                   <li>
-                    <a href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white">Dashboard</a>
                   </li>
                   <li>
-                    <a href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                    <NuxtLink to="/settings" class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white">Settings
+                    </NuxtLink>
                   </li>
                 </ul>
                 <div class="py-1">
                   <a @click="openModal"
-                    class="block px-4 py-2 text-sm text-[#FAA6B0] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer">Sign
+                    class="block px-4 py-2 text-sm text-[#FAA6B0] hover:bg-gray-100 dark:text-gray-200 dark:hover:text-white cursor-pointer">Sign
                     out</a>
                 </div>
               </div>
@@ -92,20 +91,19 @@
   </div>
   <BaseModals :open-modal="isOpen" @close="isOpen = false" @confirm="handleSignOut()" />
 </template>
+
 <script setup>
 import {
   useGetSession,
 } from '~/composables/useFetchData'
 
-const { signOut, status, getSession } = useAuth()
+const { signOut, status } = useAuth()
 
-const session = await getSession()
 const statusUser = status.value
 const dataUser = reactive({
   name: '',
   email: ''
 })
-
 const isOpen = ref(false)
 
 function openModal() {
@@ -117,12 +115,13 @@ async function handleSignOut() {
 }
 
 if (statusUser === 'authenticated') {
-  useGetSession('/api/getSession', session.accessToken).then((res) => {
+  useGetSession('/api/getSession').then((res) => {
     dataUser.name = res.data.username
     dataUser.email = res.data.email
   })
 }
 </script>
+
 <style scoped>
 .header {
   transform: translateY(0);

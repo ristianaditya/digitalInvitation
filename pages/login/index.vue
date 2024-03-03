@@ -16,7 +16,8 @@
             Join and Feel
             <span class="text-[#faa6b0]">Ease</span>
           </h1>
-          <p class=" col-start-1 row-start-3 mt-4 max-w-lg font-medium text-lg leading-8 font-inter">Start your event with
+          <p class=" col-start-1 row-start-3 mt-4 max-w-lg font-medium text-lg leading-8 font-inter">Start your event
+            with
             beautifully crafted
             digital invitations, combining elegance and user-friendliness. It's the perfect beginning for a memorable
             gathering!</p>
@@ -57,7 +58,8 @@
               </div>
               <form class="max-w-screen-lg mt-8 mb-2" @submit.prevent="onSubmit">
                 <div class="flex flex-col gap-6 mb-1">
-                  <BaseInput name="email" type="email" label="Email" placeholder="name@mail.com" icon="ic:round-email" />
+                  <BaseInput name="email" type="email" label="Email" placeholder="name@mail.com"
+                    icon="ic:round-email" />
                   <BaseInput name="password" type="password" label="Password" placeholder="*************"
                     icon="mdi:password" />
                 </div>
@@ -75,9 +77,11 @@
 
       </div>
     </div>
+    <UNotifications />
   </div>
 </template>
-<script setup >
+
+<script setup>
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
 
@@ -85,7 +89,6 @@ definePageMeta({
   layout: false,
   auth: {
     unauthenticatedOnly: true,
-    navigateAuthenticatedTo: '/',
   }
 })
 
@@ -120,6 +123,7 @@ const onSubmit = handleSubmit(async values => {
 });
 
 </script>
+
 <style>
 .h1 {
   font-weight: 800;

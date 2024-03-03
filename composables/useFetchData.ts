@@ -1,12 +1,16 @@
-// const { getSession } = useAuth()
+const { getSession } = useAuth()
 
 export const useGetData = async (path: string) => {
   const config = useRuntimeConfig()
-  // const session = await getSession()
+  const session = await getSession()
   return new Promise(async (resolve, reject) => {
     try {
       await useFetch(config.public.baseURLService.concat(`${path}`), {
         method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.accessToken}`,
+        },
         onResponse({ response }) {
           resolve(response._data)
         },
@@ -17,18 +21,39 @@ export const useGetData = async (path: string) => {
   })
 }
 
-export const useGetSession = async (path: string, token: string) => {
+export const useGetSession = async (path: string) => {
   const config = useRuntimeConfig()
+  const session = await getSession()
   return new Promise(async (resolve, reject) => {
     try {
       await useFetch(config.public.baseURLService.concat(`${path}`), {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${session.accessToken}`,
         },
         onResponse({ response }) {
           resolve(response._data)
+        },
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+export const usePostRegis = async (path: string, body: object) => {
+  const config = useRuntimeConfig()
+  return new Promise(async (resolve, reject) => {
+    try {
+      await useFetch(config.public.baseURLService.concat(`${path}`), {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: body,
+        onResponse({ response }) {
+          resolve(response)
         },
       })
     } catch (error) {
@@ -39,12 +64,15 @@ export const useGetSession = async (path: string, token: string) => {
 
 export const usePostData = async (path: string, body: object) => {
   const config = useRuntimeConfig()
+  const session = await getSession()
+
   return new Promise(async (resolve, reject) => {
     try {
       await useFetch(config.public.baseURLService.concat(`${path}`), {
         method: 'post',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.accessToken}`,
         },
         body: body,
         onResponse({ response }) {

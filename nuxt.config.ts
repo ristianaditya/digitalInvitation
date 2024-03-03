@@ -6,6 +6,7 @@ export default {
     '~/assets/css/feature.css'
   ],
   modules: [
+    '@nuxt/ui',
     '@nuxtjs/tailwindcss',
     'nuxt-icon',
     '@sidebase/nuxt-auth',
@@ -25,6 +26,9 @@ export default {
   ],
   auth: {
     globalAppMiddleware: true,
+  },
+  colorMode: {
+    preference: 'light'
   },
   app: {
     head: {

@@ -18,10 +18,11 @@ async function refreshAccessToken(refreshToken: {
     } | null>(`${process.env.BASE_URL_API_SERVICE}/api/refreshToken`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Bearer ${refreshToken.refreshToken}`
-      }
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${refreshToken.refreshToken}`
+      },
     });
+
 
     return {
       ...refreshToken,
@@ -31,7 +32,9 @@ async function refreshAccessToken(refreshToken: {
     };
 
   } catch (error) {
-    console.log(error);
+    const cookie = useCookie('next-auth.session-token')
+    cookie.value = null
+    console.log(error.message);
 
     return {
       ...refreshToken,
@@ -57,11 +60,12 @@ export default NuxtAuthHandler({
         token.accessTokenExpires = user?.expires_in
         token.refreshToken = user?.refreshToken
       }
+      var currentTime = parseInt(Date.now().toString().slice(0, 10));
+      var refreshTime = currentTime + (20 * 60);
 
-      if (parseInt(Date.now().toString().slice(0, 10)) > token.accessTokenExpires) {
+      if (refreshTime >= token.accessTokenExpires) {
         return refreshAccessToken(token)
       }
-
       return Promise.resolve(token);
 
     },

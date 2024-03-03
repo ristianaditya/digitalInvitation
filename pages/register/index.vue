@@ -16,7 +16,8 @@
             Join and Feel
             <span class="text-[#faa6b0]">Ease</span>
           </h1>
-          <p class=" col-start-1 row-start-3 mt-4 max-w-lg font-medium text-lg leading-8 font-inter">Start your event with
+          <p class=" col-start-1 row-start-3 mt-4 max-w-lg font-medium text-lg leading-8 font-inter">Start your event
+            with
             beautifully crafted
             digital invitations, combining elegance and user-friendliness. It's the perfect beginning for a memorable
             gathering!</p>
@@ -59,7 +60,8 @@
                 <div class="flex flex-col gap-6 mb-1">
                   <BaseInput name="username" type="text" label="Username" placeholder="username"
                     icon="carbon:user-filled" />
-                  <BaseInput name="email" type="email" label="Email" placeholder="name@mail.com" icon="ic:round-email" />
+                  <BaseInput name="email" type="email" label="Email" placeholder="name@mail.com"
+                    icon="ic:round-email" />
                   <BaseInput name="password" type="password" label="Password" placeholder="*************"
                     icon="mdi:password" />
                   <BaseInput name="password_confirmation" type="password" label="Confirm Password"
@@ -79,18 +81,21 @@
       </div>
     </div>
   </div>
+  <UNotifications />
 </template>
+
 <script setup lang="ts">
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
 import {
-  usePostData,
+  usePostRegis
 } from '~/composables/useFetchData'
 
 definePageMeta({
   layout: false,
   auth: {
-    unauthenticatedOnly: false,
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: '/',
   }
 })
 
@@ -99,17 +104,18 @@ const alertState = reactive({
   message: '',
   loading: false
 })
+const toast = useToast()
 
 const { handleSubmit } = useForm({
   validationSchema: yup.object({
-    username: yup.string().required(),
+    username: yup.string().required().min(3).max(16),
     email: yup.string().required().email(),
     password: yup.string().required().min(6),
     password_confirmation: yup
       .string()
-      .required()
-      .min(6)
-      .oneOf([yup.ref('password')]),
+      .required('password confirmation is a required field')
+      .min(6, 'password confirmation must be at least 6 characters')
+      .oneOf([yup.ref('password')], 'Passwords must match'),
   }),
 });
 
@@ -117,21 +123,34 @@ const onSubmit = handleSubmit(async values => {
   alertState.loading = true
 
   try {
-    await usePostData('/api/register', values).then((res: any) => {
+    await usePostRegis('/api/register', values).then((res: any) => {
       if (res.status == 422) {
         alertState.show = true
         alertState.message = res._data.username || res._data.email
       } else {
         alertState.show = false
+        toast.add({
+          icon: 'i-heroicons-check-circle',
+          title: 'account successfully created',
+          color: 'green',
+          timeout: 2000,
+        })
         navigateTo('/login')
       }
     })
   } catch (error) {
-    alert('Data Failed to Add')
+    toast.add({
+      icon: 'i-heroicons-exclamation-triangle',
+      title: 'error api service',
+      color: 'orange',
+      timeout: 2000,
+    })
   }
   alertState.loading = false
 });
+
 </script>
+
 <style>
 .h1 {
   font-weight: 800;
