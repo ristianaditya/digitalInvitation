@@ -1,6 +1,6 @@
 <template>
-  <div v-if="statusUser === 'authenticated'">
-    <div class="fixed inset-x-0 bottom-0 z-50">
+  <div v-if="statusUser === 'authenticated' && complateRegis.completion == false">
+    <div class="fixed inset-x-0 bottom-0 z-50 animate-fade-up animate-once">
       <div class="bg-[#49479F]">
         <div class="mx-auto max-w-7xl py-3 px-3 sm:px-6 lg:px-8">
           <div class="flex flex-col items-center justify-between lg:flex-row lg:justify-center">
@@ -38,9 +38,12 @@
 
 <script setup>
 
+import { useComplateRegis } from '@/store/index'
+
 definePageMeta({
   auth: false
 })
+const complateRegis = useComplateRegis()
 
 const { status } = useAuth()
 
@@ -49,6 +52,7 @@ const statusUser = status.value
 const color = reactive({
   bg: 'bg-[#F4F0FD]',
 })
+
 
 const handleScroll = () => {
   const scrollPosition = window.scrollY || window.pageYOffset;

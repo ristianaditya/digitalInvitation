@@ -45,7 +45,7 @@
             <div tabindex="0" role="button">
               <div class=" w-8 h-8 p-[1px] rounded-full ring-2 ring-[#D2C6FA] avatar online placeholder">
                 <div class="bg-neutral text-neutral-content rounded-full w-16">
-                  <UAvatar :alt="dataUser.name" size="sm" />
+                  <UAvatar :alt="dataUser.name" :src="dataUser.picture" size="sm" />
                 </div>
               </div>
             </div>
@@ -97,14 +97,19 @@ import {
   useGetSession,
 } from '~/composables/useFetchData'
 
+import { useComplateRegis } from '@/store/index'
+
 const { signOut, status } = useAuth()
 
 const statusUser = status.value
 const dataUser = reactive({
   name: '',
-  email: ''
+  email: '',
+  picture: '',
 })
 const isOpen = ref(false)
+
+const complateRegis = useComplateRegis()
 
 function openModal() {
   isOpen.value = true
@@ -118,6 +123,13 @@ if (statusUser === 'authenticated') {
   useGetSession('/api/getSession').then((res) => {
     dataUser.name = res.data.username
     dataUser.email = res.data.email
+    dataUser.picture = res.data.picture
+
+    if (!!res.data.username && !!res.data.email && !!res.data.name && !!res.data.no_phone && !!res.data.gender && !!res.data.address) {
+      complateRegis.completion = true
+    } else {
+      complateRegis.completion = false
+    }
   })
 }
 </script>

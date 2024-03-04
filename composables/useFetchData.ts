@@ -84,3 +84,26 @@ export const usePostData = async (path: string, body: object) => {
     }
   })
 }
+
+export const useUploadPhoto = async (path: string, body: object) => {
+  const config = useRuntimeConfig()
+  const session = await getSession()
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      await useFetch(config.public.baseURLService.concat(`${path}`), {
+        method: 'post',
+        headers: {
+          'Authorization': `Bearer ${session.accessToken}`,
+        },
+        body: body,
+        onResponse({ response }) {
+          resolve(response)
+        },
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
