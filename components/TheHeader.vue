@@ -20,9 +20,9 @@
           <li><a>Login</a></li>
         </ul>
       </div>
-      <a class="text-xl">
+      <NuxtLink to="/">
         <img src="/logos/pink_logo.svg" alt="Invitations Plus Logo" width="150" height="30" />
-      </a>
+      </NuxtLink>
     </div>
     <div class="navbar-end">
       <div class="navbar-center hidden lg:flex">
@@ -58,7 +58,8 @@
                 </div>
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                   <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white">Dashboard</a>
+                    <NuxtLink to="/Dashboard" class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white">Dashboard
+                    </NuxtLink>
                   </li>
                   <li>
                     <NuxtLink to="/settings" class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white">Settings
@@ -77,15 +78,35 @@
 
         <NuxtLink v-else to="/login" class=" w-15 text-lg">Sign in</NuxtLink>
 
-
-        <NuxtLink :to="{ path: '/', hash: '#pricing' }"
-          class="inline-flex justify-center rounded-lg text-sm font-semibold -my-2.5 ml-8" href="/all-access">
-          <span
-            class="inline-flex items-center justify-center w-full px-4 py-3 text-base font-bold leading-6 text-slate-900 bg-[#F8D075] border border-transparent rounded-full md:w-auto hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fdd26d] font-inter ">
-            Get all-access
-            <Icon name="ep:arrow-right-bold" class="ml-2" />
-          </span>
-        </NuxtLink>
+        <div v-if="!!sessionData.subscribe">
+          <div class="inline-flex justify-center rounded-lg text-sm font-semibold -my-2.5 ml-8">
+            <span v-if="sessionData.subscribe == 'DigitalDreamscape'"
+              class="inline-flex items-center justify-center w-full px-4 py-2 font-bold leading-6 text-[#49479F] bg-[#D2C6FA] border border-transparent rounded-full md:w-auto hover:bg-[#ccbdfd] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#ccbdfd] font-inter text-base">
+              DreamScape
+              <img src="/tier/tier3.png" alt="" class="rounded-3xl w-7 h-7 ml-1" />
+            </span>
+            <span v-else-if="sessionData.subscribe == 'SparkleSend'"
+              class="inline-flex items-center justify-center w-full px-4 py-2 font-bold leading-6 text-[#4e3f1b] bg-[#F8D075] border border-transparent rounded-full md:w-auto hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fdd26d] font-inter text-base">
+              {{ sessionData.subscribe }}
+              <img src="/tier/tier2.png" alt="" class="rounded-3xl w-7 h-7 ml-1" />
+            </span>
+            <span v-else-if="sessionData.subscribe == 'DigitalDazzle'"
+              class="inline-flex items-center justify-center w-full px-4 py-2 font-bold leading-6 text-[#161616] bg-[#e0e0e0] border border-transparent rounded-full md:w-auto hover:bg-[#cecece] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#d6d6d6] font-inter text-base">
+              {{ sessionData.subscribe }}
+              <img src="/tier/free.png" alt="" class="rounded-3xl w-7 h-7 ml-1" />
+            </span>
+          </div>
+        </div>
+        <div v-else>
+          <NuxtLink :to="{ path: '/', hash: '#pricing' }"
+            class="inline-flex justify-center rounded-lg text-sm font-semibold -my-2.5 ml-8" href="/all-access">
+            <span
+              class="inline-flex items-center justify-center w-full px-4 py-3 text-base font-bold leading-6 text-slate-900 bg-[#F8D075] border border-transparent rounded-full md:w-auto hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fdd26d] font-inter ">
+              Get all-access
+              <Icon name="ep:arrow-right-bold" class="ml-2" />
+            </span>
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>
@@ -97,9 +118,11 @@ import {
   useGetSession,
 } from '~/composables/useFetchData'
 
-import { useComplateRegis } from '@/store/index'
+import { useComplateRegis, useSessionData } from '@/store/index'
 
 const { signOut, status } = useAuth()
+
+const sessionData = useSessionData()
 
 const statusUser = status.value
 const dataUser = reactive({
@@ -120,13 +143,18 @@ async function handleSignOut() {
 }
 
 if (statusUser === 'authenticated') {
-  useGetSession('/api/getSession').then((res) => {
+  useGetSession('/user/getSession').then((res) => {
     dataUser.name = res.data.username
     dataUser.email = res.data.email
     dataUser.picture = res.data.picture
+    sessionData.subscribe = res.data.latest_transaction?.subscribe
 
     if (!!res.data.username && !!res.data.email && !!res.data.name && !!res.data.no_phone && !!res.data.gender && !!res.data.address) {
       complateRegis.completion = true
+      sessionData.id = res.data.id
+      sessionData.name = res.data.name
+      sessionData.email = res.data.email
+      sessionData.phone = res.data.no_phone
     } else {
       complateRegis.completion = false
     }

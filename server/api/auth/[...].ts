@@ -15,14 +15,13 @@ async function refreshAccessToken(refreshToken: {
         expires_in: number;
         refresh_token: string;
       };
-    } | null>(`${process.env.BASE_URL_API_SERVICE}/api/refreshToken`, {
+    } | null>(`${process.env.BASE_URL_API_SERVICE}/user/refreshToken`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${refreshToken.refreshToken}`
       },
     });
-
 
     return {
       ...refreshToken,
@@ -44,8 +43,7 @@ async function refreshAccessToken(refreshToken: {
 }
 
 export default NuxtAuthHandler({
-  // A secret string you define, to ensure correct encryption
-  secret: 'your-secret-here',
+  secret: process.env.AUTH_ORIGIN,
   pages: {
     signIn: '/login',
     error: '/login?validation=true',
@@ -61,9 +59,10 @@ export default NuxtAuthHandler({
         token.refreshToken = user?.refreshToken
       }
       var currentTime = parseInt(Date.now().toString().slice(0, 10));
-      var refreshTime = currentTime + (20 * 60);
+      var refreshTime = currentTime + (30 * 60);
 
       if (refreshTime >= token.accessTokenExpires) {
+
         return refreshAccessToken(token)
       }
       return Promise.resolve(token);
@@ -82,7 +81,7 @@ export default NuxtAuthHandler({
       name: 'Credentials',
       async authorize(credentials: any){
         try {
-          const user = await $fetch(`${process.env.BASE_URL_API_SERVICE}/api/login`, {
+          const user = await $fetch(`${process.env.BASE_URL_API_SERVICE}/login`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

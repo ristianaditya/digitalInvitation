@@ -1,12 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  mode: 'jit',
   content: ['components/**/*.{vue,js}',
-    'layouts/**/*.vue',
-    'pages/**/*.vue',
+    'layouts/**/*.{html,vue}',
+    'pages/**/*.{html,vue}',
     'composables/**/*.{js,ts}',
     'plugins/**/*.{js,ts}',
     'App.{js,ts,vue}',
-    'app.{js,ts,vue}'],
+    'app.{js,ts,vue}'
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -29,5 +31,11 @@ export default {
       }
   }),
   ],
+  // safelist: [
+  //   {
+  //     pattern: /./,
+  //     variants: ['md'],
+  //   }
+  // ]
 }
 

@@ -123,7 +123,7 @@ const onSubmit = handleSubmit(async values => {
   alertState.loading = true
 
   try {
-    await usePostRegis('/api/register', values).then((res: any) => {
+    await usePostRegis('/register', values).then((res: any) => {
       if (res.status == 422) {
         alertState.show = true
         alertState.message = res._data.username || res._data.email

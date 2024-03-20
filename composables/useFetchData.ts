@@ -5,7 +5,7 @@ export const useGetData = async (path: string) => {
   const session = await getSession()
   return new Promise(async (resolve, reject) => {
     try {
-      await useFetch(config.public.baseURLService.concat(`${path}`), {
+      await $fetch(config.public.baseURLService.concat(`${path}`), {
         method: 'get',
         headers: {
           'Content-Type': 'application/json',
@@ -24,9 +24,10 @@ export const useGetData = async (path: string) => {
 export const useGetSession = async (path: string) => {
   const config = useRuntimeConfig()
   const session = await getSession()
+
   return new Promise(async (resolve, reject) => {
     try {
-      await useFetch(config.public.baseURLService.concat(`${path}`), {
+      await $fetch(config.public.baseURLService.concat(`${path}`), {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +47,7 @@ export const usePostRegis = async (path: string, body: object) => {
   const config = useRuntimeConfig()
   return new Promise(async (resolve, reject) => {
     try {
-      await useFetch(config.public.baseURLService.concat(`${path}`), {
+      await $fetch(config.public.baseURLService.concat(`${path}`), {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
@@ -68,7 +69,7 @@ export const usePostData = async (path: string, body: object) => {
 
   return new Promise(async (resolve, reject) => {
     try {
-      await useFetch(config.public.baseURLService.concat(`${path}`), {
+      await $fetch(config.public.baseURLService.concat(`${path}`), {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +92,7 @@ export const useUploadPhoto = async (path: string, body: object) => {
 
   return new Promise(async (resolve, reject) => {
     try {
-      await useFetch(config.public.baseURLService.concat(`${path}`), {
+      await $fetch(config.public.baseURLService.concat(`${path}`), {
         method: 'post',
         headers: {
           'Authorization': `Bearer ${session.accessToken}`,
@@ -106,4 +107,3 @@ export const useUploadPhoto = async (path: string, body: object) => {
     }
   })
 }
-

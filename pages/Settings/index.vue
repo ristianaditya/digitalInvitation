@@ -60,6 +60,44 @@
             </div>
           </div>
         </div>
+        <div v-if="!!dataUser.latest_transaction?.subscribe"
+          class="grid lg:grid-cols-3 items-start first:*:col-span-2 lg:first:*:col-span-1 last:*:col-span-2 gap-6 py-6">
+          <div class="flex lg:flex-col justify-between flex-row flex-wrap gap-4">
+            <div class="flex items-start gap-4">
+              <div>
+                <p class="text-gray-900 dark:text-white font-semibold">Subscription</p>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">This information will be displayed publicly so
+                  be
+                  careful what you share.</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="rounded-lg divide-y divide-gray-200 dark:divide-gray-800 ring-1 ring-gray-200 dark:ring-gray-800 shadow bg-white dark:bg-gray-900">
+
+            <div class="divide-y divide-gray-200 dark:divide-gray-800 gap-4 flex flex-col px-6 py-4">
+              <div class="flex items-center justify-between pt-4 first:pt-0 gap-2">
+                <div class="">
+                  <div class="flex content-center items-center justify-between text-sm">
+                    <p class="block font-bold text-[#49479F] dark:text-gray-200">{{
+    dataUser.latest_transaction?.subscribe
+  }}</p>
+                  </div>
+                  <p class="text-gray-500 dark:text-gray-400 text-sm">Expired : {{
+      dataUser.latest_transaction?.subscribe_expired
+    }}</p>
+                </div>
+                <div class="mt-1 relative flex">
+                  <img v-if="dataUser.latest_transaction?.subscribe == 'DigitalDreamscape'" src="/tier/tier3.png" alt=""
+                    class="rounded-3xl w-10 h-10 ml-1" />
+                  <img v-else-if="dataUser.latest_transaction?.subscribe == 'SparkleSend'" src="/tier/tier2.png" alt=""
+                    class="rounded-3xl w-10 h-10 ml-1" />
+                  <img v-else src="/tier/free.png" alt="" class="rounded-3xl w-10 h-10 ml-1" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </UContainer>
@@ -97,6 +135,7 @@ const dataUser = reactive({
   file: '',
   old_password: '',
   password: '',
+  latest_transaction: '',
 })
 
 const schema = yup.object({
@@ -136,7 +175,7 @@ async function onSubmit(values) {
         old_password: dataUser.old_password,
         password: dataUser.password,
       }
-      await usePostData(`/api/updatePassword/${idUser.value}`, dataPassword).then((res) => {
+      await usePostData(`/user/updatePassword/${idUser.value}`, dataPassword).then((res) => {
         if (res.status == 200) {
           toast.add({
             icon: 'i-heroicons-check-circle',
@@ -156,7 +195,7 @@ async function onSubmit(values) {
     }
 
     if (stateImage.value) {
-      await useUploadPhoto(`/api/uploadPhoto/${idUser.value}`, formData).then((res) => {
+      await useUploadPhoto(`/user/uploadPhoto/${idUser.value}`, formData).then((res) => {
         if (res.status == 200) {
           stateImage.value = false
         } else {
@@ -170,7 +209,7 @@ async function onSubmit(values) {
       })
     }
 
-    await usePostData(`/api/updateUser/${idUser.value}`, values).then((res) => {
+    await usePostData(`/user/updateUser/${idUser.value}`, values).then((res) => {
       if (res.status == 422) {
         const jsonError = res._data.username || res._data.email || res._data.no_phone;
         toast.add({
@@ -202,7 +241,7 @@ async function onSubmit(values) {
 }
 
 onMounted(async () => {
-  await useGetSession('/api/getSession').then((res) => {
+  await useGetSession('/user/getSession').then((res) => {
     idUser.value = res.data.id
     dataUser.name = res.data.name,
       dataUser.username = res.data.username,
@@ -210,6 +249,7 @@ onMounted(async () => {
       dataUser.no_phone = res.data.no_phone,
       dataUser.address = res.data.address,
       dataUser.picture = res.data.picture,
+      dataUser.latest_transaction = res.data.latest_transaction,
       dataUser.gender = (res.data.gender == "male") ? people[0] : (res.data.gender == "female") ? people[1] : ''
   })
   stateLoad.value = false
