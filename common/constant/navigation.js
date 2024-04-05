@@ -5,6 +5,16 @@ export const NAVIGATION_MENU = [
         icon: 'material-symbols:home-outline-rounded',
       },
       {
+        link: '/musics',
+        label: 'Musics',
+        icon: 'solar:music-library-2-line-duotone',
+      },
+      {
+        link: '/history',
+        label: 'History Payment',
+        icon: 'akar-icons:history',
+      },
+      {
         link: '/thema',
         label: 'Thema',
         icon: 'material-symbols:image-outline',

@@ -16,8 +16,13 @@ import {
 } from '~/composables/useFetchData'
 definePageMeta({
   layout: false,
-  middleware: 'auth'
+  middleware: 'auth',
 })
+useHead({
+  script: [
+    { src: 'https://cdn.tailwindcss.com', body: true }
+  ]
+});
 const route = useRoute()
 const stateLoad = ref(true)
 const project = reactive({

@@ -11,9 +11,7 @@
           <div class="ItemPreviewIframe-module_root-EQCRj" data-loaded="true">
             <div data-picture="true">
               <picture>
-                <source type="image/webp"
-                  srcset="https://www.its.ac.id/tmesin/wp-content/uploads/sites/22/2022/07/no-image.png">
-                <img src="https://www.its.ac.id/tmesin/wp-content/uploads/sites/22/2022/07/no-image.png"
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Empty.png"
                   class="ItemPreviewImage-module_root-0gttw" loading="lazy">
               </picture>
             </div><iframe
@@ -41,10 +39,11 @@
               class="btn bg-[#F8D075] btn-sm rounded-xl hover:bg-[#c5a24f]">
               <span class="i-heroicons-eye flex-shrink-0 w-5 h-5 relative text-[#705a27] "></span>
             </NuxtLink>
-            <button class="btn bg-[#49479F] text-gray-100 btn-sm rounded-xl hover:bg-[#252463]">
+            <NuxtLink :to="`SettingProject?id=${projects_data.id}`"
+              class="btn bg-[#49479F] text-gray-100 btn-sm rounded-xl hover:bg-[#252463]">
               <span class="i-heroicons-cog-6-tooth flex-shrink-0 w-5 h-5 relative text-gray-100 "></span>
               Setting
-            </button>
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -60,7 +59,6 @@ import {
 definePageMeta({
   layout: 'editor',
   middleware: 'auth',
-  transition: '/Dashboard/Preview',
 })
 
 const project = ref()
@@ -69,7 +67,7 @@ const stateLoad = ref(true)
 function converter(params) {
   const utcTime = new Date(params);
   let day = utcTime.getDate();
-  let month = utcTime.getMonth() + 1; // Add 1 because getMonth() returns 0-11
+  let month = utcTime.getMonth() + 1;
   let year = utcTime.getFullYear();
   let hours = utcTime.getHours();
   let minutes = utcTime.getMinutes();
@@ -78,9 +76,24 @@ function converter(params) {
   return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
 }
 
+function makeid(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
 onMounted(async () => {
   const activePage = useActivePage()
   activePage.page = 'Dashboard'
+  activePage.create = true
+  activePage.child = ''
+  activePage.formCreate = `/Builder?id=${makeid(25)}`
 
   await usePostData('/project/getByUserId').then((res) => {
     if (res.status == 200) {

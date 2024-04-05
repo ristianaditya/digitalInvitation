@@ -238,10 +238,11 @@ async function createPaymentLink(name, price) {
             phone: sessionData.phone,
           },
           callbacks: {
-            finish: `https://9723-180-244-134-115.ngrok-free.app/?id=${sessionData.id}&type=${name}&price=${price}`
+            finish: `https://f947-180-244-133-178.ngrok-free.app/?id=${sessionData.id}&type=${name}&price=${price}`
           }
         };
         await usePostData(`/transaction/showToken`, { detailsTransaction: parameter }).then((res) => {
+          console.log({ res });
           if (res.status == 200) {
             window.snap.pay(res._data.token, {
               onSuccess: function (result) {
@@ -285,6 +286,7 @@ async function createPaymentLink(name, price) {
         })
       }
     } catch (error) {
+      console.log(error)
       toast.add({
         icon: 'i-heroicons-exclamation-triangle',
         title: 'api service error',

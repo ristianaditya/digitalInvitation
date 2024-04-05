@@ -52,7 +52,7 @@
 <script setup>
 
 const isOpen = ref(false)
-const router = useRouter();
+const router = useRouter()
 const { status } = useAuth()
 const statusUser = status.value
 

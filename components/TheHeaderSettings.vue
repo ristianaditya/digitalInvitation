@@ -172,4 +172,13 @@ if (statusUser === 'authenticated') {
 .link-active {
   @apply block py-2 px-3 text-white bg-[#49479F] rounded active:text-[#49479F] hover:bg-transparent bg-transparent md:text-[#49479F] md:p-0
 }
+
+.menu li>*:not(ul, .menu-title, details, .btn):active, .menu li>*:not(ul, .menu-title, details, .btn).active, .menu li>details>summary:active {
+  border-radius: 0px !important;
+  background-color: oklch(0.45 0.14 280.25);
+}
+
+.hover\:bg-gray-100:hover {
+  border-radius: 0px !important;
+}
 </style>

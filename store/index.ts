@@ -14,6 +14,6 @@ export const useSessionData = defineStore('session-data', {
 
 export const useActivePage = defineStore('active-page', {
   state: () => {
-    return { page: '' }
+    return { page: '', child: '' , create: true, formCreate: ''}
   },
 })

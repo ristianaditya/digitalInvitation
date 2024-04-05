@@ -1,5 +1,5 @@
 <template>
-  <UContainer v-if="stateLoad" class=" text-center h-[80vh] flex justify-center items-center">
+  <UContainer v-if="pageLoad" class=" text-center h-[80vh] flex justify-center items-center">
     <span class="loading loading-spinner text-[#49479F] loading-lg"></span>
   </UContainer>
   <UContainer v-else class=" mt-12 max-w-4xl font-inter">
@@ -110,7 +110,7 @@ import * as yup from 'yup';
 import {
   useGetSession,
   usePostData,
-  useUploadPhoto
+  useFormUpload
 } from '~/composables/useFetchData'
 
 definePageMeta({
@@ -119,7 +119,7 @@ definePageMeta({
 })
 const toast = useToast()
 const people = ['male', 'female']
-const stateLoad = ref(true)
+const pageLoad = ref(true)
 const stateImage = ref(false)
 const stateLoading = ref(false)
 const idUser = ref('')
@@ -195,7 +195,7 @@ async function onSubmit(values) {
     }
 
     if (stateImage.value) {
-      await useUploadPhoto(`/user/uploadPhoto/${idUser.value}`, formData).then((res) => {
+      await useFormUpload(`/user/uploadPhoto/${idUser.value}`, formData).then((res) => {
         if (res.status == 200) {
           stateImage.value = false
         } else {
@@ -252,7 +252,7 @@ onMounted(async () => {
       dataUser.latest_transaction = res.data.latest_transaction,
       dataUser.gender = (res.data.gender == "male") ? people[0] : (res.data.gender == "female") ? people[1] : ''
   })
-  stateLoad.value = false
+  pageLoad.value = false
 })
 </script>
 

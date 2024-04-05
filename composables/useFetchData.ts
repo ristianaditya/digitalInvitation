@@ -86,7 +86,7 @@ export const usePostData = async (path: string, body: object) => {
   })
 }
 
-export const useUploadPhoto = async (path: string, body: object) => {
+export const useFormUpload = async (path: string, body: object) => {
   const config = useRuntimeConfig()
   const session = await getSession()
 
