@@ -5,10 +5,17 @@
         <div class="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-16">
           <h1 class="max-w-lg mb-6 text-5xl font-bold leading-none tracking-tight text-white md:mx-auto">
             <span class="relative inline-block">
-              <svg viewBox="0 0 52 24" fill="currentColor"
+              <svg
+viewBox="0 0 52 24"
+fill="currentColor"
                 class="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-blue-gray-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block">
                 <defs>
-                  <pattern id="7e5e8ff8-1960-4094-a63a-2a0c0f922d69" x="0" y="0" width=".135" height=".30">
+                  <pattern
+id="7e5e8ff8-1960-4094-a63a-2a0c0f922d69"
+x="0"
+y="0"
+width=".135"
+height=".30">
                     <circle cx="1" cy="1" r=".7"></circle>
                   </pattern>
                 </defs>
@@ -151,7 +158,7 @@
                 <span class="ml-3"><span class="text-black">Unlimited </span> guests</span>
               </li>
             </ul>
-            <a @click="createPaymentLink('DigitalDreamscape', 80000)" class="text-sm font-semibold cursor-pointer">
+            <a class="text-sm font-semibold cursor-pointer" @click="createPaymentLink('DigitalDreamscape', 80000)">
               <span
                 class="flex items-center justify-center w-full px-4 py-4 text-base font-bold leading-6 text-slate-900 bg-[#F8D075] border border-transparent rounded-md md:w-auto hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#fdd26d] font-inter ">
                 Choose Plan
@@ -242,7 +249,6 @@ async function createPaymentLink(name, price) {
           }
         };
         await usePostData(`/transaction/showToken`, { detailsTransaction: parameter }).then((res) => {
-          console.log({ res });
           if (res.status == 200) {
             window.snap.pay(res._data.token, {
               onSuccess: function (result) {
@@ -286,7 +292,6 @@ async function createPaymentLink(name, price) {
         })
       }
     } catch (error) {
-      console.log(error)
       toast.add({
         icon: 'i-heroicons-exclamation-triangle',
         title: 'api service error',
