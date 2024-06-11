@@ -1,6 +1,6 @@
 <template>
   <div
-    class="header navbar absolute inset-x-0 top-0 z-10 mx-auto max-w-[1630px] bg-base-100 bg-transparent font-inter font-bold md:px-14 md:py-8"
+    class="header navbar relative inset-x-0 top-0 z-10 mx-auto max-w-[1630px] bg-base-100 bg-transparent font-inter font-bold md:px-14 md:py-8"
   >
     <div class="navbar-start">
       <div class="dropdown">

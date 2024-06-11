@@ -29,9 +29,9 @@
         <BaseInputModal
           name="eventName"
           type="text"
-          label="Event Name "
+          label="Event Desc "
           icon="i-heroicons-cake"
-          desc="name of the invitation event to be held."
+          desc="desc of the invitation event to be held."
         />
         <BaseInputModalSelectGet
           name="musics"
@@ -105,13 +105,6 @@
         >Save Changes
       </UButton>
       <UButton
-        v-show="dataMusic.invitelink"
-        class="mr-3 w-16 animate-bounce justify-center bg-[#F8D075] text-[#705a27] animate-infinite animate-ease-linear hover:bg-[#c5a24f]"
-        variant="solid"
-        @click="router.push(`/Dashboard/Guest?id=${dataMusic.projectId}`)"
-        >Guest
-      </UButton>
-      <UButton
         color="blue"
         class="mr-3 w-20 justify-center"
         variant="soft"
@@ -133,7 +126,6 @@
     },
   })
 
-  const router = useRouter()
   const submitForm = ref()
   const pageLoad = ref(true)
   const stateLoading = ref(false)
@@ -143,7 +135,6 @@
     invitelink: '',
     musics: '',
     inviteDate: '',
-    eventName: '',
     eventName: '',
     personFirst: '',
     genderFirst: '',
@@ -155,7 +146,7 @@
   const emit = defineEmits(['close', 'confirm'])
   const schema = yup.object({
     invitelink: yup.string().required().min(3).max(16),
-    eventName: yup.string().required().min(3).max(16),
+    eventName: yup.string().required().min(3).max(32),
     musics: yup.object().required(),
     inviteDate: yup.string().required(),
     personFirst: yup.string().required().min(3).max(16),

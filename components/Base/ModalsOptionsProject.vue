@@ -56,7 +56,12 @@
                   Select invite option :
                 </p>
                 <ul class="mb-4 space-y-4">
-                  <li>
+                  <li
+                    v-if="
+                      sessionData.subscribe != 'DigitalDazzle' &&
+                      !!sessionData.subscribe
+                    "
+                  >
                     <input
                       id="invitation-1"
                       v-model="typeInvitation"
@@ -68,7 +73,7 @@
                     />
                     <label
                       for="invitation-1"
-                      class="inline-flex w-full cursor-pointer items-center justify-between rounded-lg border border-gray-200 bg-white p-5 text-gray-900 hover:bg-gray-100 hover:text-gray-900 peer-checked:border-[#49479F] peer-checked:text-[#49479F] dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:peer-checked:text-[#49479F]"
+                      class="inline-flex w-full cursor-pointer items-center justify-between rounded-lg border border-gray-200 bg-white p-5 text-gray-900 hover:bg-gray-100 hover:text-gray-900 peer-checked:border-[#49479F] peer-checked:text-[#49479F]"
                     >
                       <div class="block">
                         <div class="w-full text-lg font-semibold">
@@ -93,6 +98,35 @@
                           d="M1 5h12m0 0L9 1m4 4L9 9"
                         />
                       </svg>
+                    </label>
+                  </li>
+                  <li v-else>
+                    <input
+                      id="invitation-1"
+                      v-model="typeInvitation"
+                      type="radio"
+                      name="invitation"
+                      value="custom"
+                      class="peer hidden"
+                      required
+                    />
+                    <label
+                      for="invitation-1"
+                      class="inline-flex w-full items-center justify-between rounded-lg border border-gray-200 bg-gray-100 p-5 text-gray-900"
+                    >
+                      <div class="block">
+                        <div class="w-full text-lg font-semibold">
+                          Custom Invitation
+                          <UBadge color="blue" variant="subtle">Premium</UBadge>
+                        </div>
+                        <div class="w-full text-gray-500 dark:text-gray-400">
+                          Create your own custom theme
+                        </div>
+                      </div>
+                      <span
+                        class="i-heroicons-lock-closed h-5 w-5 flex-shrink-0"
+                        aria-hidden="true"
+                      ></span>
                     </label>
                   </li>
                   <li>
@@ -151,6 +185,7 @@
 
 <script setup>
   import { TransitionRoot, TransitionChild, Dialog } from '@headlessui/vue'
+  import { useSessionData } from '@/store/index'
 
   const typeInvitation = ref()
 
@@ -160,6 +195,7 @@
       default: false,
     },
   })
+  const sessionData = useSessionData()
 
   const emit = defineEmits(['close', 'confirm'])
 

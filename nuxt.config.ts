@@ -7,7 +7,7 @@ export default {
       autoprefixer: {},
     },
   },
-  css: ['~/assets/css/tailwind.css', '~/assets/css/feature.css'],
+  css: ['~/assets/css/tailwind.css'],
   modules: [
     '@nuxt/ui',
     '@nuxtjs/tailwindcss',
@@ -24,10 +24,14 @@ export default {
           Roboto: true,
           Lora: true,
           Inter: true,
+          Satisfy: true,
         },
       },
     ],
   ],
+  googleFonts: {
+    display: 'swap', // 'auto' | 'block' | 'swap' | 'fallback' | 'optional'
+  },
   // plugins: [
   //   '~/plugins/midtrans.js'
   // ],

@@ -1,0 +1,169 @@
+<template>
+  <UContainer
+    v-if="pageLoad"
+    class="flex h-[40vh] items-center justify-center text-center"
+  >
+    <span class="loading loading-spinner loading-lg text-[#49479F]"></span>
+  </UContainer>
+  <div v-else>
+    <Form
+      :initial-values="dataGuest"
+      :validation-schema="schema"
+      @submit="onSubmit"
+    >
+      <button
+        v-show="false"
+        ref="submitForm"
+        type="submit"
+        class="linear hover:bg-brand-800 active:bg-brand-700 inline-flex items-center justify-center rounded-[12px] bg-[#49479F] px-4 py-3 text-sm font-medium text-white transition duration-200"
+      >
+        Save Changes
+      </button>
+      <div class="mb-6 space-y-6 py-5">
+        <BaseInputModal
+          name="name"
+          type="text"
+          label="Name"
+          icon="i-heroicons-user"
+          desc="enter the guest's name."
+        />
+        <BaseInputModalSelect
+          name="genderFirst"
+          label="Attendance"
+          desc="input the gender of the event owner."
+          placeholder="Select Attendance"
+          :listdata="status"
+        />
+        <BaseInputModalTextArea
+          name="greetings"
+          label="Greetings and Pray"
+          desc="enter the greetings text."
+        />
+      </div>
+    </Form>
+    <UNotifications />
+    <div class="sm:flex sm:flex-row-reverse">
+      <UButton
+        class="w-28 justify-center bg-[#49479F] text-white hover:bg-[#2b2a61]"
+        variant="solid"
+        @click="handleSubmit"
+        >Save Changes
+      </UButton>
+      <UButton
+        color="blue"
+        class="mr-3 w-20 justify-center"
+        variant="soft"
+        @click="closedModal"
+      >
+        Cancel
+      </UButton>
+    </div>
+  </div>
+</template>
+<script setup>
+  import { Form } from 'vee-validate'
+  import * as yup from 'yup'
+
+  const submitForm = ref()
+  const stateLoading = ref(false)
+  const pageLoad = ref(true)
+  const invitation = ref()
+  const toast = useToast()
+  const dataGuest = reactive({
+    name: '',
+    no_phone: '',
+  })
+  const status = ['attended', 'absent']
+  const emit = defineEmits(['close', 'confirm'])
+
+  const props = defineProps({
+    idModal: {
+      type: String,
+      default: '',
+    },
+  })
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+  const schema = yup.object({
+    name: yup.string().required().min(3).max(26),
+    no_phone: yup
+      .string()
+      .required('number phone is a required field')
+      .matches(phoneRegExp, 'Phone number is not valid'),
+  })
+
+  async function onSubmit(values) {
+    stateLoading.value = true
+    const param = {
+      invitation_id: invitation.value,
+      name: values.name,
+      no_phone: values.no_phone,
+    }
+    try {
+      if (!!!props.idModal) {
+        await usePostData(`/guest/create`, param).then((res) => {
+          if (res.status == 200) {
+            toast.add({
+              icon: 'i-heroicons-check-circle',
+              title: 'Guest successfully created',
+              color: 'green',
+              timeout: 3000,
+            })
+            emit('confirm')
+          }
+        })
+      } else {
+        await usePostData(`/guest/update/${props.idModal}`, param).then(
+          (res) => {
+            if (res.status == 200) {
+              toast.add({
+                icon: 'i-heroicons-check-circle',
+                title: 'Guest successfully updated',
+                color: 'green',
+                timeout: 3000,
+              })
+              emit('confirm')
+            }
+          },
+        )
+      }
+    } catch (error) {
+      toast.add({
+        icon: 'i-heroicons-exclamation-triangle',
+        title: 'error api service',
+        color: 'orange',
+        timeout: 3000,
+      })
+    }
+
+    stateLoading.value = false
+  }
+
+  function closedModal() {
+    emit('close')
+  }
+
+  const handleSubmit = async () => {
+    submitForm.value?.click()
+  }
+
+  onMounted(async () => {
+    dataGuest.name = props.idModal
+    // await usePostData(`/invitations/getByProject/${route.query.id}`).then(
+    //   (res) => {
+    //     if (res.status == 200) {
+    //       const data = res._data.data[0]
+    //       invitation.value = data.id
+    //     }
+    //   },
+    // )
+    // if (!!props.idModal) {
+    //   await useGetData(`/guest/getByIdGuest/${props.idModal}`).then((res) => {
+    //     dataGuest.name = res.data.name
+    //     dataGuest.no_phone = res.data.no_phone
+    //   })
+    // }
+
+    pageLoad.value = false
+  })
+</script>

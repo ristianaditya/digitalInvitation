@@ -169,7 +169,7 @@
               <div
                 class="flex items-center justify-between gap-2 pt-4 first:pt-0"
               >
-                <div class="">
+                <div>
                   <div
                     class="flex content-center items-center justify-between text-sm"
                   >
@@ -181,7 +181,7 @@
                   </div>
                   <p class="text-sm text-gray-500 dark:text-gray-400">
                     Expired :
-                    {{ dataUser.latest_transaction?.subscribe_expired }}
+                    {{ dataUser.expired }}
                   </p>
                 </div>
                 <div class="relative mt-1 flex">
@@ -251,6 +251,7 @@
     old_password: '',
     password: '',
     latest_transaction: '',
+    expired: '',
   })
 
   const schema = yup.object({
@@ -363,6 +364,29 @@
   }
 
   onMounted(async () => {
+    const days = [
+      'Minggu',
+      'Senin',
+      'Selasa',
+      'Rabu',
+      'Kamis',
+      'Jumat',
+      'Sabtu',
+    ]
+    const months = [
+      'Januari',
+      'Februari',
+      'Maret',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Agustus',
+      'September',
+      'Oktober',
+      'November',
+      'Desember',
+    ]
     await useGetSession('/user/getSession').then((res) => {
       idUser.value = res.data.id
       ;(dataUser.name = res.data.name),
@@ -378,6 +402,13 @@
             : res.data.gender == 'female'
               ? people[1]
               : '')
+      const date = new Date(res.data.latest_transaction?.subscribe_expired)
+      const dayName = days[date.getDay()]
+      const day = date.getDate()
+      const month = months[date.getMonth()]
+      const year = date.getFullYear()
+
+      dataUser.expired = dayName + ', ' + day + ' ' + month + ' ' + year
     })
     pageLoad.value = false
   })

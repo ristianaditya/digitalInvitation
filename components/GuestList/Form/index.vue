@@ -29,7 +29,7 @@
         />
         <BaseInputModal
           name="no_phone"
-          type="number"
+          type="text"
           label="No Phone"
           icon="i-heroicons-phone"
           desc="input guest phone number."
@@ -77,10 +77,14 @@
       default: '',
     },
   })
-
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   const schema = yup.object({
     name: yup.string().required().min(3).max(26),
-    no_phone: yup.number().required('number phone is a required field'),
+    no_phone: yup
+      .string()
+      .required('number phone is a required field')
+      .matches(phoneRegExp, 'Phone number is not valid'),
   })
 
   async function onSubmit(values) {

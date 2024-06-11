@@ -1,226 +1,135 @@
 <template>
   <div>
-    <UContainer
-      v-if="stateLoad"
-      class="flex h-[80vh] items-center justify-center text-center"
-    >
-      <span class="loading loading-spinner loading-lg text-[#49479F]"></span>
-    </UContainer>
-    <div v-else>
-      <div class="fixed bottom-4 left-0 right-0 z-50 m-auto w-fit px-2">
+    <ThemaEnvelope
+      v-show="envelope"
+      :date="invitation.date"
+      :person-first="invitation.personFirst"
+      :person-second="invitation.personSecond"
+      :invite-desc="invitation.inviteDesc"
+      :invite-name="route.query.to"
+      @close="envelope = false"
+    />
+    <div v-show="!envelope">
+      <UContainer
+        v-if="stateLoad"
+        class="flex h-[80vh] items-center justify-center text-center"
+      >
+        <span class="loading loading-spinner loading-lg text-[#49479F]"></span>
+      </UContainer>
+      <div v-else>
         <div
-          class="relative flex justify-between overflow-hidden rounded-2xl bg-white px-2 shadow sm:px-6"
+          class="fixed bottom-4 left-1/2 z-50 h-16 w-full max-w-md -translate-x-1/2 rounded-full border border-gray-200 bg-white/30 shadow-2xl shadow-indigo-500/50 backdrop-blur-xl dark:border-gray-600 dark:bg-gray-700"
         >
-          <nav
-            class="scrollactive-nav flex min-w-min items-center justify-between sm:gap-6"
-          >
-            <a
-              href="#home"
-              class="scrollactive-item is-active grid h-16 w-12 grid-cols-1 grid-rows-1 pt-1 sm:h-16 sm:w-16"
-              ><span class="sr-only">Beranda</span>
-              <div
-                class="col-[1/1] row-[1/1] flex h-14 flex-col items-center justify-center space-y-1 sm:w-16"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  width="24px"
-                  height="24px"
-                  class="h-6 w-6 flex-shrink-0 text-green-700"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  ></path>
-                </svg>
-                <div class="text-[0.60rem] text-green-700 sm:text-xs">
-                  Beranda
-                </div>
-              </div></a
-            ><a
-              href="#profile"
-              class="scrollactive-item grid h-16 w-12 grid-cols-1 grid-rows-1 pt-1 sm:h-16 sm:w-16"
-              ><span class="sr-only">Profil</span>
-              <div
-                class="col-[1/1] row-[1/1] flex h-14 flex-col items-center justify-center space-y-1 sm:w-16"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  width="24px"
-                  height="24px"
-                  class="h-6 w-6 flex-shrink-0 text-green-700"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                  ></path>
-                </svg>
-                <div class="text-[0.60rem] text-green-700 sm:text-xs">
-                  Profil
-                </div>
-              </div></a
-            ><a
-              href="#agenda"
-              class="scrollactive-item grid h-16 w-12 grid-cols-1 grid-rows-1 pt-1 sm:h-16 sm:w-16"
-              ><span class="sr-only">Acara</span>
-              <div
-                class="col-[1/1] row-[1/1] flex h-14 flex-col items-center justify-center space-y-1 sm:w-16"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  width="24px"
-                  height="24px"
-                  class="h-6 w-6 flex-shrink-0 text-green-700"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  ></path>
-                </svg>
-                <div class="text-[0.60rem] text-green-700 sm:text-xs">
-                  Acara
-                </div>
-              </div></a
-            ><a
-              href="#gallery"
-              class="scrollactive-item grid h-16 w-12 grid-cols-1 grid-rows-1 pt-1 sm:h-16 sm:w-16"
-              ><span class="sr-only">Galeri</span>
-              <div
-                class="col-[1/1] row-[1/1] flex h-14 flex-col items-center justify-center space-y-1 sm:w-16"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  width="24px"
-                  height="24px"
-                  class="h-6 w-6 flex-shrink-0 text-green-700"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  ></path>
-                </svg>
-                <div class="text-[0.60rem] text-green-700 sm:text-xs">
-                  Galeri
-                </div>
-              </div></a
-            ><a
-              href="#story"
-              class="scrollactive-item grid h-16 w-12 grid-cols-1 grid-rows-1 pt-1 sm:h-16 sm:w-16"
-              ><span class="sr-only">Cerita</span>
-              <div
-                class="col-[1/1] row-[1/1] flex h-14 flex-col items-center justify-center space-y-1 sm:w-16"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  width="24px"
-                  height="24px"
-                  class="h-6 w-6 flex-shrink-0 text-green-700"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                  ></path>
-                </svg>
-                <div class="text-[0.60rem] text-green-700 sm:text-xs">
-                  Cerita
-                </div>
-              </div></a
-            ><a
-              href="#gift"
-              class="scrollactive-item grid h-16 w-12 grid-cols-1 grid-rows-1 pt-1 sm:h-16 sm:w-16"
-              ><span class="sr-only">Hadiah</span>
-              <div
-                class="col-[1/1] row-[1/1] flex h-14 flex-col items-center justify-center space-y-1 sm:w-16"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  width="24px"
-                  height="24px"
-                  class="h-6 w-6 flex-shrink-0 text-green-700"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"
-                  ></path>
-                </svg>
-                <div class="text-[0.60rem] text-green-700 sm:text-xs">
-                  Hadiah
-                </div>
-              </div></a
-            ><a
-              href="#guestbook"
-              class="scrollactive-item grid h-16 w-12 grid-cols-1 grid-rows-1 pt-1 sm:h-16 sm:w-16"
-              ><span class="sr-only">Ucapan</span>
-              <div
-                class="col-[1/1] row-[1/1] flex h-14 flex-col items-center justify-center space-y-1 sm:w-16"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  width="24px"
-                  height="24px"
-                  class="h-6 w-6 flex-shrink-0 text-green-700"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-                  ></path>
-                </svg>
-                <div class="text-[0.60rem] text-green-700 sm:text-xs">
-                  Ucapan
-                </div>
-              </div></a
+          <div class="mx-auto grid h-full max-w-md grid-cols-3">
+            <button
+              data-tooltip-target="tooltip-home"
+              type="button"
+              class="group inline-flex flex-col items-center justify-center rounded-s-full px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+              @click="state.isOpenForm = true"
             >
-          </nav>
+              <Icon name="material-symbols:rsvp" class="text-4xl" />
+              <span class="sr-only">RSVP</span>
+            </button>
+            <div
+              id="tooltip-home"
+              role="tooltip"
+              class="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
+            >
+              Home
+              <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+            <div class="flex items-center justify-center">
+              <button
+                v-if="!!!musicPlay"
+                ref="buttonPlay"
+                data-tooltip-target="tooltip-new"
+                type="button"
+                class="group inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#49479F] font-medium hover:bg-[#32316d] focus:outline-none focus:ring-4 focus:ring-[#8d8be2] dark:focus:ring-[#49479F]"
+                @click="playMusic()"
+              >
+                <Icon
+                  name="material-symbols:play-arrow"
+                  class="text-xl text-white"
+                />
+                <span class="sr-only">Play Music</span>
+              </button>
+              <button
+                v-else
+                data-tooltip-target="tooltip-new"
+                type="button"
+                class="group inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#49479F] font-medium hover:bg-[#32316d] focus:outline-none focus:ring-4 focus:ring-[#8d8be2] dark:focus:ring-[#49479F]"
+                @click="playMusic()"
+              >
+                <Icon name="ph:pause-fill" class="text-xl text-white" />
+                <span class="sr-only">Pause Music</span>
+              </button>
+            </div>
+            <div
+              id="tooltip-new"
+              role="tooltip"
+              class="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
+            >
+              Create new item
+              <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+            <button
+              data-tooltip-target="tooltip-profile"
+              type="button"
+              class="group inline-flex flex-col items-center justify-center rounded-e-full px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+              @click="openQrModalForm(route.query.to, route.params.id)"
+            >
+              <Icon name="uil:qrcode-scan" class="text-2xl" />
+              <span class="sr-only">QR Code</span>
+            </button>
+            <div
+              id="tooltip-profile"
+              role="tooltip"
+              class="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
+            >
+              Profile
+              <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+          </div>
         </div>
+
+        <div v-html="iniHtml"></div>
       </div>
-      <div v-html="iniHtml"></div>
+      <div ref="container"></div>
     </div>
-    <div ref="container"></div>
+    <BaseModalForm
+      :open-modal="state.isOpenQrForm"
+      title-modal="QR Code"
+      desc-modal="Guest's qr code to be scanned."
+      @close="state.isOpenQrForm = false"
+    >
+      <template #body>
+        <div class="w-full text-center">
+          <img :src="qrcode" alt="QR Code" class="h-100 w-full" />
+        </div>
+      </template>
+    </BaseModalForm>
+    <BaseModalForm
+      :open-modal="state.isOpenForm"
+      title-modal="Form RSVP"
+      desc-modal="This form is used to add and update the guest list."
+      @close="state.isOpenForm = false"
+    >
+      <template #body>
+        <div>
+          <Rsvp
+            :id-modal="route.query.to"
+            @close="state.isOpenForm = false"
+            @confirm="confirmSave()"
+          />
+        </div>
+      </template>
+    </BaseModalForm>
   </div>
 </template>
 <script setup>
   import { usePostData } from '~/composables/useFetchData'
+  import { useQRCode } from '@vueuse/integrations/useQRCode'
+
   definePageMeta({
     layout: false,
     middleware: 'auth',
@@ -228,26 +137,77 @@
   useHead({
     script: [{ src: 'https://cdn.tailwindcss.com', body: true }],
   })
+  const envelope = ref(true)
   const route = useRoute()
   const stateLoad = ref(true)
+  const musicPlay = ref(false)
+  const buttonPlay = ref('')
+  const codeGuest = ref('')
+  const state = reactive({
+    isOpenQrForm: false,
+    isOpenForm: false,
+  })
+  const qrcode = useQRCode(codeGuest)
+  let beep = null
   const project = reactive({
     html: '',
     css: '',
   })
+  const invitation = reactive({
+    date: '',
+    personFirst: '',
+    personSecond: '',
+    inviteDesc: '',
+    musicSrc: '',
+  })
   const iniHtml = computed(() => {
     return project.html
   })
+
+  function openQrModalForm(name, invite_link) {
+    codeGuest.value = `${invite_link}/${name}`
+    state.isOpenQrForm = true
+  }
+
+  function playMusic() {
+    if (!beep) {
+      beep = new Audio(invitation.musicSrc)
+      beep.volume = 0.1
+      beep.addEventListener('canplay', () => {
+        if (!musicPlay.value) {
+          beep.play()
+          musicPlay.value = true
+        }
+      })
+    } else {
+      if (!musicPlay.value) {
+        beep.play()
+        musicPlay.value = true
+      } else {
+        beep.pause()
+        musicPlay.value = false
+      }
+    }
+  }
+  setTimeout(() => {
+    playMusic()
+  }, 8000)
   onMounted(async () => {
     await usePostData(`/invitations/getInvitation/${route.params.id}`).then(
       (res) => {
         project.html = JSON.parse(res._data.data[0].project.html)
         project.css = JSON.parse(res._data.data[0].project.css)
+        invitation.date = res._data.data[0].invite_date
+        invitation.personFirst = res._data.data[0].familydata.personFirst
+        invitation.personSecond = res._data.data[0].familydata.personSecond
+        invitation.inviteDesc = res._data.data[0].invite_name
+        invitation.musicSrc = res._data.data[0].music.music
+        console.log(route.query.to)
       },
     )
     const style = document.createElement('style')
     style.innerHTML = project.css
     document.head.appendChild(style)
-
     stateLoad.value = false
   })
 </script>

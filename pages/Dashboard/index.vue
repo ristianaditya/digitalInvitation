@@ -38,7 +38,7 @@
           </div>
         </figure>
         <NuxtLink
-          :to="projects_data.invitation?.invite_link || 'kosong'"
+          :to="`${projects_data.invitation?.invite_link}?to=Guest` || 'kosong'"
           target="_blank"
         >
           <div class="bgcolor relative h-52 items-center rounded-t-xl">
@@ -64,28 +64,6 @@
               variant="subtle"
               >LIVE</UBadge
             >
-            <div v-if="projects_data.invitation?.status == 'publish'">
-              <span
-                v-if="!copied"
-                class="i-heroicons-clipboard-document relative h-5 w-5 flex-shrink-0 cursor-pointer text-[#49479F]"
-                @click="
-                  copy(
-                    'http://localhost:3000/' +
-                      projects_data.invitation?.invite_link || 'kosong',
-                  )
-                "
-              ></span>
-              <span
-                v-else
-                class="i-heroicons-clipboard-document-check relative h-5 w-5 flex-shrink-0 cursor-pointer text-[#49479F]"
-                @click="
-                  copy(
-                    'http://localhost:3000/' +
-                      projects_data.invitation?.invite_link || 'kosong',
-                  )
-                "
-              ></span>
-            </div>
           </h2>
           <p class="-mt-1">
             Last updated {{ converter(projects_data.updated_at) }}
@@ -99,15 +77,81 @@
                 class="i-heroicons-pencil-square relative h-5 w-5 flex-shrink-0 text-[#705a27]"
               ></span>
             </NuxtLink>
-            <div
-              class="btn btn-sm rounded-xl bg-[#49479F] text-gray-100 hover:bg-[#252463]"
-              @click="modalSetting(projects_data.id)"
-            >
-              <span
-                class="i-heroicons-cog-6-tooth relative h-5 w-5 flex-shrink-0 text-gray-100"
-              ></span>
-              Setting
-            </div>
+            <Menu as="div">
+              <div>
+                <MenuButton
+                  class="btn btn-sm inline-flex w-full justify-center rounded-xl bg-[#49479F] text-sm font-medium text-white hover:bg-[#252463] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                >
+                  Settings
+                  <span
+                    class="i-heroicons-cog-6-tooth relative h-5 w-5 flex-shrink-0 text-[#ffffff]"
+                  ></span>
+                </MenuButton>
+              </div>
+
+              <transition
+                enter-active-class="transition duration-100 ease-out"
+                enter-from-class="transform scale-95 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in"
+                leave-from-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
+              >
+                <MenuItems
+                  class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+                >
+                  <div class="px-1 py-1">
+                    <MenuItem v-slot="{ active }">
+                      <button
+                        :class="[
+                          active ? 'bg-[#f0f0f0] ' : '',
+                          'group flex w-full items-center rounded-md px-2 py-2 text-sm text-black',
+                        ]"
+                        @click="modalSetting(projects_data.id)"
+                      >
+                        <span
+                          class="i-heroicons-wrench-screwdriver relative mr-2 h-5 w-5 flex-shrink-0 text-[#49479F]"
+                        ></span>
+                        Settings
+                      </button>
+                    </MenuItem>
+                    <MenuItem v-slot="{ active }">
+                      <button
+                        :class="[
+                          active ? 'bg-[#f0f0f0] ' : '',
+                          'group flex w-full items-center rounded-md px-2 py-2 text-sm text-black',
+                        ]"
+                        @click="
+                          router.push(`/Dashboard/Guest?id=${projects_data.id}`)
+                        "
+                      >
+                        <span
+                          class="i-heroicons-user-group relative mr-2 h-5 w-5 flex-shrink-0 text-[#49479F]"
+                        ></span>
+                        Guests
+                      </button>
+                    </MenuItem>
+                  </div>
+
+                  <div class="px-1 py-1">
+                    <MenuItem v-slot="{ active }">
+                      <button
+                        :class="[
+                          active ? 'bg-[#fdd7d7] ' : 'text-gray-900',
+                          'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                        ]"
+                        class="text-[#b83f3f]"
+                      >
+                        <span
+                          class="i-heroicons-trash relative mr-2 h-5 w-5 flex-shrink-0 text-[#b83f3f]"
+                        ></span>
+                        Delete
+                      </button>
+                    </MenuItem>
+                  </div>
+                </MenuItems>
+              </transition>
+            </Menu>
           </div>
         </div>
       </div>
@@ -130,17 +174,15 @@
   <UNotifications />
 </template>
 <script setup>
+  import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
   import { useActivePage } from '@/store/index'
   import { usePostData } from '~/composables/useFetchData'
-  import { useClipboard } from '@vueuse/core'
 
   definePageMeta({
     layout: 'editor-default',
     middleware: 'auth',
   })
 
-  const source = ref('Hello')
-  const { copy, copied } = useClipboard({ source })
   const project = ref()
   const stateLoad = ref(true)
   const router = useRouter()
@@ -187,6 +229,7 @@
     activePage.formCreate = `/Builder?id=${makeid(25)}`
 
     await usePostData('/project/getByUserId').then((res) => {
+      console.log(res._data, 'status')
       if (res.status == 200) {
         project.value = res._data.projects
       }

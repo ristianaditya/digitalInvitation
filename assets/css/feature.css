@@ -1,6 +1,6 @@
 .headline-large {
-  font-size: 5rem;
-  line-height: 1
+  font-size: 5rem !important;
+  line-height: 1 !important;
 }
 
 .headline-small {
@@ -15,7 +15,7 @@
   max-width: 85rem;
   margin-left: auto;
   margin-right: auto;
-  position: relative
+  position: relative;
 }
 
 .container.small {
@@ -583,7 +583,7 @@
 
 @media screen and (max-width:479px) {
   .headline-large {
-    font-size: 2.5rem
+    font-size: 2.5rem !important
   }
 
   .paragraph-regular {
