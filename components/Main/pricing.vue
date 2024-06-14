@@ -99,7 +99,7 @@
               <span
                 class="flex w-full items-center justify-center rounded-md border border-transparent bg-[#F8D075] px-4 py-4 font-inter text-base font-bold leading-6 text-slate-900 hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-[#fdd26d] focus:ring-offset-2 md:w-auto"
               >
-                Get Free Subscriptions
+                Claim Free
                 <Icon name="ep:arrow-right-bold" class="ml-2" /> </span
             ></a>
           </div>
@@ -559,6 +559,14 @@
                 setTimeout(() => {
                   state.isOpenFormAlert = false
                 }, '3000')
+              }
+              if (res.status == 409) {
+                toast.add({
+                  icon: 'i-heroicons-exclamation-triangle',
+                  title: 'DigitalDazzle has Already Claimed',
+                  color: 'orange',
+                  timeout: 3000,
+                })
               }
             })
           }

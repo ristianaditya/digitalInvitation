@@ -202,7 +202,6 @@
         invitation.personSecond = res._data.data[0].familydata.personSecond
         invitation.inviteDesc = res._data.data[0].invite_name
         invitation.musicSrc = res._data.data[0].music.music
-        console.log(route.query.to)
       },
     )
     const style = document.createElement('style')

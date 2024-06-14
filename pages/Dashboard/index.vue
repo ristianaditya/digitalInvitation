@@ -229,7 +229,6 @@
     activePage.formCreate = `/Builder?id=${makeid(25)}`
 
     await usePostData('/project/getByUserId').then((res) => {
-      console.log(res._data, 'status')
       if (res.status == 200) {
         project.value = res._data.projects
       }
