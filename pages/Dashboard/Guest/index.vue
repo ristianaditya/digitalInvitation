@@ -205,7 +205,10 @@ http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                           </template>
                         </UButton>
                       </UTooltip>
-                      <UTooltip text="QR Code" :popper="{ offsetDistance: 16 }">
+                      <UTooltip
+                        text="Send Message"
+                        :popper="{ offsetDistance: 16 }"
+                      >
                         <UButton
                           variant="ghost"
                           color="blue"
@@ -213,15 +216,16 @@ http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                             rounded: 'rounded-md',
                           }"
                           @click="
-                            openQrModalForm(
-                              guest.name,
-                              guest.invitation.invite_link,
+                            sendMessage(
+                              guest?.no_phone,
+                              guest?.invitation?.clipboard,
+                              `http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                             )
                           "
                         >
                           <template #trailing>
                             <Icon
-                              name="majesticons:qr-code-line"
+                              name="ri:whatsapp-fill"
                               class="text-2xl text-[#413f8d]"
                             />
                           </template>
@@ -372,18 +376,6 @@ http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
       @confirm="confirmDelete()"
     />
     <BaseModalForm
-      :open-modal="state.isOpenQrForm"
-      title-modal="QR Code"
-      desc-modal="Guest's qr code to be scanned."
-      @close="state.isOpenQrForm = false"
-    >
-      <template #body>
-        <div class="w-full text-center">
-          <img :src="qrcode" alt="QR Code" class="h-100 w-full" />
-        </div>
-      </template>
-    </BaseModalForm>
-    <BaseModalForm
       :open-modal="state.isOpenForm"
       title-modal="Form List Guest"
       desc-modal="This form is used to add and update the guest list."
@@ -422,7 +414,6 @@ http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
   import { useActivePage } from '@/store/index'
   import DataTable from 'datatables.net-vue3'
   import DataTablesCore from 'datatables.net'
-  import { useQRCode } from '@vueuse/integrations/useQRCode'
   import { useClipboard } from '@vueuse/core'
   import { useGetData } from '~/composables/useFetchData'
   const toast = useToast()
@@ -442,14 +433,11 @@ http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
   const isOpen = ref(false)
   const config = ref()
   const route = useRoute()
-  const codeGuest = ref('')
-  const qrcode = useQRCode(codeGuest)
 
   const state = reactive({
     isOpenDelete: false,
     idItems: '',
     isOpenForm: false,
-    isOpenQrForm: false,
     isOpenClipboard: false,
   })
 
@@ -467,9 +455,9 @@ http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
     state.isOpenForm = true
   }
 
-  function openQrModalForm(name, invite_link) {
-    codeGuest.value = `${invite_link}/${name}`
-    state.isOpenQrForm = true
+  function sendMessage(no_phone, text, invite) {
+    const link = `https://wa.me/${no_phone}?text=${text}, ${invite}`
+    window.open(link)
   }
 
   DataTable.use(DataTablesCore)
