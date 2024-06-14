@@ -23,7 +23,9 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
-                  ></path></svg>Complete the Registration to Experience All the Features
+                  ></path>
+                </svg>
+                Complete the Registration to Experience All the Features
               </p>
             </div>
             <div class="mt-2 w-full flex-shrink-0 lg:mt-0 lg:w-auto">
@@ -39,7 +41,47 @@
       </div>
     </div>
   </div>
-
+  <div
+    v-if="dataUser.expired <= 3 && dataUser.expired >= 0"
+    class="fixed inset-x-0 bottom-0 z-50 animate-fade-up animate-once"
+  >
+    <div class="bg-[#DB5550]">
+      <div class="mx-auto max-w-7xl px-3 py-3 sm:px-6 lg:px-8">
+        <div
+          class="flex flex-col items-center justify-between lg:flex-row lg:justify-center"
+        >
+          <div class="flex flex-1 items-center lg:mr-3 lg:flex-none">
+            <p class="ml-3 text-center font-medium text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                aria-hidden="true"
+                class="mr-2 hidden h-6 w-6 lg:inline"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
+                ></path>
+              </svg>
+              Your Subscription has {{ dataUser.expired }} Days Left
+            </p>
+          </div>
+          <div class="mt-2 w-full flex-shrink-0 lg:mt-0 lg:w-auto">
+            <NuxtLink
+              :to="{ path: '/', hash: '#pricing' }"
+              class="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-[#DB5550] shadow-sm"
+            >
+              Subscribe
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="relative scroll-smooth" @scroll="handleScroll">
     <div id="home" :class="color.bg" class="transition-all duration-1000">
       <MainHome />
@@ -64,6 +106,10 @@
 
   const { status } = useAuth()
 
+  const dataUser = reactive({
+    expired: 30,
+  })
+
   const statusUser = status.value
 
   const color = reactive({
@@ -86,6 +132,14 @@
 
   onMounted(() => {
     window.addEventListener('scroll', handleScroll)
+
+    useGetSession('/user/getSession').then((res) => {
+      const expired = new Date(res.data.latest_transaction?.subscribe_expired)
+      const now = new Date()
+      const timeDifference = expired.getTime() - now.getTime()
+      const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 24))
+      dataUser.expired = dayDifference
+    })
   })
 
   onUnmounted(() => {
