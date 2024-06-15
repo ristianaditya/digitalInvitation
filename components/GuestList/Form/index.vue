@@ -106,6 +106,16 @@
             })
             emit('confirm')
           }
+          if (res.status == 422) {
+            const validator = res._data?.name || res?._data.no_phone
+
+            toast.add({
+              icon: 'i-heroicons-exclamation-triangle',
+              title: validator[0],
+              color: 'orange',
+              timeout: 3000,
+            })
+          }
         })
       } else {
         await usePostData(`/guest/update/${props.idModal}`, param).then(
