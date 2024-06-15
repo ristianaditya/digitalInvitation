@@ -7,16 +7,6 @@
     >
       <div class="flex min-w-0 flex-1 items-center justify-between gap-x-1.5">
         <div class="flex min-w-0 flex-1 items-stretch gap-1.5">
-          <button
-            type="button"
-            class="focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex flex-shrink-0 items-center gap-x-1.5 rounded-md p-1.5 text-sm font-medium text-gray-700 hover:bg-[#fbf9ff] hover:text-[#49479F] focus:outline-none focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-inset disabled:cursor-not-allowed disabled:opacity-75 lg:hidden dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
-            aria-label="Open sidebar"
-          >
-            <span
-              class="i-heroicons-bars-3-20-solid h-5 w-5 flex-shrink-0"
-              aria-hidden="true"
-            ></span>
-          </button>
           <div class="relative inline-flex w-full text-left rtl:text-right">
             <div
               aria-haspopup="menu"
