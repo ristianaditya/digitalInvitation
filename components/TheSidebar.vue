@@ -131,4 +131,16 @@
   import { NAVIGATION_MENU } from '~/common/constant/navigation'
   import { useActivePage } from '@/store/index'
   const activePage = useActivePage()
+  const invitation = reactive({
+    subs: '',
+  })
+  const router = useRouter()
+  onMounted(async () => {
+    await useGetSession('/user/getSession').then((res) => {
+      invitation.subs = res.data.latest_transaction?.subscribe
+    })
+    if (!!!invitation.subs) {
+      router.push('/#pricing')
+    }
+  })
 </script>

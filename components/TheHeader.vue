@@ -106,9 +106,22 @@
                 >
                   <li>
                     <NuxtLink
-                      to="/Dashboard"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white"
+                      :to="{
+                        path: !!!sessionData.subscribe ? '/' : '/Dashboard',
+                        hash: '#pricing',
+                      }"
+                      class="block px-4 py-2 hover:bg-gray-100"
+                      :class="
+                        !!!sessionData.subscribe
+                          ? 'text-gray-400'
+                          : 'text-gray-700'
+                      "
                       >Dashboard
+                      <span
+                        v-if="!!!sessionData.subscribe"
+                        class="i-heroicons-lock-closed -mb-[3px] ml-2 h-4 w-4 flex-shrink-0"
+                        aria-hidden="true"
+                      ></span>
                     </NuxtLink>
                   </li>
                   <li>

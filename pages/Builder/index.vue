@@ -104,6 +104,9 @@
   const handleBack = () => {
     router.go(-1)
   }
+  const invitation = reactive({
+    subs: '',
+  })
   onMounted(async () => {
     const data = grapesjs.init({
       container: '#gjs',
@@ -178,9 +181,6 @@
           blocks: ['link-block', 'quote', 'text-basic'],
         },
       },
-      // canvas: {
-      //   styles: ['http://localhost:3000/css/temaSatu.css'],
-      // },
       styleManager: { clearProperties: 1 },
       assetManager: {
         assets: [
@@ -215,6 +215,13 @@
       },
     })
     grape.value = data
+
+    await useGetSession('/user/getSession').then((res) => {
+      invitation.subs = res.data.latest_transaction?.subscribe
+    })
+    if (!!!invitation.subs) {
+      router.push('/#pricing')
+    }
   })
   async function save() {
     const param = {

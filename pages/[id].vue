@@ -145,7 +145,7 @@
 
   definePageMeta({
     layout: false,
-    middleware: 'auth',
+    auth: false,
   })
   useHead({
     script: [{ src: 'https://cdn.tailwindcss.com', body: true }],
