@@ -141,6 +141,7 @@
                           'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                         ]"
                         class="text-[#b83f3f]"
+                        @click="openModalDelete(projects_data.id)"
                       >
                         <span
                           class="i-heroicons-trash relative mr-2 h-5 w-5 flex-shrink-0 text-[#b83f3f]"
@@ -171,6 +172,16 @@
       />
     </template>
   </BaseModalForm>
+  <BaseModal
+    :open-modal="state.isOpenDelete"
+    title-modal="Confirm to delete"
+    desc-modal="Are you sure you want to delete your data ? "
+    icon-modal="i-heroicons-exclamation-triangle"
+    text-confirm="Delete"
+    type-modal="danger"
+    @close="state.isOpenDelete = false"
+    @confirm="confirmDelete()"
+  />
   <UNotifications />
 </template>
 <script setup>
@@ -189,6 +200,8 @@
   const state = reactive({
     isOpenForm: false,
     idProjectModal: '',
+    isOpenDelete: false,
+    idItems: '',
   })
 
   function converter(params) {
@@ -219,6 +232,23 @@
   function modalSetting(id) {
     state.isOpenForm = true
     state.idProjectModal = id
+  }
+
+  function openModalDelete(id) {
+    state.idItems = id
+    state.isOpenDelete = true
+  }
+
+  async function confirmDelete() {
+    await usePostData(`/project/destroy/${state.idItems}`)
+    state.isOpenDelete = false
+    stateLoad.value = true
+    await usePostData('/project/getByUserId').then((res) => {
+      if (res.status == 200) {
+        project.value = res._data.projects
+      }
+    })
+    stateLoad.value = false
   }
 
   onMounted(async () => {
