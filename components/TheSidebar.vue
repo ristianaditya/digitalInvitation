@@ -36,38 +36,78 @@
         <div class="flex flex-1 flex-col gap-y-2 overflow-y-auto px-4">
           <ul class="relative !min-h-[auto] !min-w-[auto]">
             <div v-for="navigation in NAVIGATION_MENU" :key="navigation.label">
-              <li tag="li" class="!overflow-visible">
-                <div default-open="true" as="div">
-                  <div as="template">
-                    <div class="flex">
-                      <NuxtLink
-                        :to="navigation.link"
-                        class="focus-visible:before:ring-primary-500 dark:focus-visible:before:ring-primary-400 group relative flex w-full items-center gap-1.5 rounded-md px-2.5 py-3 text-sm font-medium before:absolute before:inset-px before:rounded-md focus:outline-none focus-visible:outline-none focus-visible:before:ring-2 focus-visible:before:ring-inset disabled:cursor-not-allowed disabled:opacity-75 dark:text-white dark:before:bg-gray-800 dark:focus-visible:outline-none"
-                        :class="
-                          navigation.label == activePage.page
-                            ? 'text-[#49479F] before:bg-[#F4F0FD]'
-                            : 'hover:text-[#49479F] hover:before:bg-[#fbf9ff] '
-                        "
-                        draggable="false"
-                      >
-                        <Icon
-                          :name="navigation.icon"
-                          class="relative h-5 w-5 flex-shrink-0 dark:text-white"
+              <div v-if="invitation.role == 'admin'">
+                <li v-if="navigation.admin" tag="li" class="!overflow-visible">
+                  <div default-open="true" as="div">
+                    <div as="template">
+                      <div class="flex">
+                        <NuxtLink
+                          :to="navigation.link"
+                          class="focus-visible:before:ring-primary-500 dark:focus-visible:before:ring-primary-400 group relative flex w-full items-center gap-1.5 rounded-md px-2.5 py-3 text-sm font-medium before:absolute before:inset-px before:rounded-md focus:outline-none focus-visible:outline-none focus-visible:before:ring-2 focus-visible:before:ring-inset disabled:cursor-not-allowed disabled:opacity-75 dark:text-white dark:before:bg-gray-800 dark:focus-visible:outline-none"
                           :class="
                             navigation.label == activePage.page
-                              ? 'text-[#49479F]'
-                              : ''
+                              ? 'text-[#49479F] before:bg-[#F4F0FD]'
+                              : 'hover:text-[#49479F] hover:before:bg-[#fbf9ff] '
                           "
-                        />
-                        <span class="relative truncate text-sm"
-                          ><span class="sr-only"> Current page: </span>
-                          {{ navigation.label }}</span
+                          draggable="false"
                         >
-                      </NuxtLink>
+                          <Icon
+                            :name="navigation.icon"
+                            class="relative h-5 w-5 flex-shrink-0 dark:text-white"
+                            :class="
+                              navigation.label == activePage.page
+                                ? 'text-[#49479F]'
+                                : ''
+                            "
+                          />
+                          <span class="relative truncate text-sm"
+                            ><span class="sr-only"> Current page: </span>
+                            {{ navigation.label }}</span
+                          >
+                        </NuxtLink>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              </div>
+              <div v-else>
+                <li
+                  v-if="navigation.admin == false"
+                  tag="li"
+                  class="!overflow-visible"
+                >
+                  <div default-open="true" as="div">
+                    <div as="template">
+                      <div class="flex">
+                        <NuxtLink
+                          :to="navigation.link"
+                          class="focus-visible:before:ring-primary-500 dark:focus-visible:before:ring-primary-400 group relative flex w-full items-center gap-1.5 rounded-md px-2.5 py-3 text-sm font-medium before:absolute before:inset-px before:rounded-md focus:outline-none focus-visible:outline-none focus-visible:before:ring-2 focus-visible:before:ring-inset disabled:cursor-not-allowed disabled:opacity-75 dark:text-white dark:before:bg-gray-800 dark:focus-visible:outline-none"
+                          :class="
+                            navigation.label == activePage.page
+                              ? 'text-[#49479F] before:bg-[#F4F0FD]'
+                              : 'hover:text-[#49479F] hover:before:bg-[#fbf9ff] '
+                          "
+                          draggable="false"
+                        >
+                          <Icon
+                            :name="navigation.icon"
+                            class="relative h-5 w-5 flex-shrink-0 dark:text-white"
+                            :class="
+                              navigation.label == activePage.page
+                                ? 'text-[#49479F]'
+                                : ''
+                            "
+                          />
+                          <span class="relative truncate text-sm"
+                            ><span class="sr-only"> Current page: </span>
+                            {{ navigation.label }}</span
+                          >
+                        </NuxtLink>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </div>
             </div>
           </ul>
           <div class="flex-1"></div>
@@ -123,13 +163,16 @@
   const activePage = useActivePage()
   const invitation = reactive({
     subs: '',
+    role: 'user',
   })
   const router = useRouter()
   onMounted(async () => {
     await useGetSession('/user/getSession').then((res) => {
       invitation.subs = res.data.latest_transaction?.subscribe
+      invitation.role = res.data.role
+      console.log(invitation.role, 'ini rlenya')
     })
-    if (!!!invitation.subs) {
+    if (!!!invitation.subs && invitation.role != 'admin') {
       router.push('/#pricing')
     }
   })

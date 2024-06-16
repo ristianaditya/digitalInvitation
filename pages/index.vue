@@ -1,6 +1,10 @@
 <template>
   <div
-    v-if="statusUser === 'authenticated' && complateRegis.completion == false"
+    v-if="
+      statusUser === 'authenticated' &&
+      complateRegis.completion == false &&
+      dataUser.role != 'admin'
+    "
   >
     <div class="fixed inset-x-0 bottom-0 z-50 animate-fade-up animate-once">
       <div class="bg-[#49479F]">
@@ -42,7 +46,9 @@
     </div>
   </div>
   <div
-    v-if="dataUser.expired <= 3 && dataUser.expired >= 0"
+    v-if="
+      dataUser.expired <= 3 && dataUser.expired >= 0 && dataUser.role != 'admin'
+    "
     class="fixed inset-x-0 bottom-0 z-50 animate-fade-up animate-once"
   >
     <div class="bg-[#DB5550]">
@@ -108,6 +114,7 @@
 
   const dataUser = reactive({
     expired: 30,
+    role: 'user',
   })
 
   const statusUser = status.value
@@ -139,6 +146,7 @@
       const timeDifference = expired.getTime() - now.getTime()
       const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 24))
       dataUser.expired = dayDifference
+      dataUser.role = res.data.role
     })
   })
 

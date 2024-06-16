@@ -117,18 +117,23 @@
                   <li>
                     <NuxtLink
                       :to="{
-                        path: !!!sessionData.subscribe ? '/' : '/Dashboard',
+                        path:
+                          !!!sessionData.subscribe && dataUser.role != 'admin'
+                            ? '/'
+                            : '/Dashboard',
                         hash: '#pricing',
                       }"
                       class="block px-4 py-2 hover:bg-gray-100"
                       :class="
-                        !!!sessionData.subscribe
+                        !!!sessionData.subscribe && dataUser.role != 'admin'
                           ? 'text-gray-400'
                           : 'text-gray-700'
                       "
                       >Dashboard
                       <span
-                        v-if="!!!sessionData.subscribe"
+                        v-if="
+                          !!!sessionData.subscribe && dataUser.role != 'admin'
+                        "
                         class="i-heroicons-lock-closed -mb-[3px] ml-2 h-4 w-4 flex-shrink-0"
                         aria-hidden="true"
                       ></span>
@@ -233,6 +238,7 @@
     name: '',
     email: '',
     picture: '',
+    role: 'user',
   })
   const isOpen = ref(false)
 
@@ -251,6 +257,7 @@
       dataUser.name = res.data.username
       dataUser.email = res.data.email
       dataUser.picture = res.data.picture
+      dataUser.role = res.data.role
       sessionData.subscribe = res.data.latest_transaction?.subscribe
 
       if (

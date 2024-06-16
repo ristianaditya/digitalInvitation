@@ -109,6 +109,7 @@
   }
   const invitation = reactive({
     subs: '',
+    role: 'user',
   })
   onMounted(async () => {
     const data = grapesjs.init({
@@ -222,8 +223,9 @@
 
     await useGetSession('/user/getSession').then((res) => {
       invitation.subs = res.data.latest_transaction?.subscribe
+      invitation.role = res.data.role
     })
-    if (!!!invitation.subs) {
+    if (!!!invitation.subs && dataUser.role != 'admin') {
       router.push('/#pricing')
     }
   })
