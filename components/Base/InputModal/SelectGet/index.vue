@@ -5,9 +5,10 @@
       {{ desc }}
     </p>
     <div class="relative mb-5 mt-1">
-      <div class="relative">
+      <div class="relative grid grid-cols-8 gap-3">
         <USelectMenu
           v-model="value"
+          class="col-span-7"
           :name="name"
           :options="dataMusic"
           searchable
@@ -22,6 +23,12 @@
             <q>{{ query }}</q> not found
           </template>
         </USelectMenu>
+        <div
+          class="btn btn-circle btn-sm self-center bg-[#F8D075] hover:bg-[#ccaa5a]"
+          @click="openModalForm()"
+        >
+          <Icon name="material-symbols:add" class="text-2xl" />
+        </div>
       </div>
       <p class="mt-2 text-sm text-red-500 dark:text-red-400">
         {{ errorMessage }}
@@ -33,6 +40,22 @@
       <MusicfyPlayer :config="config" />
     </div>
   </UModal>
+  <BaseModalForm
+    :open-modal="state.isOpenForm"
+    title-modal="Form Musics"
+    desc-modal="This form is used to add and update the music list."
+    @close="state.isOpenForm = false"
+  >
+    <template #body>
+      <div>
+        <MusicsForm
+          :id-modal="state.idItems"
+          @close="state.isOpenForm = false"
+          @confirm="confirmSave()"
+        />
+      </div>
+    </template>
+  </BaseModalForm>
 </template>
 <script setup>
   import { useField } from 'vee-validate'
@@ -48,6 +71,12 @@
   const { value, errorMessage } = useField(() => props.name)
 
   const dataMusic = ref()
+
+  const state = reactive({
+    isOpenDelete: false,
+    isOpenForm: false,
+    idItems: '',
+  })
 
   const getMusics = async () => {
     const result = await useGetData('/musics/getMusics')
@@ -74,6 +103,15 @@
       },
     })
     isOpen.value = true
+  }
+
+  async function confirmSave() {
+    state.isOpenForm = false
+  }
+
+  function openModalForm() {
+    state.idItems = ''
+    state.isOpenForm = true
   }
 </script>
 <style>

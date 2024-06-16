@@ -29,9 +29,19 @@
           <li>
             <NuxtLink :to="{ path: '/', hash: '#feature' }">Feature</NuxtLink>
           </li>
-          <li><a>Gallery</a></li>
-          <li><a>Pricing</a></li>
-          <li><a>Login</a></li>
+          <li>
+            <NuxtLink :to="{ path: '/', hash: '#thema' }">Gallery</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink :to="{ path: '/', hash: '#pricing' }">Pricing</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink :to="{ path: '/Dashboard' }">Dashboard</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink :to="{ path: '/Settings' }">Setting</NuxtLink>
+          </li>
+          <li><NuxtLink :to="{ path: '/Login' }">Login</NuxtLink></li>
         </ul>
       </div>
       <NuxtLink to="/">
