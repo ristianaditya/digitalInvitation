@@ -499,6 +499,7 @@ http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
     activePage.create = false
     activePage.child = ' / Guests Settings'
     activePage.formCreate = `/SettingProject/GuestList/form?id=${route.query.id}`
+    activePage.export = false
 
     await useGetData(`/guest/getById/${route.query.id}`).then((res) => {
       listGuest.value = res.data

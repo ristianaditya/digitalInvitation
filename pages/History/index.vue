@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseHeaderNavigation @open="openModalForm()" />
+    <BaseHeaderNavigation @open="handleExport" />
     <UContainer
       v-if="stateLoad"
       class="flex h-[80vh] items-center justify-center text-center"
@@ -19,11 +19,13 @@
               <thead class="thead-light">
                 <tr>
                   <th>No</th>
+                  <th v-if="sessionData.role === 'admin'">Username</th>
+                  <th v-if="sessionData.role === 'admin'">Email</th>
                   <th>Receipt Number</th>
                   <th>Subscribe</th>
                   <th>Price</th>
                   <th>Status</th>
-                  <th>Subscribe Start</th>
+                  <th v-if="sessionData.role === 'user'">Subscribe Start</th>
                   <th>Subscribe Expired</th>
                 </tr>
               </thead>
@@ -31,6 +33,18 @@
                 <tr v-for="history in listHistory" :key="history.id">
                   <td class="text-sm font-normal leading-normal">
                     {{ pageNumber++ }}
+                  </td>
+                  <td
+                    v-if="sessionData.role === 'admin'"
+                    class="text-sm font-normal leading-normal"
+                  >
+                    {{ history.user.username }}
+                  </td>
+                  <td
+                    v-if="sessionData.role === 'admin'"
+                    class="text-sm font-normal leading-normal"
+                  >
+                    {{ history.user.email }}
                   </td>
                   <td class="text-sm font-normal leading-normal">
                     {{ history.id_payment }}
@@ -102,11 +116,14 @@
                       {{ history.status }}
                     </UBadge>
                   </td>
-                  <td class="text-sm font-normal leading-normal">
-                    {{ history.subscribe_start }}
+                  <td
+                    v-if="sessionData.role === 'user'"
+                    class="text-sm font-normal leading-normal"
+                  >
+                    {{ converter(history.subscribe_start) }}
                   </td>
                   <td class="text-sm font-normal leading-normal">
-                    {{ history.subscribe_expired }}
+                    {{ converter(history.subscribe_expired) }}
                   </td>
                 </tr>
               </tbody>
@@ -121,24 +138,76 @@
   import { useActivePage } from '@/store/index'
   import DataTable from 'datatables.net-vue3'
   import DataTablesCore from 'datatables.net'
+  import { useSessionData } from '@/store/index'
+  import { useExportExcel } from '@/composables/useExportExcel'
 
   DataTable.use(DataTablesCore)
+
+  const sessionData = useSessionData()
   const stateLoad = ref(true)
   const listHistory = ref()
+  const dataExport = ref()
   const pageNumber = 1
 
   definePageMeta({
     layout: 'editor-default',
     middleware: 'auth',
   })
+
+  function converter(params) {
+    const utcTime = new Date(params)
+    const days = [
+      'Minggu',
+      'Senin',
+      'Selasa',
+      'Rabu',
+      'Kamis',
+      'Jumat',
+      'Sabtu',
+    ]
+    const months = [
+      'Januari',
+      'Februari',
+      'Maret',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Agustus',
+      'September',
+      'Oktober',
+      'November',
+      'Desember',
+    ]
+
+    let day = days[utcTime.getDay()]
+    let month = months[utcTime.getMonth()]
+    let year = utcTime.getFullYear()
+
+    return `${day}, ${utcTime.getDate()} ${month} ${year}`
+  }
+
+  const { exportToExcel } = useExportExcel()
+  const handleExport = () => {
+    const date = new Date()
+    exportToExcel(
+      dataExport.value,
+      `PAYMENT_${date.getMonth()}_${date.getFullYear()}.xlsx`,
+    )
+  }
+
   onMounted(async () => {
     const activePage = useActivePage()
     activePage.page = 'History Payment'
     activePage.child = ''
     activePage.create = false
+    activePage.export = true
 
     await useGetData('/transaction/historyByUser').then((res) => {
       listHistory.value = res.transaction
+    })
+    await useGetData('/transaction/transactionExport').then((res) => {
+      dataExport.value = res.transaction
     })
     stateLoad.value = false
   })

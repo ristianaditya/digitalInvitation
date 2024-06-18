@@ -7,7 +7,11 @@
     <span class="loading loading-spinner loading-lg text-[#49479F]"></span>
   </UContainer>
   <div v-else>
-    <div class="z-20 grid grid-cols-1 gap-8 md:grid-cols-4">
+    <Dashboard v-if="sessionData.role === 'admin'" />
+    <div
+      v-if="sessionData.role === 'user'"
+      class="z-20 grid grid-cols-1 gap-8 md:grid-cols-4"
+    >
       <div
         v-for="projects_data in project"
         :key="projects_data.id"
@@ -186,7 +190,7 @@
 </template>
 <script setup>
   import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-  import { useActivePage } from '@/store/index'
+  import { useActivePage, useSessionData } from '@/store/index'
   import { usePostData } from '~/composables/useFetchData'
 
   definePageMeta({
@@ -194,6 +198,7 @@
     middleware: 'auth',
   })
 
+  const sessionData = useSessionData()
   const project = ref()
   const stateLoad = ref(true)
   const router = useRouter()
@@ -253,10 +258,16 @@
 
   onMounted(async () => {
     const activePage = useActivePage()
+    const sessionData = useSessionData()
     activePage.page = 'Dashboard'
-    activePage.create = true
+    if (sessionData.role === 'admin') {
+      activePage.create = false
+    } else {
+      activePage.create = true
+    }
     activePage.child = ''
     activePage.formCreate = `/Builder?id=${makeid(25)}`
+    activePage.export = false
 
     await usePostData('/project/getByUserId').then((res) => {
       if (res.status == 200) {

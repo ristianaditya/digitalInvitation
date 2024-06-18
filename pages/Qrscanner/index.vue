@@ -119,6 +119,7 @@
     activePage.page = 'QR Scanner'
     activePage.create = false
     activePage.child = ''
+    activePage.export = false
     devices.value = (await navigator.mediaDevices.enumerateDevices()).filter(
       ({ kind }) => kind === 'videoinput',
     )

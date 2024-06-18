@@ -71,11 +71,7 @@
                 </li>
               </div>
               <div v-else>
-                <li
-                  v-if="navigation.admin == false"
-                  tag="li"
-                  class="!overflow-visible"
-                >
+                <li v-if="navigation.user" tag="li" class="!overflow-visible">
                   <div default-open="true" as="div">
                     <div as="template">
                       <div class="flex">
@@ -160,6 +156,9 @@
 <script setup>
   import { NAVIGATION_MENU } from '~/common/constant/navigation'
   import { useActivePage } from '@/store/index'
+  import { useSessionData } from '@/store/index'
+
+  const sessionData = useSessionData()
   const activePage = useActivePage()
   const invitation = reactive({
     subs: '',
@@ -170,7 +169,7 @@
     await useGetSession('/user/getSession').then((res) => {
       invitation.subs = res.data.latest_transaction?.subscribe
       invitation.role = res.data.role
-      console.log(invitation.role, 'ini rlenya')
+      sessionData.role = res.data.role
     })
     if (!!!invitation.subs && invitation.role != 'admin') {
       router.push('/#pricing')

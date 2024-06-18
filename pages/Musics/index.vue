@@ -234,6 +234,7 @@
     activePage.page = 'Musics'
     activePage.child = ''
     activePage.create = true
+    activePage.export = false
     activePage.formCreate = '/musics/form'
 
     await useGetData('/musics/getMusics').then((res) => {

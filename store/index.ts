@@ -8,12 +8,19 @@ export const useComplateRegis = defineStore('complate-regis', {
 
 export const useSessionData = defineStore('session-data', {
   state: () => {
-    return {  id: '', name: '', email: '' , phone: '', subscribe: '' }
+    return {
+      id: '',
+      name: '',
+      email: '',
+      phone: '',
+      subscribe: '',
+      role: 'user',
+    }
   },
 })
 
 export const useActivePage = defineStore('active-page', {
   state: () => {
-    return { page: '', child: '' , create: true, formCreate: ''}
+    return { page: '', child: '', create: true, formCreate: '', export: false }
   },
 })

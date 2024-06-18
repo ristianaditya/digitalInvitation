@@ -30,6 +30,14 @@
     >
       <Icon name="material-symbols:add" class="text-2xl" />
     </div>
+    <div
+      v-if="sessionData.role === 'admin'"
+      v-show="activePage.export"
+      class="btn btn-sm -mt-[6px] ml-3"
+      @click="openModal()"
+    >
+      <Icon name="vscode-icons:file-type-excel" class="text-2xl" /> Export
+    </div>
   </div>
   <USlideover v-model="isOpen">
     <div class="flex-1 p-4">
@@ -172,7 +180,9 @@
 
 <script setup>
   import { NAVIGATION_MENU } from '~/common/constant/navigation'
-  import { useActivePage } from '@/store/index'
+  import { useActivePage, useSessionData } from '@/store/index'
+
+  const sessionData = useSessionData()
   const activePage = useActivePage()
   const isOpen = ref(false)
   const emit = defineEmits(['open'])

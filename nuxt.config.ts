@@ -16,6 +16,7 @@ export default {
     '@pinia/nuxt',
     '@vee-validate/nuxt',
     'nuxt-musicfyplayer',
+    'nuxt-highcharts',
     [
       '@nuxtjs/google-fonts',
       {
@@ -45,7 +46,7 @@ export default {
     head: {
       title: 'Invite Plus',
       link: [
-        { rel: 'icon', type: 'image/svg', href: '/logos/main_icon.svg' },
+        { rel: 'icon', type: 'image/svg', href: '/logos/iconMain.svg' },
         {
           rel: 'stylesheet',
           href: 'https://unpkg.com/grapesjs/dist/css/grapes.min.css',
