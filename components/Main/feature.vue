@@ -199,9 +199,5 @@
   </div>
 </template>
 <script setup>
-  useHead({
-    link: [
-      { rel: 'stylesheet', href: 'http://localhost:3000/css/feature.css' },
-    ],
-  })
+  import('~/assets/css/feature.css')
 </script>

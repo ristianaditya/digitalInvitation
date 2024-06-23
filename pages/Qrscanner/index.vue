@@ -67,9 +67,22 @@
     middleware: 'auth',
   })
 
-  const result = ref('')
   const toast = useToast()
+  const result = ref('')
   const failed = ref(false)
+  const selectedDevice = ref(null)
+  const devices = ref([])
+  const barcodeFormats = ref({
+    qr_code: true,
+  })
+  const trackFunctionSelected = ref({ text: 'outline', value: paintCenterText })
+  const selectedBarcodeFormats = computed(() => {
+    return Object.keys(barcodeFormats.value).filter(
+      (format) => barcodeFormats.value[format],
+    )
+  })
+  const error = ref('')
+
   async function onDetect(detectedCodes) {
     const valueString = detectedCodes.map((code) => code.rawValue)[0]
     const parts = valueString.split('/')
@@ -109,11 +122,6 @@
     }
   }
 
-  /*** select camera ***/
-
-  const selectedDevice = ref(null)
-  const devices = ref([])
-
   onMounted(async () => {
     const activePage = useActivePage()
     activePage.page = 'QR Scanner'
@@ -150,21 +158,6 @@
       ctx.fillText(parts[1], centerX, centerY)
     }
   }
-
-  const trackFunctionSelected = ref({ text: 'outline', value: paintCenterText })
-
-  /*** barcode formats ***/
-
-  const barcodeFormats = ref({
-    qr_code: true,
-  })
-  const selectedBarcodeFormats = computed(() => {
-    return Object.keys(barcodeFormats.value).filter(
-      (format) => barcodeFormats.value[format],
-    )
-  })
-
-  const error = ref('')
 
   function onError(err) {
     error.value = `[${err.name}]: `
