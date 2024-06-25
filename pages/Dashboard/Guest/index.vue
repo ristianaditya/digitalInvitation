@@ -193,7 +193,7 @@
                             }),
                               copy(
                                 `${guest?.invitation?.clipboard}
-${config.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
+${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                               )
                           "
                         >
@@ -219,7 +219,7 @@ ${config.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                             sendMessage(
                               guest?.no_phone,
                               guest?.invitation?.clipboard,
-                              `${config.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
+                              `${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                             )
                           "
                         >
@@ -417,7 +417,7 @@ ${config.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
   import { useClipboard } from '@vueuse/core'
   import { useGetData } from '~/composables/useFetchData'
 
-  const config = useRuntimeConfig()
+  const configRuntime = useRuntimeConfig()
   const toast = useToast()
   const { copy } = useClipboard()
   const listGuest = ref()
