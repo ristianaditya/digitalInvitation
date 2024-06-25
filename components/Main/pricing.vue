@@ -481,6 +481,7 @@
   }
 
   async function createPaymentLink(name, price, pay) {
+    const config = useRuntimeConfig()
     if (statusUser === 'authenticated') {
       try {
         if (complateRegis.completion) {
@@ -502,7 +503,7 @@
               },
               callbacks: {
                 // finish: `https://f947-180-244-133-178.ngrok-free.app/?id=${sessionData.id}&type=${name}&price=${price}`,
-                finish: `${process.env.BASE_URL}/?id=${sessionData.id}&type=${name}&price=${price}`,
+                finish: `${config.public.baseURL}/?id=${sessionData.id}&type=${name}&price=${price}`,
               },
             }
             await usePostData(`/transaction/showToken`, {
