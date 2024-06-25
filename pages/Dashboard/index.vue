@@ -34,7 +34,8 @@
               loading="lazy"
               scrolling="no"
               :src="
-                `${process.env.BASE_URL}/Builder/Preview?id=` + projects_data.id
+                `${config.public.baseURL}/Builder/Preview?id=` +
+                projects_data.id
               "
               tabindex="-1"
               title="Tailwind alpine component - Modal Sidebar"
@@ -198,6 +199,7 @@
     middleware: 'auth',
   })
 
+  const config = useRuntimeConfig()
   const sessionData = useSessionData()
   const project = ref()
   const stateLoad = ref(true)

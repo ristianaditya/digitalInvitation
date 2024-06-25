@@ -193,7 +193,7 @@
                             }),
                               copy(
                                 `${guest?.invitation?.clipboard}
-${process.env.BASE_URL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
+${config.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                               )
                           "
                         >
@@ -219,7 +219,7 @@ ${process.env.BASE_URL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                             sendMessage(
                               guest?.no_phone,
                               guest?.invitation?.clipboard,
-                              `${process.env.BASE_URL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
+                              `${config.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                             )
                           "
                         >
@@ -416,6 +416,8 @@ ${process.env.BASE_URL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
   import DataTablesCore from 'datatables.net'
   import { useClipboard } from '@vueuse/core'
   import { useGetData } from '~/composables/useFetchData'
+
+  const config = useRuntimeConfig()
   const toast = useToast()
   const { copy } = useClipboard()
   const listGuest = ref()
