@@ -71,6 +71,10 @@ export default NuxtAuthHandler({
 
       return Promise.resolve(session)
     },
+    redirect: async ({ url, baseUrl }) => {
+      // Redirect user to a specific URL after login
+      return Promise.resolve(config.public.baseURL)
+    },
   },
   providers: [
     CredentialsProvider.default({
