@@ -502,7 +502,7 @@
               },
               callbacks: {
                 // finish: `https://f947-180-244-133-178.ngrok-free.app/?id=${sessionData.id}&type=${name}&price=${price}`,
-                finish: `http://localhost:3000/?id=${sessionData.id}&type=${name}&price=${price}`,
+                finish: `${process.env.BASE_URL}/?id=${sessionData.id}&type=${name}&price=${price}`,
               },
             }
             await usePostData(`/transaction/showToken`, {

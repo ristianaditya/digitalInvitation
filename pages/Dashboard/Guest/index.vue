@@ -193,7 +193,7 @@
                             }),
                               copy(
                                 `${guest?.invitation?.clipboard}
-http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
+${process.env.BASE_URL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                               )
                           "
                         >
@@ -219,7 +219,7 @@ http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                             sendMessage(
                               guest?.no_phone,
                               guest?.invitation?.clipboard,
-                              `http://localhost:3000/${guest?.invitation?.invite_link}?to=${guest?.name}`,
+                              `${process.env.BASE_URL}/${guest?.invitation?.invite_link}?to=${guest?.name}`,
                             )
                           "
                         >

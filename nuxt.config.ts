@@ -38,6 +38,7 @@ export default {
   // ],
   auth: {
     globalAppMiddleware: true,
+    baseUrl: process.env.BASE_URL,
   },
   colorMode: {
     preference: 'light',
@@ -75,6 +76,7 @@ export default {
     // Public keys that are exposed to the client
     public: {
       baseURLService: process.env.BASE_URL_API_SERVICE,
+      baseURL: process.env.BASE_URL,
     },
   },
 }

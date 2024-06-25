@@ -34,7 +34,7 @@
               loading="lazy"
               scrolling="no"
               :src="
-                'http://localhost:3000/Builder/Preview?id=' + projects_data.id
+                `${process.env.BASE_URL}/Builder/Preview?id=` + projects_data.id
               "
               tabindex="-1"
               title="Tailwind alpine component - Modal Sidebar"
