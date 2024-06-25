@@ -38,7 +38,6 @@ export default {
   // ],
   auth: {
     globalAppMiddleware: true,
-    baseUrl: process.env.BASE_URL,
   },
   colorMode: {
     preference: 'light',

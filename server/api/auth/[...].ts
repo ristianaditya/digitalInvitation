@@ -1,6 +1,5 @@
 import { NuxtAuthHandler } from '#auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-const config = useRuntimeConfig()
 
 async function refreshAccessToken(refreshToken: {
   accessToken: string
@@ -43,9 +42,9 @@ async function refreshAccessToken(refreshToken: {
 export default NuxtAuthHandler({
   secret: process.env.AUTH_ORIGIN,
   pages: {
-    signIn: `${config.public.baseURL}/login`,
-    error: `${config.public.baseURL}/login?validation=true`,
-    signOut: `${config.public.baseURL}/login`,
+    signIn: `https://inviteplus.netlify.app/login`,
+    error: `https://inviteplus.netlify.app/login?validation=true`,
+    signOut: `https://inviteplus.netlify.app/login`,
   },
   callbacks: {
     jwt: async ({ token, account, user }) => {
@@ -71,6 +70,10 @@ export default NuxtAuthHandler({
 
       return Promise.resolve(session)
     },
+    redirect: async () => {
+      // Redirect user to a specific URL after login
+      return Promise.resolve('https://inviteplus.netlify.app/')
+    },
   },
   providers: [
     CredentialsProvider.default({
@@ -90,7 +93,6 @@ export default NuxtAuthHandler({
               },
             },
           )
-          console.log(user, 'ini user')
 
           const dataUser = {
             ...user.data,
