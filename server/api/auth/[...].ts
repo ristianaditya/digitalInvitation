@@ -42,9 +42,9 @@ async function refreshAccessToken(refreshToken: {
 export default NuxtAuthHandler({
   secret: process.env.AUTH_ORIGIN,
   pages: {
-    signIn: `https://inviteplus.netlify.app/login`,
-    error: `https://inviteplus.netlify.app/login?validation=true`,
-    signOut: `https://inviteplus.netlify.app/login`,
+    signIn: `https://inviteplus.my.id/login`,
+    error: `https://inviteplus.my.id/login?validation=true`,
+    signOut: `https://inviteplus.my.id/login`,
   },
   callbacks: {
     jwt: async ({ token, account, user }) => {
@@ -72,7 +72,7 @@ export default NuxtAuthHandler({
     },
     redirect: async () => {
       // Redirect user to a specific URL after login
-      return Promise.resolve('https://inviteplus.netlify.app/')
+      return Promise.resolve('https://inviteplus.my.id/')
     },
   },
   providers: [
