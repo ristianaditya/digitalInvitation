@@ -263,14 +263,16 @@
   })
 
   function onFileChange(e) {
-    const input = e.target
+    const input = e[0]
 
-    if (!input.files?.length) {
+    console.log(URL.createObjectURL(input), 'ini paa yaaa')
+
+    if (!e.length) {
       return
     }
 
-    dataUser.picture = URL.createObjectURL(input.files[0])
-    dataUser.file = input.files[0]
+    dataUser.picture = URL.createObjectURL(input)
+    dataUser.file = input
 
     stateImage.value = true
   }
