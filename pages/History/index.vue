@@ -147,7 +147,7 @@
   const stateLoad = ref(true)
   const listHistory = ref()
   const dataExport = ref()
-  const pageNumber = 1
+  const pageNumber = ref(1)
 
   definePageMeta({
     layout: 'editor-default',
