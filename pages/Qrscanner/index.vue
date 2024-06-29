@@ -21,7 +21,11 @@
         </div>
         <UBadge color="blue" variant="subtle">Registered Guests</UBadge>
       </div>
-      <div v-else role="alert" class="alert mb-4 w-full shadow-lg">
+      <div
+        v-else
+        role="alert"
+        class="alert mb-4 grid w-full grid-cols-12 gap-0 shadow-lg"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -35,7 +39,7 @@
             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           ></path>
         </svg>
-        <div>
+        <div class="col-start-2 col-end-12 text-left">
           <h3 class="font-bold">Scan QR Code Below !</h3>
           <div class="text-xs">
             Wait until the guest name appears on the camera
@@ -43,6 +47,15 @@
         </div>
       </div>
     </div>
+    <select
+      v-model="selectedDevice"
+      class="select select-bordered select-sm mb-3 w-40 max-w-xs"
+    >
+      <option disabled selected>Normal</option>
+      <option v-for="device in devices" :key="device.label" :value="device">
+        {{ device.label }}
+      </option>
+    </select>
     <div class="h-[70vh] max-w-md md:w-full">
       <qrcode-stream
         v-if="selectedDevice !== null"
