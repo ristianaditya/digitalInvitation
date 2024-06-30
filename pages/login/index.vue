@@ -151,12 +151,6 @@
   })
   const pageError = ref(false)
 
-  const queryString = window.location.search
-  const urlParams = new URLSearchParams(queryString)
-  const isError = urlParams.get('validation')
-
-  pageError.value = isError
-
   const { handleSubmit } = useForm({
     validationSchema: yup.object({
       email: yup.string().required().email(),
@@ -167,7 +161,18 @@
   const onSubmit = handleSubmit(async (values) => {
     try {
       login.status = true
-      await signIn('credentials', values, { callbackUrl: '/' })
+      const { error, url } = await signIn('credentials', {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      })
+      if (error) {
+        pageError.value = true
+        login.status = false
+      } else {
+        login.status = false
+        return navigateTo(url, { external: true })
+      }
     } catch (error) {
       console.log('message', error)
     }
