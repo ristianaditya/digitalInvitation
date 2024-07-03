@@ -265,8 +265,6 @@
   function onFileChange(e) {
     const input = e[0]
 
-    console.log(URL.createObjectURL(input), 'ini paa yaaa')
-
     if (!e.length) {
       return
     }

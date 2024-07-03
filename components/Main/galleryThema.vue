@@ -41,7 +41,7 @@
             <div class="h-fit w-full">
               <div class="relative w-full rounded-xl">
                 <img
-                  src="/thema/gallery/themaSatu.png"
+                  :src="`/thema/gallery/${templates.src}`"
                   class="3xl:h-full 3xl:w-full mb-3 h-[210px] w-full rounded-xl object-cover"
                   alt=""
                 />

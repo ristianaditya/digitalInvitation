@@ -37,11 +37,10 @@
       <UButton
         icon="i-heroicons-folder-arrow-down"
         size="lg"
-        class="mr-2 justify-self-end rounded-2xl bg-[#F8D075] text-[#705a27] hover:bg-[#2b2a61]"
-        :class="!!saveInvitation ? '' : 'btn-disabled'"
+        class="mr-2 justify-self-end rounded-2xl bg-[#F8D075] text-[#705a27] hover:bg-[#cca852]"
         color="blue"
         variant="solid"
-        @click="save()"
+        @click="handleClick()"
       />
       <UButton
         icon="i-heroicons-folder-arrow-down"
@@ -111,6 +110,9 @@
     subs: '',
     role: 'user',
   })
+  function handleClick() {
+    router.push(`/SettingProject?id=${route.query.id}`)
+  }
   onMounted(async () => {
     const data = grapesjs.init({
       container: '#gjs',
@@ -219,6 +221,7 @@
       },
     })
     data.setStyle(styleTemplate[0].style)
+
     grape.value = data
 
     await useGetSession('/user/getSession').then((res) => {

@@ -195,6 +195,7 @@
       })
     }
     stateLoading.value = false
+    emit('confirm')
   }
 
   const handleSubmit = async () => {

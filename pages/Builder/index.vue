@@ -37,11 +37,10 @@
       <UButton
         icon="i-heroicons-folder-arrow-down"
         size="lg"
-        class="mr-2 justify-self-end rounded-2xl bg-[#F8D075] text-[#705a27] hover:bg-[#2b2a61]"
-        :class="!!saveInvitation ? '' : 'btn-disabled'"
+        class="mr-2 justify-self-end rounded-2xl bg-[#F8D075] text-[#705a27] hover:bg-[#cca852]"
         color="blue"
         variant="solid"
-        @click="save()"
+        @click="handleClick()"
       />
       <UButton
         icon="i-heroicons-folder-arrow-down"
@@ -225,6 +224,9 @@
       router.push('/#pricing')
     }
   })
+  function handleClick() {
+    router.push(`/SettingProject?id=${route.query.id}`)
+  }
   async function save() {
     const param = {
       id: route.query.id,
