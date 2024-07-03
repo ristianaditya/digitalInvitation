@@ -7,31 +7,6 @@
         <h4 class="text-navy-700 ml-1 text-3xl font-bold dark:text-white">
           Gallery
         </h4>
-        <ul
-          class="mt-4 flex items-center justify-between md:mt-0 md:justify-center md:!gap-5 2xl:!gap-12"
-        >
-          <li>
-            <a
-              class="text-brand-500 hover:text-brand-500 text-base font-medium dark:text-white"
-              href=" "
-              >Wedding</a
-            >
-          </li>
-          <li>
-            <a
-              class="text-brand-500 hover:text-brand-500 text-base font-medium dark:text-white"
-              href=" "
-              >Anniversary</a
-            >
-          </li>
-          <li>
-            <a
-              class="text-brand-500 hover:text-brand-500 text-base font-medium dark:text-white"
-              href=" "
-              >Graduation</a
-            >
-          </li>
-        </ul>
       </div>
       <div class="z-20 grid grid-cols-1 gap-5 md:grid-cols-4">
         <div v-for="templates in TEMPLATES" :key="templates.name">
@@ -53,9 +28,11 @@
                   <p class="text-navy-700 text-lg font-bold">
                     {{ templates.label }}
                   </p>
-                  <p class="mt-1 text-sm font-medium text-gray-600 md:mt-2">
-                    01/11/2020
-                  </p>
+                  <div v-if="templates.premium" class="mt-2 text-sm">
+                    <UBadge color="blue" variant="subtle">
+                      <div class="text-sm">Premium</div></UBadge
+                    >
+                  </div>
                 </div>
                 <div class="flex flex-row-reverse md:mt-2 lg:mt-0">
                   <button
