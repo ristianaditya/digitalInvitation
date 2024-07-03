@@ -82,7 +82,7 @@
                 class="i-heroicons-pencil-square relative h-5 w-5 flex-shrink-0 text-[#705a27]"
               ></span>
             </NuxtLink>
-            <Menu as="div">
+            <Menu as="div" class="z-50">
               <div>
                 <MenuButton
                   class="btn btn-sm inline-flex w-full justify-center rounded-xl bg-[#49479F] text-sm font-medium text-white hover:bg-[#252463] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"

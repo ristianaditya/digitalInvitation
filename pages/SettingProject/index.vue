@@ -24,3 +24,6 @@
     router.push('/dashboard')
   }
 </script>
+<style>
+  @import url('~/assets/css/table.css');
+</style>
