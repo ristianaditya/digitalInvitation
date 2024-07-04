@@ -1,4 +1,4 @@
-export default defineNuxtConfig({
+export default {
   ssr: false,
   devtools: { enabled: true },
   postcss: {
@@ -78,4 +78,4 @@ export default defineNuxtConfig({
       baseURL: process.env.BASE_URL,
     },
   },
-})
+}

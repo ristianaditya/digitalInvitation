@@ -214,6 +214,7 @@
 
   const { signOut, status, getSession } = useAuth()
 
+  const config = useRuntimeConfig()
   const sessionData = useSessionData()
   const session = await getSession()
   const statusUser = status.value
@@ -231,6 +232,11 @@
   }
 
   async function handleSignOut() {
+    const { error } = await signOut({ redirect: false })
+    if (error) {
+    } else {
+      return navigateTo(config.public.baseURL, { external: true })
+    }
     await signOut()
   }
 

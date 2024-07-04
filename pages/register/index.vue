@@ -4,7 +4,7 @@
       class="fle-col flex min-h-screen items-center justify-center px-4 py-6"
     >
       <div class="grid w-full max-w-6xl items-center gap-10 md:grid-cols-2">
-        <div class="max-md:text-center max-[500px]:w-80">
+        <div class="ml-auto mr-auto max-md:text-center max-[500px]:w-80">
           <div
             class="col-start-1 row-start-1 mb-6 mt-12 h-7 animate-fade-up leading-7 animate-delay-1000 animate-normal animate-ease-linear"
             aria-hidden="true"
@@ -68,7 +68,7 @@
             ></rect>
           </svg>
           <div
-            class="relative w-full max-w-md space-y-6 rounded-3xl bg-white p-12 font-inter shadow-[5px_5px_0px_0px_rgb(210,198,250)] max-md:mx-auto max-[500px]:w-80 md:ml-auto"
+            class="relative w-full max-w-md space-y-6 rounded-3xl bg-white p-12 font-inter shadow-[5px_5px_0px_0px_rgb(210,198,250)] max-md:mx-auto max-[500px]:w-[21rem] max-[500px]:p-8 md:ml-auto md:mr-auto"
           >
             <div class="relative flex flex-col text-black">
               <h4
