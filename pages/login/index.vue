@@ -1,10 +1,10 @@
 <template>
-  <div class="bg-[#F4F0FD] font-[sans-serif] text-[#333]">
+  <div class="w-screen bg-[#F4F0FD] font-[sans-serif] text-[#333]">
     <div
-      class="fle-col flex min-h-screen items-center justify-center px-4 py-6"
+      class="flex min-h-screen flex-col items-center justify-center px-4 py-6"
     >
       <div class="grid w-full max-w-6xl items-center gap-10 md:grid-cols-2">
-        <div class="max-md:text-center">
+        <div class="max-md:text-center max-[500px]:w-80">
           <div
             class="col-start-1 row-start-1 mb-6 mt-12 h-7 animate-fade-up leading-7 animate-delay-1000 animate-normal animate-ease-linear"
             aria-hidden="true"
@@ -17,7 +17,7 @@
             </a>
           </div>
           <h1
-            class="h1 col-start-1 row-start-2 mb-2 mt-2 max-w-[36rem] text-4xl font-extrabold leading-8 tracking-tight text-slate-900 sm:text-[3.7rem] xl:max-w-[50.5rem]"
+            class="h1 col-start-1 row-start-2 mb-2 mt-2 max-w-[30rem] text-4xl font-extrabold leading-8 tracking-tight text-slate-900 sm:text-[3.7rem]"
           >
             Join and Feel
             <span class="text-[#faa6b0]">Ease</span>
@@ -68,7 +68,7 @@
             ></rect>
           </svg>
           <div
-            class="relative w-full max-w-md space-y-6 rounded-3xl bg-white p-12 font-inter shadow-[5px_5px_0px_0px_rgb(210,198,250)] max-md:mx-auto md:ml-auto"
+            class="relative w-full max-w-md space-y-6 rounded-3xl bg-white p-12 font-inter shadow-[5px_5px_0px_0px_rgb(210,198,250)] max-md:mx-auto max-[500px]:w-80 md:ml-auto md:mr-auto"
           >
             <div class="relative flex flex-col text-black">
               <h4
@@ -135,6 +135,7 @@
 <script setup>
   import { useForm } from 'vee-validate'
   import * as yup from 'yup'
+  const config = useRuntimeConfig()
 
   definePageMeta({
     layout: false,
@@ -161,7 +162,7 @@
   const onSubmit = handleSubmit(async (values) => {
     try {
       login.status = true
-      const { error, url } = await signIn('credentials', {
+      const { error } = await signIn('credentials', {
         email: values.email,
         password: values.password,
         redirect: false,
@@ -171,7 +172,7 @@
         login.status = false
       } else {
         login.status = false
-        return navigateTo(url, { external: true })
+        return navigateTo(config.public.baseURL, { external: true })
       }
     } catch (error) {
       console.log('message', error)
@@ -179,7 +180,7 @@
   })
 </script>
 
-<style>
+<style scoped>
   .h1 {
     font-weight: 800;
     line-height: 1;

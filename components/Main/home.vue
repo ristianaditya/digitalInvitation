@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="relative -mt-[12rem] h-full overflow-hidden pt-[5.75rem]">
-      <div class="grid h-screen">
+      <div class="grid h-fit md:h-screen">
         <div
           class="relative mx-auto grid w-screen max-w-[1630px] place-self-center px-14 pt-20"
         >
