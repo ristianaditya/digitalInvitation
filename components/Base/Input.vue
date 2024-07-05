@@ -5,7 +5,7 @@
     {{ label }} <a class="text-red-600">*</a>
   </h6>
   <label
-    class="input input-bordered flex items-center gap-2 border-2"
+    class="input input-bordered flex items-center gap-2 border-2 bg-white"
     :class="errorMessage ? 'input-error' : 'border-[#F4F0FD]'"
   >
     <Icon :name="icon" />

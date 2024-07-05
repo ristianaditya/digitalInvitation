@@ -51,8 +51,8 @@
       v-model="selectedDevice"
       class="select select-bordered select-sm mb-3 w-40 max-w-xs"
     >
-      <option disabled selected>Normal</option>
-      <option v-for="device in devices" :key="device.label" :value="device">
+      <option disabled selected>Select Camera</option>
+      <option v-for="device in devices" :key="device.deviceId" :value="device">
         {{ device.label }}
       </option>
     </select>
@@ -141,9 +141,21 @@
     activePage.create = false
     activePage.child = ''
     activePage.export = false
-    devices.value = (await navigator.mediaDevices.enumerateDevices()).filter(
-      ({ kind }) => kind === 'videoinput',
-    )
+    const videoDevices = (
+      await navigator.mediaDevices.enumerateDevices()
+    ).filter(({ kind }) => kind === 'videoinput')
+
+    devices.value = videoDevices.map((device) => {
+      const label = device.label.toLowerCase()
+      return {
+        deviceId: device.deviceId,
+        label: label.includes('back')
+          ? 'Back Camera'
+          : label.includes('front')
+            ? 'Front Camera'
+            : 'Camera',
+      }
+    })
 
     if (devices.value.length > 0) {
       selectedDevice.value = devices.value[0]

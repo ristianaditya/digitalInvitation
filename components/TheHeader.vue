@@ -21,7 +21,7 @@
         </div>
         <ul
           tabindex="0"
-          class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
+          class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-slate-50 p-2 shadow"
         >
           <li>
             <NuxtLink :to="{ path: '/', hash: '#home' }">Home</NuxtLink>
@@ -35,13 +35,18 @@
           <li>
             <NuxtLink :to="{ path: '/', hash: '#pricing' }">Pricing</NuxtLink>
           </li>
-          <li>
-            <NuxtLink :to="{ path: '/Dashboard' }">Dashboard</NuxtLink>
-          </li>
-          <li>
-            <NuxtLink :to="{ path: '/Settings' }">Setting</NuxtLink>
-          </li>
-          <li><NuxtLink :to="{ path: '/Login' }">Login</NuxtLink></li>
+          <div v-if="statusUser === 'authenticated'">
+            <li>
+              <NuxtLink :to="{ path: '/Dashboard' }">Dashboard</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink :to="{ path: '/Settings' }">Setting</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink @click="openModal">Logout</NuxtLink>
+            </li>
+          </div>
+          <li v-else><NuxtLink :to="{ path: '/Login' }">Login</NuxtLink></li>
         </ul>
       </div>
       <NuxtLink to="/">
@@ -54,6 +59,27 @@
       </NuxtLink>
     </div>
     <div class="navbar-end">
+      <div
+        v-if="statusUser === 'authenticated'"
+        class="mr-5 mt-1 flex lg:hidden"
+      >
+        <NuxtLink to="/settings">
+          <div tabindex="0" role="button">
+            <div
+              class="avatar placeholder online h-8 w-8 rounded-full p-[1px] ring-2 ring-[#D2C6FA]"
+            >
+              <div class="w-16 rounded-full bg-neutral text-neutral-content">
+                <UAvatar
+                  :alt="dataUser.name"
+                  :src="dataUser.picture"
+                  size="sm"
+                />
+              </div>
+            </div>
+          </div>
+        </NuxtLink>
+      </div>
+
       <div class="navbar-center hidden lg:flex">
         <ul
           class="style-none menu menu-horizontal mt-4 flex flex-col gap-3 rounded-lg border border-gray-100 bg-gray-50 p-4 px-1 text-lg md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 rtl:space-x-reverse"
@@ -151,7 +177,7 @@
                   <a
                     class="block cursor-pointer px-4 py-2 text-sm text-[#FAA6B0] hover:bg-gray-100 dark:text-gray-200 dark:hover:text-white"
                     @click="openModal"
-                    >Sign out</a
+                    >Logout</a
                   >
                 </div>
               </div>

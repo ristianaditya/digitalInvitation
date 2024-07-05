@@ -1,6 +1,11 @@
 export default {
   ssr: false,
   devtools: { enabled: true },
+  colorMode: {
+    preference: 'light',
+    fallback: 'light',
+    classSuffix: '',
+  },
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -38,9 +43,6 @@ export default {
   // ],
   auth: {
     globalAppMiddleware: true,
-  },
-  colorMode: {
-    preference: 'light',
   },
   app: {
     head: {
