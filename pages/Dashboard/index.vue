@@ -15,7 +15,7 @@
       <div
         v-for="projects_data in project"
         :key="projects_data.id"
-        class="card card-compact h-full w-full bg-base-100 bg-white shadow-xl"
+        class="card card-compact h-full w-full bg-white shadow-xl"
       >
         <figure class="absolute h-52">
           <div class="ItemPreviewIframe-module_root-EQCRj" data-loaded="true">
@@ -62,7 +62,7 @@
         </NuxtLink>
         <div class="card-body">
           <h2 class="card-title">
-            {{ projects_data.project_name }}
+            <div class="text-slate-800">{{ projects_data.project_name }}</div>
             <UBadge
               v-if="projects_data.invitation?.status == 'publish'"
               color="red"
@@ -70,7 +70,7 @@
               >LIVE</UBadge
             >
           </h2>
-          <p class="-mt-1">
+          <p class="-mt-1 text-slate-800">
             Last updated {{ converter(projects_data.updated_at) }}
           </p>
           <div class="card-actions mt-2 flex justify-end">

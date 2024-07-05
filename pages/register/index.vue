@@ -167,7 +167,7 @@
     validationSchema: yup.object({
       username: yup.string().required().min(3).max(16),
       email: yup.string().required().email(),
-      password: yup.string().required().min(6),
+      password: yup.string().required().min(8),
       password_confirmation: yup
         .string()
         .required('password confirmation is a required field')
@@ -180,7 +180,7 @@
     alertState.loading = true
 
     try {
-      await usePostRegis('/register', values).then((res: any) => {
+      await usePostRegis('/register', values).then((res) => {
         if (res.status == 422) {
           alertState.show = true
           alertState.message = res._data.username || res._data.email

@@ -5,7 +5,7 @@
   >
     <span class="loading loading-spinner loading-lg text-[#49479F]"></span>
   </UContainer>
-  <UContainer v-else class="mt-12 max-w-4xl font-inter">
+  <UContainer v-else class="mt-12 max-w-4xl bg-white font-inter">
     <Form
       :initial-values="dataUser"
       :validation-schema="schema"

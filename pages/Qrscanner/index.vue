@@ -148,21 +148,9 @@
     activePage.create = false
     activePage.child = ''
     activePage.export = false
-    const videoDevices = (
-      await navigator.mediaDevices.enumerateDevices()
-    ).filter(({ kind }) => kind === 'videoinput')
-
-    devices.value = videoDevices.map((device) => {
-      const label = device.label.toLowerCase()
-      return {
-        deviceId: device.deviceId,
-        label: label.includes('back')
-          ? 'Back Camera'
-          : label.includes('front')
-            ? 'Front Camera'
-            : 'Camera',
-      }
-    })
+    devices.value = (await navigator.mediaDevices.enumerateDevices()).filter(
+      ({ kind }) => kind === 'videoinput',
+    )
     if (devices.value.length > 0) {
       selectedDevice.value = devices.value[0]
     }

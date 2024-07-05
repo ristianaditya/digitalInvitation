@@ -21,7 +21,7 @@
         </div>
         <ul
           tabindex="0"
-          class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-slate-50 p-2 shadow"
+          class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-slate-50 p-2 text-slate-700 shadow"
         >
           <li>
             <NuxtLink :to="{ path: '/', hash: '#home' }">Home</NuxtLink>

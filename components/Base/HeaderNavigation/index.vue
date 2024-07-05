@@ -3,7 +3,7 @@
     <div
       tabindex="0"
       role="button"
-      class="mr-4 lg:hidden"
+      class="mr-4 text-slate-800 lg:hidden"
       @click="isOpen = true"
     >
       <svg
@@ -20,7 +20,7 @@
         />
       </svg>
     </div>
-    <p class="-mt-2 mb-7 text-[22px] font-[600]">
+    <p class="-mt-2 mb-7 text-[22px] font-[600] text-slate-800">
       {{ activePage.page }}{{ activePage.child }}
     </p>
     <div
@@ -53,10 +53,10 @@
       />
       <Placeholder class="h-screen" />
       <div
-        class="relative h-screen flex-shrink-0 flex-col items-stretch border-b border-gray-200 lg:flex lg:w-[250px] lg:border-b-0 lg:border-r dark:border-gray-800"
+        class="relative h-screen flex-shrink-0 flex-col items-stretch border-b border-gray-200 lg:flex lg:w-[250px] lg:border-b-0 lg:border-r"
       >
         <div
-          class="flex h-[4rem] min-w-0 flex-shrink-0 items-center gap-x-4 border-b !border-transparent border-gray-200 px-4 dark:border-gray-800"
+          class="flex h-[4rem] min-w-0 flex-shrink-0 items-center gap-x-4 border-b !border-transparent border-gray-200 px-4"
         >
           <div
             class="flex min-w-0 flex-1 items-center justify-between gap-x-1.5"
@@ -71,7 +71,7 @@
                 >
                   <button
                     type="button"
-                    class="focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex w-full flex-shrink-0 items-center gap-x-1.5 rounded-md px-2.5 py-3 text-sm font-medium text-gray-700 hover:bg-[#fbf9ff] hover:text-[#49479F] focus:outline-none focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-inset disabled:cursor-not-allowed disabled:opacity-75 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
+                    class="focus-visible:ring-primary-500 inline-flex w-full flex-shrink-0 items-center gap-x-1.5 rounded-md px-2.5 py-3 text-sm font-medium text-gray-700 hover:bg-[#fbf9ff] hover:text-[#49479F] focus:outline-none focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-inset disabled:cursor-not-allowed disabled:opacity-75"
                   >
                     <img
                       src="/logos/pink_logo.svg"
@@ -100,7 +100,7 @@
                         <div class="flex">
                           <NuxtLink
                             :to="navigation.link"
-                            class="focus-visible:before:ring-primary-500 dark:focus-visible:before:ring-primary-400 group relative flex w-full items-center gap-1.5 rounded-md px-2.5 py-3 text-sm font-medium before:absolute before:inset-px before:rounded-md focus:outline-none focus-visible:outline-none focus-visible:before:ring-2 focus-visible:before:ring-inset disabled:cursor-not-allowed disabled:opacity-75 dark:text-white dark:before:bg-gray-800 dark:focus-visible:outline-none"
+                            class="focus-visible:before:ring-primary-500 group relative flex w-full items-center gap-1.5 rounded-md px-2.5 py-3 text-sm font-medium text-slate-600 before:absolute before:inset-px before:rounded-md focus:outline-none focus-visible:outline-none focus-visible:before:ring-2 focus-visible:before:ring-inset disabled:cursor-not-allowed disabled:opacity-75"
                             :class="
                               navigation.label == activePage.page
                                 ? 'text-[#49479F] before:bg-[#F4F0FD]'
@@ -110,7 +110,7 @@
                           >
                             <Icon
                               :name="navigation.icon"
-                              class="relative h-5 w-5 flex-shrink-0 dark:text-white"
+                              class="relative h-5 w-5 flex-shrink-0"
                               :class="
                                 navigation.label == activePage.page
                                   ? 'text-[#49479F]'
@@ -133,7 +133,7 @@
                 class="align-center sticky bottom-0 flex w-full flex-row items-center text-center"
               >
                 <div
-                  class="flex w-full border-t border-solid border-gray-200 dark:border-gray-800"
+                  class="flex w-full border-t border-solid border-gray-200"
                 ></div>
               </div>
             </div>
@@ -150,7 +150,7 @@
                 >
                   <NuxtLink
                     to="/"
-                    class="focus-visible:before:ring-primary-500 dark:focus-visible:before:ring-primary-400 group relative flex w-full items-center gap-1.5 rounded-md px-2.5 py-3 text-sm font-medium text-gray-500 before:absolute before:inset-px before:rounded-md before:bg-[#49479F] hover:before:bg-[#393963] focus:outline-none focus-visible:outline-none focus-visible:before:ring-2 focus-visible:before:ring-inset disabled:cursor-not-allowed disabled:opacity-75 dark:text-gray-400 dark:hover:text-white dark:focus-visible:outline-none"
+                    class="focus-visible:before:ring-primary-500 group relative flex w-full items-center gap-1.5 rounded-md px-2.5 py-3 text-sm font-medium text-gray-500 before:absolute before:inset-px before:rounded-md before:bg-[#49479F] hover:before:bg-[#393963] focus:outline-none focus-visible:outline-none focus-visible:before:ring-2 focus-visible:before:ring-inset disabled:cursor-not-allowed disabled:opacity-75"
                     draggable="false"
                     href="/settings/members"
                   >
@@ -170,7 +170,7 @@
           class="group absolute inset-y-0 -right-[5px] z-50 hidden h-full w-[9px] cursor-col-resize select-none bg-transparent md:block"
         >
           <div
-            class="absolute inset-x-0 mx-auto h-full w-px transition duration-200 group-hover:bg-gray-300 dark:group-hover:bg-gray-700"
+            class="absolute inset-x-0 mx-auto h-full w-px transition duration-200 group-hover:bg-gray-300"
           ></div>
         </div>
       </div>
