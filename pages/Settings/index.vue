@@ -11,9 +11,7 @@
       :validation-schema="schema"
       @submit="onSubmit"
     >
-      <div
-        class="mb-6 space-y-6 divide-y divide-gray-200 *:pt-6 dark:divide-gray-800"
-      >
+      <div class="mb-6 space-y-6 divide-y divide-gray-200 bg-white *:pt-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-start gap-4">
             <div>

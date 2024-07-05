@@ -1,6 +1,12 @@
 <template>
   <BaseHeaderNavigation />
-  <div class="h-[70vh] max-w-md md:w-full">
+  <UContainer
+    v-if="stateLoad"
+    class="flex h-[80vh] items-center justify-center text-center"
+  >
+    <span class="loading loading-spinner loading-lg text-[#49479F]"></span>
+  </UContainer>
+  <div v-else class="h-[70vh] max-w-md md:w-full">
     <p class="error">{{ error }}</p>
 
     <div
@@ -85,6 +91,7 @@
   const failed = ref(false)
   const selectedDevice = ref(null)
   const devices = ref([])
+  const stateLoad = ref(true)
   const barcodeFormats = ref({
     qr_code: true,
   })
@@ -156,10 +163,10 @@
             : 'Camera',
       }
     })
-
     if (devices.value.length > 0) {
       selectedDevice.value = devices.value[0]
     }
+    stateLoad.value = false
   })
 
   function paintCenterText(detectedCodes, ctx) {

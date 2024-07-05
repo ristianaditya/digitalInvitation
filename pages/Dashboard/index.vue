@@ -15,7 +15,7 @@
       <div
         v-for="projects_data in project"
         :key="projects_data.id"
-        class="card card-compact h-full w-full bg-base-100 shadow-xl"
+        class="card card-compact h-full w-full bg-base-100 bg-white shadow-xl"
       >
         <figure class="absolute h-52">
           <div class="ItemPreviewIframe-module_root-EQCRj" data-loaded="true">
