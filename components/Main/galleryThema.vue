@@ -26,6 +26,11 @@
                     class="absolute left-0 top-0 m-2 rounded-full bg-[#FAA6B0] px-2 text-center text-sm font-medium text-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]"
                     >Premium</span
                   >
+                  <span
+                    v-else
+                    class="absolute left-0 top-0 m-2 rounded-full bg-[#49479F] px-2 text-center text-sm font-medium text-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]"
+                    >Free</span
+                  >
                 </div>
                 <div
                   class="mb-5 mt-3 flex items-center justify-between px-1 md:items-start"

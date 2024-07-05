@@ -101,6 +101,7 @@
   const grape = ref()
   const saveInvitation = ref()
   const project = ref('Project Untitled')
+  const projectLength = ref(0)
 
   const router = useRouter()
   const handleBack = () => {
@@ -228,11 +229,37 @@
       invitation.subs = res.data.latest_transaction?.subscribe
       invitation.role = res.data.role
     })
+
+    await usePostData('/project/getByUserId').then((res) => {
+      if (res.status == 200) {
+        projectLength.value = res._data.projects.length
+      }
+    })
+
     if (!!!invitation.subs && dataUser.role != 'admin') {
       router.push('/#pricing')
     }
   })
   async function save() {
+    if (invitation.subs == 'DigitalDazzle' && projectLength.value < 1) {
+      handleSave()
+    } else if (invitation.subs == 'SparkleSend' && projectLength.value < 2) {
+      handleSave()
+    } else if (
+      invitation.subs == 'DigitalDreamscape' &&
+      projectLength.value < 4
+    ) {
+      handleSave()
+    } else {
+      toast.add({
+        icon: 'i-heroicons-exclamation-triangle',
+        title: 'The Project is Full',
+        color: 'orange',
+        timeout: 3000,
+      })
+    }
+  }
+  async function handleSave() {
     const param = {
       id: route.query.id,
       editor: saveInvitation.value,

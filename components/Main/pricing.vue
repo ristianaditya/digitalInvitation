@@ -70,13 +70,13 @@
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-grey.svg" />
                 <span class="ml-3"
-                  >Countdown <span class="text-black">Timer</span></span
+                  >Make <span class="text-black">1 Invitation</span></span
                 >
               </li>
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-grey.svg" />
                 <span class="ml-3"
-                  ><span class="text-black">Map </span>location</span
+                  ><span class="text-black">Free </span>Invitations</span
                 >
               </li>
               <li class="mb-2 flex text-lg">
@@ -130,12 +130,14 @@
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-white.svg" />
                 <span class="ml-3"
-                  >Unlimited <span class="text-white">Photo & Video</span></span
+                  >Make <span class="text-white">2 Invitations</span></span
                 >
               </li>
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-white.svg" />
-                <span class="ml-3"><span class="text-white">RSVP</span></span>
+                <span class="ml-3"
+                  >Premium<span class="text-white"> Invitations</span></span
+                >
               </li>
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-white.svg" />
@@ -201,13 +203,13 @@
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-grey.svg" />
                 <span class="ml-3">
-                  <span class="text-black">Send Gifts </span></span
+                  Make<span class="text-black"> 4 Invitations </span></span
                 >
               </li>
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-grey.svg" />
                 <span class="ml-3">
-                  <span class="text-black">Shareblast </span></span
+                  Premium<span class="text-black"> Invitations </span></span
                 >
               </li>
               <li class="mb-2 flex text-lg">
