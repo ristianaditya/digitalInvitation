@@ -129,6 +129,7 @@
             <div>
               <Rsvp
                 :id-modal="route.query.to"
+                :link="route.params.id"
                 @close="state.isOpenForm = false"
                 @confirm="confirmSave()"
               />
@@ -137,6 +138,7 @@
         </BaseModalForm>
       </div>
     </div>
+    <UNotifications />
   </div>
 </template>
 <script setup>
@@ -184,7 +186,9 @@
     codeGuest.value = `${invite_link}/${name}`
     state.isOpenQrForm = true
   }
-
+  function confirmSave() {
+    state.isOpenForm = false
+  }
   function playMusic() {
     if (!beep) {
       beep = new Audio(invitation.musicSrc)

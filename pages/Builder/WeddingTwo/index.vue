@@ -225,14 +225,16 @@
       invitation.subs = res.data.latest_transaction?.subscribe
       invitation.role = res.data.role
     })
-    if (!!!invitation.subs && dataUser.role != 'admin') {
-      router.push('/#pricing')
-    }
+
     await usePostData('/project/getByUserId').then((res) => {
       if (res.status == 200) {
         projectLength.value = res._data.projects.length
       }
     })
+
+    if (!!!invitation.subs && dataUser.role != 'admin') {
+      router.push('/#pricing')
+    }
   })
   function handleClick() {
     router.push(`/SettingProject?id=${route.query.id}`)
