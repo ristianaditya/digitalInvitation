@@ -63,9 +63,7 @@
             <dt class="text-2xl font-bold text-[#CB8954]">
               {{ listGuestStats?.total_greetings || 0 }}
             </dt>
-            <dd class="text-sm font-medium text-[#CB8954]">
-              Greetings & Prayers
-            </dd>
+            <dd class="text-sm font-medium text-[#CB8954]">Wishes</dd>
           </div>
           <Icon
             name="game-icons:nothing-to-say"
