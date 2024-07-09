@@ -14,6 +14,13 @@ export const NAVIGATION_MENU = [
     user: false,
   },
   {
+    link: '/assetsEditor',
+    label: 'Assets Editor',
+    icon: 'solar:gallery-wide-bold',
+    admin: true,
+    user: false,
+  },
+  {
     link: '/history',
     label: 'History Payment',
     icon: 'akar-icons:history',

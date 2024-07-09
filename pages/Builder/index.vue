@@ -98,6 +98,8 @@
   const grape = ref()
   const saveInvitation = ref()
   const project = ref('Project Untitled')
+  const dataAssets = ref()
+  const projectLength = ref(0)
 
   const router = useRouter()
   const handleBack = () => {
@@ -108,6 +110,14 @@
     role: 'user',
   })
   onMounted(async () => {
+    const result = await useGetData('/assets/getAssets')
+    dataAssets.value = result.assets.map((data) => ({
+      type: data.type,
+      width: 100,
+      height: 100,
+      name: data.file_name,
+      src: data.file_path,
+    }))
     const data = grapesjs.init({
       container: '#gjs',
       height: '95vh',
@@ -183,22 +193,7 @@
       },
       styleManager: { clearProperties: 1 },
       assetManager: {
-        assets: [
-          {
-            type: 'image',
-            width: 100,
-            height: 100,
-            name: 'gambar 1',
-            src: 'https://placehold.co/600x400.png',
-          },
-          {
-            type: 'image',
-            width: 100,
-            height: 100,
-            name: 'gambar2',
-            src: 'https://placehold.co/1800x900.png',
-          },
-        ],
+        assets: dataAssets.value,
       },
     })
     data.Storage.add('remote', {
@@ -220,6 +215,11 @@
       invitation.subs = res.data.latest_transaction?.subscribe
       invitation.role = res.data.role
     })
+    await usePostData('/project/getByUserId').then((res) => {
+      if (res.status == 200) {
+        projectLength.value = res._data.projects.length
+      }
+    })
     if (!!!invitation.subs && dataUser.role != 'admin') {
       router.push('/#pricing')
     }
@@ -228,6 +228,25 @@
     router.push(`/SettingProject?id=${route.query.id}`)
   }
   async function save() {
+    if (invitation.subs == 'DigitalDazzle' && projectLength.value < 1) {
+      handleSave()
+    } else if (invitation.subs == 'SparkleSend' && projectLength.value < 2) {
+      handleSave()
+    } else if (
+      invitation.subs == 'DigitalDreamscape' &&
+      projectLength.value < 4
+    ) {
+      handleSave()
+    } else {
+      toast.add({
+        icon: 'i-heroicons-exclamation-triangle',
+        title: 'The Project is Full',
+        color: 'orange',
+        timeout: 3000,
+      })
+    }
+  }
+  async function handleSave() {
     const param = {
       id: route.query.id,
       editor: saveInvitation.value,

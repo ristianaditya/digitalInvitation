@@ -102,6 +102,7 @@
   const saveInvitation = ref()
   const project = ref('Project Untitled')
   const projectLength = ref(0)
+  const dataAssets = ref()
 
   const router = useRouter()
   const handleBack = () => {
@@ -112,6 +113,14 @@
     role: 'user',
   })
   onMounted(async () => {
+    const result = await useGetData('/assets/getAssets')
+    dataAssets.value = result.assets.map((data) => ({
+      type: data.type,
+      width: 100,
+      height: 100,
+      name: data.file_name,
+      src: data.file_path,
+    }))
     const data = grapesjs.init({
       container: '#gjs',
       height: '95vh',
@@ -187,22 +196,7 @@
       },
       styleManager: { clearProperties: 1 },
       assetManager: {
-        assets: [
-          {
-            type: 'image',
-            width: 100,
-            height: 100,
-            name: 'gambar 1',
-            src: 'https://placehold.co/600x400.png',
-          },
-          {
-            type: 'image',
-            width: 100,
-            height: 100,
-            name: 'gambar2',
-            src: 'https://placehold.co/1800x900.png',
-          },
-        ],
+        assets: dataAssets.value,
       },
     })
     data.Storage.add('remote', {

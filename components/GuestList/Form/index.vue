@@ -42,7 +42,12 @@
         class="w-28 justify-center bg-[#49479F] text-white hover:bg-[#2b2a61]"
         variant="solid"
         @click="handleSubmit"
-        >Save Changes
+      >
+        <div v-if="stateLoading">
+          <span class="loading loading-spinner mr-2 h-3 w-3"></span>
+          Saving..
+        </div>
+        <div v-else>Save Changes</div>
       </UButton>
       <UButton
         color="blue"

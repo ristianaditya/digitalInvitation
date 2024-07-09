@@ -20,10 +20,6 @@
             type="submit"
             class="linear hover:bg-brand-800 active:bg-brand-700 inline-flex items-center justify-center rounded-[12px] bg-[#49479F] px-4 py-3 text-sm font-medium text-white transition duration-200"
           >
-            <span
-              v-show="stateLoading"
-              class="loading loading-spinner mr-2"
-            ></span>
             Save Changes
           </button>
           <BaseInputModal
@@ -79,7 +75,12 @@
           class="w-28 justify-center bg-[#49479F] text-white hover:bg-[#2b2a61]"
           variant="solid"
           @click="handleSubmit"
-          >Save Changes
+        >
+          <div v-if="stateLoading">
+            <span class="loading loading-spinner mr-2 h-3 w-3"></span>
+            Saving..
+          </div>
+          <div v-else>Save Changes</div>
         </UButton>
         <UButton
           color="blue"
