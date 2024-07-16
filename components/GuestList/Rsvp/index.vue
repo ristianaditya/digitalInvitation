@@ -3,6 +3,7 @@
     <div class="mt-10 flex">
       <p class="-mt-2 mb-4 text-[22px] font-[600]">List RSVP</p>
       <Icon
+        v-if="sessionData.subscribe == 'DigitalDazzle'"
         name="lets-icons:lock-duotone"
         class="-mt-1 ml-1 h-6 w-6 text-[#741841]"
       />
