@@ -1,77 +1,7 @@
 <template>
   <div>
     <BaseHeaderNavigation @open="openModalForm()" />
-    <div
-      class="mb-7 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-4"
-    >
-      <div
-        class="group flex flex-col overflow-hidden rounded-2xl bg-pink-50 transition hover:bg-pink-100 active:bg-pink-50"
-      >
-        <div class="flex grow items-center justify-between p-6">
-          <div>
-            <dt class="text-2xl font-bold text-[#CD6996]">
-              {{ listGuestStats?.total_guests || 0 }}
-            </dt>
-            <dd class="text-sm font-medium text-[#CD6996]">Guests</dd>
-          </div>
-          <Icon
-            name="fluent:guest-12-filled"
-            class="h-10 w-10 text-[#CD6996]"
-          />
-        </div>
-      </div>
-
-      <div
-        class="group flex flex-col overflow-hidden rounded-2xl bg-sky-50 transition hover:bg-sky-100 active:bg-sky-50"
-      >
-        <div class="flex grow items-center justify-between p-6">
-          <div>
-            <dt class="text-2xl font-bold text-[#5AB5E1]">
-              {{ listGuestStats?.total_attended || 0 }}
-            </dt>
-            <dd class="text-sm font-medium text-[#5AB5E1]">Guests</dd>
-          </div>
-          <Icon
-            name="icon-park-twotone:folder-success"
-            class="h-10 w-10 text-[#5AB5E1]"
-          />
-        </div>
-      </div>
-
-      <div
-        class="group flex flex-col overflow-hidden rounded-2xl bg-purple-50 transition hover:bg-purple-100 active:bg-purple-50"
-      >
-        <div class="flex grow items-center justify-between p-6">
-          <div>
-            <dt class="text-2xl font-bold text-[#49479F]">
-              {{ listGuestStats?.total_not_attended || 0 }}
-            </dt>
-            <dd class="text-sm font-medium text-[#49479F]">Absent</dd>
-          </div>
-          <Icon
-            name="icon-park-twotone:folder-failed"
-            class="h-10 w-10 text-[#49479F]"
-          />
-        </div>
-      </div>
-
-      <div
-        class="group flex flex-col overflow-hidden rounded-2xl bg-orange-50 transition hover:bg-orange-100 active:bg-orange-50"
-      >
-        <div class="flex grow items-center justify-between p-6">
-          <div>
-            <dt class="text-2xl font-bold text-[#CB8954]">
-              {{ listGuestStats?.total_greetings || 0 }}
-            </dt>
-            <dd class="text-sm font-medium text-[#CB8954]">Wishes</dd>
-          </div>
-          <Icon
-            name="game-icons:nothing-to-say"
-            class="h-10 w-10 text-[#CB8954]"
-          />
-        </div>
-      </div>
-    </div>
+    <GuestListCount />
     <div class="mt-10 flex">
       <p class="-mt-2 mb-4 text-[22px] font-[600]">List Guest</p>
       <div
@@ -277,92 +207,7 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
         </div>
       </UModal>
     </div>
-    <div class="mt-10 flex">
-      <p class="-mt-2 mb-4 text-[22px] font-[600]">List RSVP</p>
-    </div>
-    <div v-if="stateLoadRsvp" class="w-full max-w-full">
-      <div
-        class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border"
-      >
-        <div class="table-responsive">
-          <DataTable
-            class="table-flush content-table table display text-slate-500"
-          >
-            <thead class="thead-light">
-              <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Greeting</th>
-                <th>RSVP Attendance</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </DataTable>
-        </div>
-      </div>
-    </div>
-    <div v-else class="w-full max-w-full">
-      <div
-        class="shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 bg-white bg-clip-border"
-      >
-        <div class="table-responsive">
-          <DataTable
-            class="table-flush content-table table display text-slate-500"
-          >
-            <thead class="thead-light">
-              <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Greeting</th>
-                <th>RSVP Attendance</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="rsvp in listRsvp" :key="rsvp.id">
-                <td class="text-sm font-normal leading-normal">
-                  {{ pageNumberRsvp++ }}
-                </td>
-                <td class="text-sm font-normal leading-normal">
-                  {{ rsvp?.guest?.name }}
-                </td>
-                <td class="text-sm font-normal leading-normal">
-                  {{ rsvp.greeting }}
-                </td>
-                <td class="text-sm font-normal leading-normal">
-                  <UBadge
-                    v-if="rsvp.attendance == 'attended'"
-                    color="green"
-                    variant="soft"
-                    size="lg"
-                    class="text-md bg-green-100 text-[10px] font-bold"
-                  >
-                    ATTENDED
-                  </UBadge>
-                  <UBadge
-                    v-else-if="rsvp.attendance == 'absent'"
-                    color="red"
-                    variant="soft"
-                    size="lg"
-                    class="text-md bg-red-100 text-[10px] font-bold"
-                  >
-                    ABSENT
-                  </UBadge>
-                  <UBadge
-                    v-else-if="rsvp.attendance == 'unconfirmed'"
-                    color="orange"
-                    variant="soft"
-                    size="lg"
-                    class="text-md bg-orange-100 text-[10px] font-bold"
-                  >
-                    UNCONFIRMED
-                  </UBadge>
-                </td>
-              </tr>
-            </tbody>
-          </DataTable>
-        </div>
-      </div>
-    </div>
+    <GuestListRsvp />
     <BaseModal
       :open-modal="state.isOpenDelete"
       title-modal="Confirm to delete"
@@ -419,17 +264,9 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
   const toast = useToast()
   const { copy } = useClipboard()
   const listGuest = ref()
-  const listRsvp = ref()
-  const listGuestStats = reactive({
-    total_guests: '',
-    total_attended: '',
-    total_not_attended: '',
-    total_greetings: '',
-  })
   const stateLoad = ref(true)
   const stateLoadRsvp = ref(true)
   const pageNumber = ref(1)
-  const pageNumberRsvp = ref(1)
   const isOpen = ref(false)
   const config = ref()
   const route = useRoute()
@@ -500,18 +337,8 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
     activePage.child = ' / Guests Settings'
     activePage.formCreate = `/SettingProject/GuestList/form?id=${route.query.id}`
     activePage.export = false
-
     await useGetData(`/guest/getById/${route.query.id}`).then((res) => {
       listGuest.value = res.data
-    })
-    await useGetData(`/rsvp/getById/${route.query.id}`).then((res) => {
-      listRsvp.value = res.data
-    })
-    await useGetData(`/guest/guestStats/${route.query.id}`).then((res) => {
-      listGuestStats.total_guests = res.data.total_guests
-      listGuestStats.total_attended = res.data.total_attended
-      listGuestStats.total_not_attended = res.data.total_not_attended
-      listGuestStats.total_greetings = res.data.total_greetings
     })
     stateLoadRsvp.value = false
     stateLoad.value = false
