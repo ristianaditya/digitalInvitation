@@ -11,6 +11,12 @@
         <Icon name="material-symbols:add" class="text-2xl" />
       </div>
       <div
+        class="btn btn-circle btn-sm -mt-[6px] ml-3 bg-[#D2C6FA] hover:bg-[#afa0e0]"
+        @click="openModalImport()"
+      >
+        <Icon name="lets-icons:import-duotone-line" class="text-2xl" />
+      </div>
+      <div
         class="btn btn-sm -mt-[6px] ml-3 bg-[#FAA6B0] hover:bg-[#FAA6B0]"
         @click="openModalClipboard()"
       >
@@ -235,6 +241,22 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
       </template>
     </BaseModalForm>
     <BaseModalForm
+      :open-modal="state.isOpenImport"
+      title-modal="Import Guest"
+      desc-modal="Import Invited Guest Data List."
+      @close="state.isOpenImport = false"
+    >
+      <template #body>
+        <div>
+          <GuestListImportGuest
+            :id-modal="route.query.id"
+            @close="state.isOpenImport = false"
+            @confirm="confirmSaveImport()"
+          />
+        </div>
+      </template>
+    </BaseModalForm>
+    <BaseModalForm
       :open-modal="state.isOpenClipboard"
       title-modal="Form Invitation Messages"
       desc-modal="Create a text clipboard for invitation messages."
@@ -245,7 +267,7 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
           <GuestListClipboard
             :id-modal="route.query.id"
             @close="state.isOpenClipboard = false"
-            @confirm="confirmSave()"
+            @confirm="confirmSaveClipboard()"
           />
         </div>
       </template>
@@ -276,6 +298,7 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
     idItems: '',
     isOpenForm: false,
     isOpenClipboard: false,
+    isOpenImport: false,
   })
 
   function openModalForm() {
@@ -285,6 +308,10 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
 
   function openModalClipboard() {
     state.isOpenClipboard = true
+  }
+
+  function openModalImport() {
+    state.isOpenImport = true
   }
 
   function openEditModalForm(id) {
@@ -312,6 +339,26 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
   async function confirmSave() {
     stateLoad.value = true
     state.isOpenForm = false
+    pageNumber.value = 1
+    await useGetData(`/guest/getById/${route.query.id}`).then((res) => {
+      listGuest.value = res.data
+    })
+    stateLoad.value = false
+  }
+
+  async function confirmSaveImport() {
+    stateLoad.value = true
+    state.isOpenImport = false
+    pageNumber.value = 1
+    await useGetData(`/guest/getById/${route.query.id}`).then((res) => {
+      listGuest.value = res.data
+    })
+    stateLoad.value = false
+  }
+
+  async function confirmSaveClipboard() {
+    stateLoad.value = true
+    state.isOpenClipboard = false
     pageNumber.value = 1
     await useGetData(`/guest/getById/${route.query.id}`).then((res) => {
       listGuest.value = res.data
