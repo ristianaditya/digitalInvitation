@@ -140,6 +140,7 @@
     try {
       if (!!dataGuest.excel) {
         await useFormUpload(`/guest/import`, formData).then((res) => {
+          console.log({ res })
           if (res.status == 200) {
             toast.add({
               icon: 'i-heroicons-check-circle',
