@@ -124,14 +124,17 @@
                   />
                 </div>
                 <button
-                  class="mt-16 inline-flex w-full select-none items-center justify-center rounded-lg bg-[#49479F] px-6 py-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  class="btn btn-ghost mt-16 inline-flex w-full select-none items-center justify-center rounded-lg bg-[#49479F] px-6 py-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:bg-[#39387c] hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="submit"
                 >
-                  <span
-                    v-show="alertState.loading"
-                    class="loading loading-spinner mr-2"
-                  ></span>
-                  Register
+                  <div
+                    v-if="alertState.loading"
+                    class="align-center -mt-1 flex items-center"
+                  >
+                    <span class="loading loading-spinner mr-2"></span>
+                    Register
+                  </div>
+                  <div v-else>Register</div>
                 </button>
               </form>
             </div>
@@ -143,7 +146,7 @@
   <UNotifications />
 </template>
 
-<script setup lang="ts">
+<script setup>
   import { useForm } from 'vee-validate'
   import * as yup from 'yup'
   import { usePostRegis } from '~/composables/useFetchData'

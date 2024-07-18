@@ -198,6 +198,6 @@
     </div>
   </div>
 </template>
-<script setup>
-  import('~/assets/css/feature.css')
-</script>
+<style>
+  @import url('~/assets/css/feature.css');
+</style>

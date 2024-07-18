@@ -42,7 +42,7 @@
                   </div>
                   <div class="flex flex-row-reverse md:mt-2 lg:mt-0">
                     <button
-                      class="linear hover:bg-brand-800 active:bg-brand-700 rounded-[15px] bg-[#49479F] px-4 py-2 text-sm font-medium text-white transition duration-200"
+                      class="linear btn btn-ghost btn-sm h-8 rounded-[10px] bg-[#49479F] px-4 py-1 text-sm font-medium text-white transition duration-200 hover:bg-[#2a2975] active:bg-[#2a2975]"
                       @click="handleClick(templates.name)"
                     >
                       Select

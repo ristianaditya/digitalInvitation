@@ -169,7 +169,7 @@
                   </li>
                 </ul>
                 <button
-                  class="mt-6 inline-flex w-full justify-center rounded-lg bg-[#49479F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#3a3980] focus:outline-none focus:ring-4 focus:ring-purple-300 dark:bg-[#49479F] dark:hover:bg-[#49479F] dark:focus:ring-[#3a3980]"
+                  class="btn btn-ghost mt-6 inline-flex w-full justify-center rounded-lg bg-[#49479F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#3a3980] focus:outline-none focus:ring-4 focus:ring-purple-300 dark:bg-[#49479F] dark:hover:bg-[#49479F] dark:focus:ring-[#3a3980]"
                   @click="confirmModal"
                 >
                   Select

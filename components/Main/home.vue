@@ -32,8 +32,10 @@
           <div
             class="col-start-1 row-start-4 mt-10 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
           >
-            <!-- :to="`/Builder?id=${makeid(30)}`" -->
-            <a class="group relative inline-block text-sm" @click="openModal">
+            <a
+              class="group btn btn-ghost relative inline-block px-0 text-sm hover:bg-transparent"
+              @click="openModal"
+            >
               <span
                 class="inline-flex w-full cursor-pointer items-center justify-center rounded-full border border-transparent bg-[#F8D075] px-6 py-4 font-inter text-base font-bold leading-6 text-slate-900 hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-[#fdd26d] focus:ring-offset-2 md:w-auto"
               >
@@ -44,7 +46,7 @@
             <a
               href="https://api.whatsapp.com/send?phone=6282129140149&text=Hello saya pengguna baru apakah kamu bisa menjelaskan tentang invitePlus ?"
               target="_blank"
-              class="group relative inline-block text-sm"
+              class="group btn btn-ghost relative inline-block px-0 text-sm hover:bg-transparent"
             >
               <span
                 class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-[#D2C6FA] px-6 py-4 font-inter text-base font-bold leading-6 text-slate-900 hover:bg-[#b7a3fa] focus:outline-none focus:ring-2 focus:ring-[#b7a3fa] focus:ring-offset-2 md:w-auto"

@@ -17,21 +17,21 @@
             <div>
               <p class="font-semibold text-gray-900 dark:text-white">Profile</p>
               <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                This information will be displayed publicly so be careful what
-                you share.
+                Complete your profile details. This information will be publicly
+                visible, so choose what you share wisely.
               </p>
             </div>
           </div>
           <div class="flex flex-wrap items-center gap-1.5">
             <button
               type="submit"
-              class="linear hover:bg-brand-800 active:bg-brand-700 inline-flex items-center justify-center rounded-[12px] bg-[#49479F] px-4 py-3 text-sm font-medium text-white transition duration-200"
+              class="linear hover:bg-brand-800 active:bg-brand-700 btn btn-ghost inline-flex items-center justify-center rounded-[12px] bg-[#49479F] px-4 py-3 text-sm text-sm font-medium text-white transition duration-200 hover:bg-[#3a3980]"
             >
-              <span
-                v-show="stateLoading"
-                class="loading loading-spinner mr-2"
-              ></span>
-              Save Changes
+              <div v-if="stateLoading">
+                <span class="loading loading-spinner mr-2 h-3 w-3"></span>
+                Saving..
+              </div>
+              <div v-else>Save Changes</div>
             </button>
           </div>
         </div>
@@ -40,14 +40,14 @@
           type="text"
           label="Name"
           icon="i-heroicons-user"
-          desc="Will appear on receipts, invoices, and other communication."
+          desc="Enter your full name. This will appear on receipts, invoices, and other official communications."
         />
         <BaseInputAdmin
           name="email"
           type="email"
           label="Email"
           icon="i-heroicons-envelope"
-          desc="Used to sign in, for email receipts and product updates."
+          desc="Provide your email address. We'll use this for account login, sending receipts, and sharing product updates."
         />
         <BaseInputAdmin
           name="username"
@@ -56,42 +56,57 @@
           icon="i-heroicons-user-circle"
           desc="Your unique username for logging in and your profile URL."
         />
-        <UFormGroup
-          name="picture"
-          label="Avatar"
-          class="grid grid-cols-2 gap-2"
-          help="JPG, GIF or PNG. 1MB Max."
-          :ui="{ container: 'flex flex-wrap items-center gap-3', help: 'mt-0' }"
-        >
-          <UAvatar :src="dataUser.picture" alt="picture" size="lg" />
-
-          <UButton
-            label="Choose"
-            color="white"
-            size="md"
-            @click="onFileClick"
-          />
-
-          <UInput
-            ref="fileRef"
-            type="file"
-            class="hidden"
-            accept=".jpg, .jpeg, .png, .gif"
-            @change="onFileChange"
-          />
-        </UFormGroup>
+        <div class="grid grid-cols-2 items-center gap-2 font-inter">
+          <div>
+            <div
+              class="flex content-center items-center justify-between text-sm"
+            >
+              <label class="block font-bold text-gray-700 after:ms-0.5"
+                >Avatar</label
+              >
+            </div>
+            <p class="text-sm text-gray-500">
+              Upload a profile picture to represent you across our platform.
+            </p>
+          </div>
+          <UFormGroup
+            name="picture"
+            class="flex"
+            help="JPG, GIF or PNG. 1MB Max."
+            :ui="{
+              container: 'flex flex-wrap items-center gap-3',
+              help: 'mt-0',
+            }"
+          >
+            <div class="mb-2 flex flex-row">
+              <UAvatar :src="dataUser.picture" alt="picture" size="lg" />
+              <div
+                class="btn btn-outline btn-sm ml-2 self-center text-gray-500 outline-gray-500 hover:bg-transparent hover:text-gray-600"
+                @click="onFileClick"
+              >
+                Choose
+              </div>
+            </div>
+            <UInput
+              ref="fileRef"
+              type="file"
+              class="hidden"
+              accept=".jpg, .jpeg, .png, .gif"
+              @change="onFileChange"
+            />
+          </UFormGroup>
+        </div>
         <BaseInputAdmin
           name="no_phone"
           type="text"
           label="Number Phone"
           icon="i-heroicons-phone"
-          desc="Your unique username for logging in and your profile URL."
+          desc="Add your contact number for account security and communication purposes."
         />
         <BaseInputSelect
           name="gender"
           label="Gender"
-          desc="Your unique username for logging in and your profile
-              URL."
+          desc="Share your gender identity if you're comfortable. This helps us personalize your experience."
           placeholder="Select Gender"
           :listdata="people"
         />
@@ -102,13 +117,11 @@
               hyperlinked."
         />
         <div class="grid grid-cols-2 gap-2">
-          <div class="">
+          <div>
             <div
               class="flex content-center items-center justify-between text-sm"
             >
-              <label
-                for="password_new"
-                class="block font-medium text-gray-700 dark:text-gray-200"
+              <label class="block font-bold text-gray-700" for="password_new"
                 >Password</label
               >
             </div>
@@ -116,7 +129,7 @@
               Confirm your current password before setting a new one.
             </p>
           </div>
-          <div class="">
+          <div>
             <div class="relative">
               <input
                 id="password"

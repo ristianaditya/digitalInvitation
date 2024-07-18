@@ -2,11 +2,9 @@
   <div class="grid grid-cols-2 gap-2">
     <div>
       <div class="flex content-center items-center justify-between text-sm">
-        <label
-          for="aUkbh3TvCg_690"
-          class="block font-medium text-gray-700 dark:text-gray-200"
-          >{{ label }}</label
-        >
+        <label class="block font-bold text-gray-700 after:ms-0.5">{{
+          label
+        }}</label>
       </div>
       <p class="text-sm text-gray-500 dark:text-gray-400">{{ desc }}</p>
     </div>

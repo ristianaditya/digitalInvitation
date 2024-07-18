@@ -70,7 +70,7 @@
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-grey.svg" />
                 <span class="ml-3"
-                  >Make <span class="text-black">1 Invitation</span></span
+                  >Create <span class="text-black">1 Invitation</span></span
                 >
               </li>
               <li class="mb-2 flex text-lg">
@@ -82,13 +82,13 @@
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-grey.svg" />
                 <span class="ml-3"
-                  ><span class="text-black">Event</span> Information</span
+                  ><span class="text-black">Guest </span> management</span
                 >
               </li>
               <li class="flex text-lg">
                 <img src="/icons/check-grey.svg" />
                 <span class="ml-3"
-                  >Send <span class="text-black">message</span></span
+                  >QR <span class="text-black">attendance</span></span
                 >
               </li>
             </ul>
@@ -97,7 +97,7 @@
               @click="openModal('DigitalDazzle')"
             >
               <span
-                class="flex w-full items-center justify-center rounded-md border border-transparent bg-[#F8D075] px-4 py-4 font-inter text-base font-bold leading-6 text-slate-900 hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-[#fdd26d] focus:ring-offset-2 md:w-auto"
+                class="btn btn-ghost flex w-full items-center justify-center rounded-md border border-transparent bg-[#F8D075] px-4 py-4 pb-10 font-inter text-base font-bold leading-6 text-slate-900 hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-[#fdd26d] focus:ring-offset-2 md:w-auto"
               >
                 Claim Free
                 <Icon name="ep:arrow-right-bold" class="ml-2" /> </span
@@ -130,7 +130,7 @@
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-white.svg" />
                 <span class="ml-3"
-                  >Make <span class="text-white">2 Invitations</span></span
+                  >Create <span class="text-white">2 Invitations</span></span
                 >
               </li>
               <li class="mb-2 flex text-lg">
@@ -154,13 +154,7 @@
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-white.svg" />
                 <span class="ml-3">
-                  <span class="text-white">Story </span></span
-                >
-              </li>
-              <li class="mb-2 flex text-lg">
-                <img src="/icons/check-white.svg" />
-                <span class="ml-3">
-                  <span class="text-white">Send Gifts </span></span
+                  <span class="text-white">Import </span>Guest List</span
                 >
               </li>
             </ul>
@@ -169,7 +163,7 @@
               @click="openModal('SparkleSend')"
             >
               <span
-                class="flex w-full items-center justify-center rounded-md border border-transparent bg-[#F8D075] px-4 py-4 font-inter text-base font-bold leading-6 text-slate-900 hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-[#fdd26d] focus:ring-offset-2 md:w-auto"
+                class="btn btn-ghost flex w-full items-center justify-center rounded-md border border-transparent bg-[#F8D075] px-4 py-4 pb-10 font-inter text-base font-bold leading-6 text-slate-900 hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-[#fdd26d] focus:ring-offset-2 md:w-auto"
               >
                 Choose Plan
                 <Icon name="ep:arrow-right-bold" class="ml-2" /> </span
@@ -197,13 +191,20 @@
                 <img src="/icons/check-grey.svg" />
                 <span class="ml-3"
                   >All features in
+                  <span class="text-black">DigitalDazzle</span></span
+                >
+              </li>
+              <li class="mb-2 flex text-lg">
+                <img src="/icons/check-grey.svg" />
+                <span class="ml-3"
+                  >All features in
                   <span class="text-black">SparkleSend</span></span
                 >
               </li>
               <li class="mb-2 flex text-lg">
                 <img src="/icons/check-grey.svg" />
                 <span class="ml-3">
-                  Make<span class="text-black"> 4 Invitations </span></span
+                  Create<span class="text-black"> 4 Invitations </span></span
                 >
               </li>
               <li class="mb-2 flex text-lg">
@@ -218,26 +219,13 @@
                   >Active <span class="text-black">3 Month</span></span
                 >
               </li>
-              <li class="mb-2 flex text-lg">
-                <img src="/icons/check-grey.svg" />
-                <span class="ml-3"
-                  >Create
-                  <span class="text-black">unlimited </span>invitations</span
-                >
-              </li>
-              <li class="flex text-lg">
-                <img src="/icons/check-grey.svg" />
-                <span class="ml-3"
-                  ><span class="text-black">Unlimited </span> guests</span
-                >
-              </li>
             </ul>
             <a
               class="cursor-pointer text-sm font-semibold"
               @click="openModal('DigitalDreamscape')"
             >
               <span
-                class="flex w-full items-center justify-center rounded-md border border-transparent bg-[#F8D075] px-4 py-4 font-inter text-base font-bold leading-6 text-slate-900 hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-[#fdd26d] focus:ring-offset-2 md:w-auto"
+                class="btn btn-ghost flex w-full items-center justify-center rounded-md border border-transparent bg-[#F8D075] px-4 py-4 pb-10 font-inter text-base font-bold leading-6 text-slate-900 hover:bg-[#facc62] focus:outline-none focus:ring-2 focus:ring-[#fdd26d] focus:ring-offset-2 md:w-auto"
               >
                 Choose Plan
                 <Icon name="ep:arrow-right-bold" class="ml-2" /> </span

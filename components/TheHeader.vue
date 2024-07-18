@@ -70,10 +70,15 @@
             >
               <div class="w-16 rounded-full bg-neutral text-neutral-content">
                 <UAvatar
+                  v-if="!!dataUser.name || !!dataUser.picture"
                   :alt="dataUser.name"
                   :src="dataUser.picture"
                   size="sm"
                 />
+                <div
+                  v-else
+                  class="skeleton h-16 w-16 shrink-0 rounded-full"
+                ></div>
               </div>
             </div>
           </div>
@@ -118,10 +123,15 @@
               >
                 <div class="w-16 rounded-full bg-neutral text-neutral-content">
                   <UAvatar
+                    v-if="!!dataUser.name || !!dataUser.picture"
                     :alt="dataUser.name"
                     :src="dataUser.picture"
                     size="sm"
                   />
+                  <div
+                    v-else
+                    class="skeleton h-16 w-16 shrink-0 rounded-full"
+                  ></div>
                 </div>
               </div>
             </div>
@@ -133,8 +143,14 @@
                 class="z-10 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
               >
                 <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                  <div class="truncate text-[#49479F]">{{ dataUser.name }}</div>
-                  <div class="truncate font-medium">{{ dataUser.email }}</div>
+                  <div v-if="!!dataUser.name" class="truncate text-[#49479F]">
+                    {{ dataUser.name }}
+                  </div>
+                  <div v-else class="skeleton mb-2 h-4 w-20"></div>
+                  <div v-if="!!dataUser.email" class="truncate font-medium">
+                    {{ dataUser.email }}
+                  </div>
+                  <div v-else class="skeleton h-4 w-28"></div>
                 </div>
                 <ul
                   class="py-2 text-sm text-gray-700 dark:text-gray-200"
