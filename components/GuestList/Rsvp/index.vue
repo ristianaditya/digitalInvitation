@@ -20,7 +20,7 @@
               <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th>Greeting</th>
+                <th>Wishes</th>
                 <th>RSVP Attendance</th>
               </tr>
             </thead>
@@ -62,7 +62,7 @@
               <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th>Greeting</th>
+                <th>Wishes</th>
                 <th>RSVP Attendance</th>
               </tr>
             </thead>

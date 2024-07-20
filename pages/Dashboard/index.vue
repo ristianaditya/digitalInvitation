@@ -1,5 +1,5 @@
 <template>
-  <BaseHeaderNavigation @open="router.push(`/Builder?id=${makeid(25)}`)" />
+  <BaseHeaderNavigation @open="isOpen = true" />
   <UContainer
     v-if="stateLoad"
     class="flex h-[80vh] items-center justify-center text-center"
@@ -187,6 +187,11 @@
     @close="state.isOpenDelete = false"
     @confirm="confirmDelete()"
   />
+  <BaseModalsOptionsProject
+    :open-modal="isOpen"
+    @close="isOpen = false"
+    @confirm="handleConfirmation"
+  />
   <UNotifications />
 </template>
 <script setup>
@@ -199,6 +204,7 @@
     middleware: 'auth',
   })
 
+  const isOpen = ref(false)
   const config = useRuntimeConfig()
   const sessionData = useSessionData()
   const project = ref()
@@ -234,6 +240,15 @@
       counter += 1
     }
     return result
+  }
+
+  function handleConfirmation(value) {
+    if (value == 'custom') {
+      router.push(`/Builder?id=${makeid(25)}`)
+    } else if (value == 'template') {
+      router.push(`/Thema`)
+      isOpen.value = false
+    }
   }
 
   function modalSetting(id) {
