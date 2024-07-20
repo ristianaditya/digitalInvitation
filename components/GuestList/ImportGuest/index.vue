@@ -131,6 +131,10 @@
       type: String,
       default: '',
     },
+    premium: {
+      type: Boolean,
+      default: false,
+    },
   })
   async function onSubmit() {
     stateLoading.value = true
@@ -138,23 +142,32 @@
     formData.append('excel', dataGuest.excel)
     formData.append('project_id', props.idModal)
     try {
-      if (!!dataGuest.excel) {
-        await useFormUpload(`/guest/import`, formData).then((res) => {
-          console.log({ res })
-          if (res.status == 200) {
-            toast.add({
-              icon: 'i-heroicons-check-circle',
-              title: 'Guest successfully Imported',
-              color: 'green',
-              timeout: 3000,
-            })
-            emit('confirm')
-          }
-        })
+      if (!!!props.premium) {
+        if (!!dataGuest.excel) {
+          await useFormUpload(`/guest/import`, formData).then((res) => {
+            console.log({ res })
+            if (res.status == 200) {
+              toast.add({
+                icon: 'i-heroicons-check-circle',
+                title: 'Guest successfully Imported',
+                color: 'green',
+                timeout: 3000,
+              })
+              emit('confirm')
+            }
+          })
+        } else {
+          toast.add({
+            icon: 'i-heroicons-exclamation-triangle',
+            title: 'No file uploaded',
+            color: 'orange',
+            timeout: 3000,
+          })
+        }
       } else {
         toast.add({
           icon: 'i-heroicons-exclamation-triangle',
-          title: 'No file uploaded',
+          title: 'Upgrade subscription to premium',
           color: 'orange',
           timeout: 3000,
         })

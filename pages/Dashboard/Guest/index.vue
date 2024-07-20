@@ -244,12 +244,14 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
       :open-modal="state.isOpenImport"
       title-modal="Import Guest"
       desc-modal="Import Invited Guest Data List."
+      :premium="sessionData.subscribe == 'DigitalDazzle' ? true : false"
       @close="state.isOpenImport = false"
     >
       <template #body>
         <div>
           <GuestListImportGuest
             :id-modal="route.query.id"
+            :premium="sessionData.subscribe == 'DigitalDazzle' ? true : false"
             @close="state.isOpenImport = false"
             @confirm="confirmSaveImport()"
           />
@@ -281,7 +283,9 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
   import DataTablesCore from 'datatables.net'
   import { useClipboard } from '@vueuse/core'
   import { useGetData } from '~/composables/useFetchData'
+  import { useSessionData } from '@/store/index'
 
+  const sessionData = useSessionData()
   const configRuntime = useRuntimeConfig()
   const toast = useToast()
   const { copy } = useClipboard()
