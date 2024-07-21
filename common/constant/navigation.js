@@ -7,6 +7,13 @@ export const NAVIGATION_MENU = [
     user: true,
   },
   {
+    link: '/users',
+    label: 'Users',
+    icon: 'solar:user-plus-bold-duotone',
+    admin: true,
+    user: false,
+  },
+  {
     link: '/musics',
     label: 'Musics',
     icon: 'solar:music-library-2-line-duotone',
