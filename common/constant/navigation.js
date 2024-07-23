@@ -48,4 +48,11 @@ export const NAVIGATION_MENU = [
     admin: false,
     user: true,
   },
+  {
+    link: '/feedback',
+    label: 'Feedback',
+    icon: 'fluent:person-feedback-48-filled',
+    admin: true,
+    user: false,
+  },
 ]

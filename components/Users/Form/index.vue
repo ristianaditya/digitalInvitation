@@ -230,7 +230,6 @@
           `/user/updateAdmin/${props.idModal}`,
           formData,
         ).then((res) => {
-          console.log(res, 'resssssponse')
           if (res.status == 422) {
             const jsonError =
               res._data.username || res._data.email || res._data.no_phone

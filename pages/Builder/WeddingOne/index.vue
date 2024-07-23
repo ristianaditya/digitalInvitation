@@ -222,7 +222,6 @@
     await useGetSession('/user/getSession').then((res) => {
       invitation.subs = res.data.latest_transaction?.subscribe
       invitation.role = res.data.role
-      console.log(invitation.subs, 'subss')
     })
     if (!!!invitation.subs && dataUser.role != 'admin') {
       router.push('/#pricing')

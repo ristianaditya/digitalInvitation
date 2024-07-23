@@ -84,6 +84,13 @@
       </div>
     </div>
   </div>
+  <div
+    v-if="statusUser === 'authenticated' && countFeedback < 1"
+    class="fixed bottom-0 right-0 z-50 mb-8 mr-12 h-16 w-16 animate-bounce cursor-pointer animate-infinite animate-ease-linear"
+    @click="state.isOpenForm = true"
+  >
+    <img src="https://devrolabs.com/image/tabnote.png" />
+  </div>
   <div class="relative scroll-smooth" @scroll="handleScroll">
     <div id="home" :class="color.bg" class="transition-all duration-1000">
       <MainHome />
@@ -96,21 +103,36 @@
     <MainGalleryThema id="thema" />
     <MainPricing id="pricing" />
   </div>
+  <BaseModalForm
+    :open-modal="state.isOpenForm"
+    title-modal="Form Feedback"
+    desc-modal="This form is used to provide feedback on the application."
+    @close="state.isOpenForm = false"
+  >
+    <template #body>
+      <Quiz @close="state.isOpenForm = false" @confirm="confirmFeedback" />
+    </template>
+  </BaseModalForm>
+  <UNotifications />
 </template>
 
 <script setup>
   import { useComplateRegis } from '@/store/index'
-
   definePageMeta({
     auth: false,
   })
   const complateRegis = useComplateRegis()
 
   const { status } = useAuth()
+  const countFeedback = ref(1)
 
   const dataUser = reactive({
     expired: 30,
     role: 'user',
+  })
+
+  const state = reactive({
+    isOpenForm: false,
   })
 
   const statusUser = status.value
@@ -133,6 +155,13 @@
     }
   }
 
+  function confirmFeedback() {
+    state.isOpenForm = false
+    useGetData('/quiz/getByIdCount').then((res) => {
+      countFeedback.value = res.data
+    })
+  }
+
   onMounted(() => {
     window.addEventListener('scroll', handleScroll)
 
@@ -143,6 +172,10 @@
       const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 24))
       dataUser.expired = dayDifference
       dataUser.role = res.data.role
+    })
+
+    useGetData('/quiz/getByIdCount').then((res) => {
+      countFeedback.value = res.data
     })
   })
 
