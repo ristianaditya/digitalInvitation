@@ -32,8 +32,16 @@
                     >Free</span
                   >
                 </div>
+                <div class="mb-3 mt-1 flex flex-wrap gap-2">
+                  <div v-for="name in templates.category" :key="name">
+                    <span
+                      class="rounded bg-indigo-50 px-1.5 py-1 text-xs font-medium text-indigo-500"
+                      >{{ name }}</span
+                    >
+                  </div>
+                </div>
                 <div
-                  class="mb-5 mt-3 flex items-center justify-between px-1 md:items-start"
+                  class="mb-5 mt-4 flex items-center justify-between px-1 md:items-start"
                 >
                   <div class="mb-2">
                     <p class="text-navy-700 text-lg font-bold">
