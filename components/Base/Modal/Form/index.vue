@@ -30,7 +30,18 @@
               class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
             >
               <div class="flex-column flex">
-                <h1 class="text-lg font-bold">{{ titleModal }}</h1>
+                <h1
+                  class="!text-lg !font-bold"
+                  style="
+                    font-family: unset !important;
+                    margin-bottom: 0px !important;
+                    margin-top: 0px !important;
+                    font-family: unset !important;
+                    line-height: unset !important;
+                  "
+                >
+                  {{ titleModal }}
+                </h1>
                 <span
                   v-show="!!premium"
                   class="left-0 top-0 m-2 -mt-[1px] h-fit rounded-full bg-[#FAA6B0] px-2 text-center text-sm font-medium text-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]"
@@ -38,7 +49,14 @@
                 >
               </div>
               <div class="mb-3 mt-1">
-                <p class="text-sm text-gray-500">
+                <p
+                  class="!text-sm !text-gray-500"
+                  style="
+                    font-family: unset !important;
+                    margin-bottom: 0px !important;
+                    margin-top: 0px !important;
+                  "
+                >
                   {{ descModal }}
                 </p>
               </div>

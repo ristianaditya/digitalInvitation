@@ -19,7 +19,7 @@
       >
         Save Changes
       </button>
-      <div class="mb-6 space-y-6 py-5">
+      <div class="!mb-6 !space-y-6 !py-5">
         <BaseInputModal
           name="name"
           type="text"

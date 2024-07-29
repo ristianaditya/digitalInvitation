@@ -1,10 +1,29 @@
 <template>
   <div>
-    <h3 v-show="label" class="text-md font-bold text-gray-800">{{ label }}</h3>
-    <p v-show="desc" class="mb-3 text-sm text-gray-600">
+    <h3
+      v-show="label"
+      class="text-md !text-[1.125rem] font-bold text-gray-800"
+      style="
+        font-family: unset !important;
+        line-height: unset !important;
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+      "
+    >
+      {{ label }}
+    </h3>
+    <p
+      v-show="desc"
+      class="mb-3 text-sm text-gray-600"
+      style="
+        font-family: unset !important;
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+      "
+    >
       {{ desc }}
     </p>
-    <div class="relative mb-5 mt-1">
+    <div class="relative mb-5 mt-1" style="margin-bottom: 1.25rem !important">
       <div class="relative">
         <USelectMenu
           v-model="value"
@@ -15,7 +34,7 @@
           class="text-md w-full focus:ring-[#49479F] dark:focus:ring-[#49479F]"
         />
       </div>
-      <p class="mt-2 text-sm text-red-500 dark:text-red-400">
+      <p class="mt-2 text-sm !text-red-500">
         {{ errorMessage }}
       </p>
     </div>

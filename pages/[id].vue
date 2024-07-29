@@ -1,11 +1,31 @@
 <template>
   <div>
-    <UContainer
+    <div
       v-if="stateLoad"
-      class="flex h-[100vh] items-center justify-center text-center"
+      class="transition-property: transform; fixed left-0 top-0 z-50 h-full w-full transform bg-[#f4f0fdc0] backdrop-blur-xl"
     >
-      <span class="loading loading-spinner loading-lg text-[#49479F]"></span>
-    </UContainer>
+      <div class="mt-[50vh] flex items-center justify-center">
+        <div class="loader">
+          <div class="loader__balls">
+            <div class="loader__balls__group">
+              <div class="ball item1"></div>
+              <div class="ball item1"></div>
+              <div class="ball item1"></div>
+            </div>
+            <div class="loader__balls__group">
+              <div class="ball item2"></div>
+              <div class="ball item2"></div>
+              <div class="ball item2"></div>
+            </div>
+            <div class="loader__balls__group">
+              <div class="ball item3"></div>
+              <div class="ball item3"></div>
+              <div class="ball item3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div v-else>
       <div
         v-if="
@@ -38,7 +58,10 @@
                   class="group inline-flex flex-col items-center justify-center rounded-s-full px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
                   @click="state.isOpenForm = true"
                 >
-                  <Icon name="material-symbols:rsvp" class="text-4xl" />
+                  <Icon
+                    name="material-symbols:rsvp"
+                    class="text-4xl text-gray-800"
+                  />
                   <span class="sr-only">RSVP</span>
                 </button>
                 <div
@@ -89,7 +112,7 @@
                   class="group inline-flex flex-col items-center justify-center rounded-e-full px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
                   @click="openQrModalForm(route.query.to, route.params.id)"
                 >
-                  <Icon name="uil:qrcode-scan" class="text-2xl" />
+                  <Icon name="uil:qrcode-scan" class="text-2xl text-gray-800" />
                   <span class="sr-only">QR Code</span>
                 </button>
                 <div
@@ -244,3 +267,6 @@
     stateLoad.value = false
   })
 </script>
+<style>
+  @import url('~/assets/css/builder.css');
+</style>

@@ -1,4 +1,35 @@
 <template>
+  <div
+    v-show="loader"
+    :class="
+      !!!loaderAnimation
+        ? 'animate-fade animate-reverse animate-once animate-ease-linear'
+        : ''
+    "
+    class="transition-property: transform; fixed left-0 top-0 z-50 h-full w-full transform bg-[#f4f0fdc0] backdrop-blur-xl"
+  >
+    <div class="mt-[50vh] flex items-center justify-center">
+      <div class="loader">
+        <div class="loader__balls">
+          <div class="loader__balls__group">
+            <div class="ball item1"></div>
+            <div class="ball item1"></div>
+            <div class="ball item1"></div>
+          </div>
+          <div class="loader__balls__group">
+            <div class="ball item2"></div>
+            <div class="ball item2"></div>
+            <div class="ball item2"></div>
+          </div>
+          <div class="loader__balls__group">
+            <div class="ball item3"></div>
+            <div class="ball item3"></div>
+            <div class="ball item3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="max-h-[100vh] overflow-hidden">
     <header
       class="sticky flex min-h-[64px] w-full items-center bg-[#F4F0FD] px-3 shadow-md"
@@ -98,6 +129,8 @@
   const project = ref('Project Untitled')
   const projectLength = ref(0)
   const dataAssets = ref()
+  const loader = ref(true)
+  const loaderAnimation = ref(true)
 
   const router = useRouter()
   const handleBack = () => {
@@ -234,6 +267,10 @@
         projectLength.value = res._data.projects.length
       }
     })
+    loaderAnimation.value = false
+    setTimeout(() => {
+      loader.value = false
+    }, 1000)
   })
   async function save() {
     if (invitation.subs != 'DigitalDazzle') {
@@ -321,35 +358,5 @@
   }
 </script>
 <style>
-  .gjs-one-bg {
-    background-color: #494949 !important;
-  }
-
-  .gjs-two-color {
-    color: #ffffff !important;
-  }
-
-  .header {
-    transform: translateY(0);
-    transition: transform 300ms linear;
-  }
-
-  .header.is-hidden {
-    transform: translateY(-100%);
-  }
-
-  .style-none {
-    background-color: transparent !important;
-  }
-
-  .link-nav {
-    @apply block rounded bg-transparent px-3 py-2 text-gray-900 hover:bg-transparent active:text-[#49479F] md:border-0 md:p-0 md:hover:text-[#49479F];
-  }
-
-  .link-active {
-    @apply block rounded bg-[#49479F] bg-transparent px-3 py-2 text-white hover:bg-transparent active:text-[#49479F] md:p-0 md:text-[#49479F];
-  }
-  .gjs-editor-cont {
-    height: 95vh !important;
-  }
+  @import url('~/assets/css/builder.css');
 </style>

@@ -40,7 +40,7 @@
             <img src="/thema/line.png" />
           </div>
           <a
-            class="group relative mb-7 mt-8 inline-flex max-h-[10px] max-w-[180px] cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-[#49479F] p-4 px-5 py-2 font-medium text-[#49479F] shadow-md transition duration-300 ease-out"
+            class="group relative mb-7 mt-8 inline-flex max-h-[40px] max-w-[180px] cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-[#49479F] p-4 px-5 font-medium text-[#49479F] shadow-md transition duration-300 ease-out"
             @click="closeModal()"
           >
             <span
