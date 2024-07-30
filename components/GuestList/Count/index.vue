@@ -38,7 +38,7 @@
             {{ listGuestStats?.total_attended || 0 }}
           </dt>
           <Icon v-else name="gg:infinity" class="h-10 w-10 text-[#5AB5E1]" />
-          <dd class="text-sm font-medium text-[#5AB5E1]">Guests</dd>
+          <dd class="text-sm font-medium text-[#5AB5E1]">Attend (scanned)</dd>
         </div>
         <Icon
           name="icon-park-twotone:folder-success"
@@ -62,7 +62,7 @@
             {{ listGuestStats?.total_not_attended || 0 }}
           </dt>
           <Icon v-else name="gg:infinity" class="h-10 w-10 text-[#49479F]" />
-          <dd class="text-sm font-medium text-[#49479F]">Absent</dd>
+          <dd class="text-sm font-medium text-[#49479F]">Absent (scanned)</dd>
         </div>
         <Icon
           name="icon-park-twotone:folder-failed"

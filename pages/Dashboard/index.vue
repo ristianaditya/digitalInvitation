@@ -1,11 +1,27 @@
 <template>
   <BaseHeaderNavigation @open="isOpen = true" />
-  <UContainer
-    v-if="stateLoad"
-    class="flex h-[80vh] items-center justify-center text-center"
-  >
-    <span class="loading loading-spinner loading-lg text-[#49479F]"></span>
-  </UContainer>
+  <div v-if="stateLoad">
+    <div class="z-20 grid grid-cols-1 gap-8 md:grid-cols-4">
+      <div class="card card-compact flex h-full w-full flex-col gap-4">
+        <div class="skeleton h-52 w-full"></div>
+        <div class="skeleton h-4 w-28"></div>
+        <div class="skeleton h-4 w-full"></div>
+        <div class="skeleton h-4 w-full"></div>
+      </div>
+      <div class="card card-compact flex h-full w-full flex-col gap-4">
+        <div class="skeleton h-52 w-full"></div>
+        <div class="skeleton h-4 w-28"></div>
+        <div class="skeleton h-4 w-full"></div>
+        <div class="skeleton h-4 w-full"></div>
+      </div>
+      <div class="card card-compact flex h-full w-full flex-col gap-4">
+        <div class="skeleton h-52 w-full"></div>
+        <div class="skeleton h-4 w-28"></div>
+        <div class="skeleton h-4 w-full"></div>
+        <div class="skeleton h-4 w-full"></div>
+      </div>
+    </div>
+  </div>
   <div v-else>
     <Dashboard v-if="sessionData.role === 'admin'" />
     <div
@@ -136,6 +152,22 @@
                         Guests
                       </button>
                     </MenuItem>
+                    <MenuItem v-slot="{ active }">
+                      <button
+                        :class="[
+                          active ? 'bg-[#f0f0f0] ' : '',
+                          'group flex w-full items-center rounded-md px-2 py-2 text-sm text-black',
+                        ]"
+                        @click="
+                          router.push(`/Dashboard/Rsvp?id=${projects_data.id}`)
+                        "
+                      >
+                        <span
+                          class="i-heroicons-list-bullet relative mr-2 h-5 w-5 flex-shrink-0 text-[#49479F]"
+                        ></span>
+                        Rsvp
+                      </button>
+                    </MenuItem>
                   </div>
 
                   <div class="px-1 py-1">
@@ -173,7 +205,7 @@
       <SettingProject
         :id-project="state.idProjectModal"
         @close="state.isOpenForm = false"
-        @confirm="state.isOpenForm = false"
+        @confirm="confirmSaveProject()"
       />
     </template>
   </BaseModalForm>
@@ -264,6 +296,16 @@
   async function confirmDelete() {
     await usePostData(`/project/destroy/${state.idItems}`)
     state.isOpenDelete = false
+    stateLoad.value = true
+    await usePostData('/project/getByUserId').then((res) => {
+      if (res.status == 200) {
+        project.value = res._data.projects
+      }
+    })
+    stateLoad.value = false
+  }
+  async function confirmSaveProject() {
+    state.isOpenForm = false
     stateLoad.value = true
     await usePostData('/project/getByUserId').then((res) => {
       if (res.status == 200) {

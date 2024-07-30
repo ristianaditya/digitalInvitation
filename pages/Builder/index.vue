@@ -145,7 +145,9 @@
   })
   onMounted(async () => {
     const dataEditor = await usePostData(`/project/getById/${route.query.id}`)
-    canvas.value = JSON.parse(dataEditor._data.project.canvas)
+    if (dataEditor.status == 200) {
+      canvas.value = JSON.parse(dataEditor._data.project.canvas)
+    }
     const result = await useGetData('/assets/getAssets')
     dataAssets.value = result.assets.map((data) => ({
       type: data.type,

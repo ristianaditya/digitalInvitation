@@ -2,6 +2,9 @@
   <div>
     <BaseHeaderNavigation @open="openModalForm()" />
     <GuestListCount />
+    <div class="h-[600px] w-full rounded-xl bg-slate-50 p-5">
+      <highchart class="h-full" :options="chartMount" />
+    </div>
     <div class="mt-10 flex">
       <p class="-mt-2 mb-4 text-[22px] font-[600]">List Guest</p>
       <div
@@ -213,7 +216,6 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
         </div>
       </UModal>
     </div>
-    <GuestListRsvp />
     <BaseModal
       :open-modal="state.isOpenDelete"
       title-modal="Confirm to delete"
@@ -285,6 +287,7 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
   import { useGetData } from '~/composables/useFetchData'
   import { useSessionData } from '@/store/index'
 
+  const totalAttendance = ref('')
   const sessionData = useSessionData()
   const configRuntime = useRuntimeConfig()
   const toast = useToast()
@@ -296,6 +299,50 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
   const isOpen = ref(false)
   const config = ref()
   const route = useRoute()
+
+  const chartMount = ref({
+    chart: {
+      type: 'line',
+    },
+    title: {
+      text: 'Attendance',
+    },
+    xAxis: {
+      categories: [
+        '06:00',
+        '07:00',
+        '08:00',
+        '09:00',
+        '10:00',
+        '11:00',
+        '12:00',
+        '13:00',
+        '14:00',
+        '15:00',
+        '16:00',
+        '17:00',
+      ],
+    },
+    yAxis: {
+      title: {
+        text: 'Total Attendance',
+      },
+    },
+    plotOptions: {
+      line: {
+        dataLabels: {
+          enabled: true,
+        },
+        enableMouseTracking: false,
+      },
+    },
+    series: [
+      {
+        name: 'Attendance',
+        data: totalAttendance,
+      },
+    ],
+  })
 
   const state = reactive({
     isOpenDelete: false,
@@ -390,6 +437,9 @@ ${configRuntime.public.baseURL}/${guest?.invitation?.invite_link}?to=${guest?.na
     activePage.export = false
     await useGetData(`/guest/getById/${route.query.id}`).then((res) => {
       listGuest.value = res.data
+    })
+    await useGetData(`/guest/getAttendance/${route.query.id}`).then((res) => {
+      totalAttendance.value = res.data
     })
     stateLoadRsvp.value = false
     stateLoad.value = false

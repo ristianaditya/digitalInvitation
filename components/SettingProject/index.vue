@@ -71,7 +71,7 @@
         <div class="collapse collapse-plus bg-base-200">
           <input type="radio" name="my-accordion-3" />
           <div class="collapse-title text-lg font-bold">
-            This event is for (optional 2)
+            This event is for (2)
           </div>
           <div class="collapse-content">
             <BaseInputModal

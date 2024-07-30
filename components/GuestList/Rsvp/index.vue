@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="mt-10 flex">
-      <p class="-mt-2 mb-4 text-[22px] font-[600]">List RSVP</p>
+    <div class="flex">
       <Icon
         v-if="sessionData.subscribe == 'DigitalDazzle'"
         name="lets-icons:lock-duotone"

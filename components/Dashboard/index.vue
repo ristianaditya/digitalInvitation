@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-14 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-4"
+    class="mb-10 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-4"
   >
     <div
       class="group flex flex-col overflow-hidden rounded-2xl bg-pink-50 transition hover:bg-pink-100 active:bg-pink-50"
@@ -67,9 +67,13 @@
       </div>
     </div>
   </div>
-  <div class="grid h-[500px] w-full grid-cols-2 gap-3">
-    <highchart class="h-full" :options="chartMount" />
-    <highchart :options="chartSubs" />
+  <div class="grid h-[500px] w-full grid-cols-2 gap-6">
+    <div class="h-[600px] w-full rounded-xl bg-slate-50 p-5">
+      <highchart class="h-full" :options="chartMount" />
+    </div>
+    <div class="h-[600px] w-full rounded-xl bg-slate-50 p-5">
+      <highchart class="h-full" :options="chartSubs" />
+    </div>
   </div>
 </template>
 <script setup>
