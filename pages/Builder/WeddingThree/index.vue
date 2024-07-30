@@ -136,6 +136,12 @@
   const dataAssets = ref()
   const loader = ref(true)
   const loaderAnimation = ref(true)
+  const dataUser = reactive({
+    name: '',
+    email: '',
+    picture: '',
+    role: 'user',
+  })
 
   const router = useRouter()
   const handleBack = () => {
@@ -255,6 +261,10 @@
     await useGetSession('/user/getSession').then((res) => {
       invitation.subs = res.data.latest_transaction?.subscribe
       invitation.role = res.data.role
+      dataUser.name = res.data.username
+      dataUser.email = res.data.email
+      dataUser.picture = res.data.picture
+      dataUser.role = res.data.role
     })
 
     await usePostData('/project/getByUserId').then((res) => {

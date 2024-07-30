@@ -136,7 +136,12 @@
   const dataAssets = ref()
   const loader = ref(true)
   const loaderAnimation = ref(true)
-
+  const dataUser = reactive({
+    name: '',
+    email: '',
+    picture: '',
+    role: 'user',
+  })
   const router = useRouter()
   const handleBack = () => {
     router.go(-1)
@@ -255,6 +260,10 @@
     await useGetSession('/user/getSession').then((res) => {
       invitation.subs = res.data.latest_transaction?.subscribe
       invitation.role = res.data.role
+      dataUser.name = res.data.username
+      dataUser.email = res.data.email
+      dataUser.picture = res.data.picture
+      dataUser.role = res.data.role
     })
     if (!!!invitation.subs && dataUser.role != 'admin') {
       router.push('/#pricing')
