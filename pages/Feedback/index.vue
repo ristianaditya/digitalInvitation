@@ -36,19 +36,34 @@
                   <td class="text-sm font-normal leading-normal">
                     {{ quiz.user.email }}
                   </td>
-                  <td class="text-sm font-normal leading-normal">
+                  <td
+                    class="text-sm font-normal leading-normal"
+                    :class="paramColor[param[JSON.parse(quiz.quiz).satu]]"
+                  >
                     {{ param[JSON.parse(quiz.quiz).satu] }}
                   </td>
-                  <td class="text-sm font-normal leading-normal">
+                  <td
+                    class="text-sm font-normal leading-normal"
+                    :class="paramColor[param[JSON.parse(quiz.quiz).dua]]"
+                  >
                     {{ param[JSON.parse(quiz.quiz).dua] }}
                   </td>
-                  <td class="text-sm font-normal leading-normal">
+                  <td
+                    class="text-sm font-normal leading-normal"
+                    :class="paramColor[param[JSON.parse(quiz.quiz).tiga]]"
+                  >
                     {{ param[JSON.parse(quiz.quiz).tiga] }}
                   </td>
-                  <td class="text-sm font-normal leading-normal">
+                  <td
+                    class="text-sm font-normal leading-normal"
+                    :class="paramColor[param[JSON.parse(quiz.quiz).empat]]"
+                  >
                     {{ param[JSON.parse(quiz.quiz).empat] }}
                   </td>
-                  <td class="text-sm font-normal leading-normal">
+                  <td
+                    class="text-sm font-normal leading-normal"
+                    :class="paramColor[param[JSON.parse(quiz.quiz).lima]]"
+                  >
                     {{ param[JSON.parse(quiz.quiz).lima] }}
                   </td>
                   <td class="text-sm font-normal leading-normal">
@@ -87,6 +102,13 @@
     3: 'Ragu-ragu',
     4: 'Setuju',
     5: 'Sangat Setuju',
+  }
+  const paramColor = {
+    'Sangat Tidak Setuju': 'bg-[#F38989]',
+    'Tidak Setuju': 'bg-[#F2B4A3]',
+    'Ragu-ragu': 'bg-[#FFDBC2]',
+    Setuju: 'bg-[#C1CBB1]',
+    'Sangat Setuju': 'bg-[#78C1A3]',
   }
   const { exportToExcel } = useExportExcel()
   const handleExport = () => {
