@@ -61,7 +61,7 @@
               ref="fileRef"
               type="file"
               class="hidden"
-              accept=".jpg, .jpeg, .png, .gif"
+              accept=".jpg, .jpeg, .png, .gif, .svg"
               @change="onFileChange"
             />
             <p class="max-w-72 truncate">

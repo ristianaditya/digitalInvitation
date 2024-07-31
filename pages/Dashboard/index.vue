@@ -23,11 +23,7 @@
     </div>
   </div>
   <div v-else>
-    <Dashboard v-if="sessionData.role === 'admin'" />
-    <div
-      v-if="sessionData.role === 'user'"
-      class="z-20 grid grid-cols-1 gap-8 md:grid-cols-4"
-    >
+    <div class="z-20 grid grid-cols-1 gap-8 md:grid-cols-4">
       <div
         v-for="projects_data in project"
         :key="projects_data.id"
@@ -238,7 +234,6 @@
 
   const isOpen = ref(false)
   const config = useRuntimeConfig()
-  const sessionData = useSessionData()
   const project = ref()
   const stateLoad = ref(true)
   const router = useRouter()

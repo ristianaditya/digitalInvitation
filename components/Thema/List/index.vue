@@ -23,6 +23,15 @@
                 >Free</span
               >
             </div>
+            <div class="mb-3 mt-1 flex flex-wrap gap-2">
+              <div v-for="(name, index) in templates.category" :key="name">
+                <span
+                  class="rounded px-1.5 py-1 text-xs font-medium"
+                  :class="`bg-${color[index]}-50 text-${color[index]}-500`"
+                  >{{ name }}</span
+                >
+              </div>
+            </div>
             <div
               class="mb-5 mt-3 flex items-center justify-between px-1 md:items-start"
             >
@@ -49,6 +58,17 @@
 <script setup>
   import { TEMPLATES } from '~/common/constant/template'
   const router = useRouter()
+
+  const color = [
+    'pink',
+    'purple',
+    'indigo',
+    'cyan',
+    'teal',
+    'green',
+    'brown',
+    'grey',
+  ]
 
   function makeid(length) {
     let result = ''

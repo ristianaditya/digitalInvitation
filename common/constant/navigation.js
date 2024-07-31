@@ -3,8 +3,15 @@ export const NAVIGATION_MENU = [
     link: '/dashboard',
     label: 'Dashboard',
     icon: 'material-symbols:home-outline-rounded',
-    admin: true,
+    admin: false,
     user: true,
+  },
+  {
+    link: '/dashboard/admin',
+    label: 'Dashboard',
+    icon: 'material-symbols:home-outline-rounded',
+    admin: true,
+    user: false,
   },
   {
     link: '/users',

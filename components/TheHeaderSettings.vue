@@ -37,7 +37,17 @@
           </li>
           <div v-if="statusUser === 'authenticated'">
             <li>
-              <NuxtLink :to="{ path: '/Dashboard' }">Dashboard</NuxtLink>
+              <NuxtLink
+                :to="{
+                  path:
+                    !!!sessionData.subscribe && dataUser.role != 'admin'
+                      ? '/'
+                      : dataUser.role == 'admin'
+                        ? '/Dashboard/Admin'
+                        : 'Dashboard',
+                }"
+                >Dashboard</NuxtLink
+              >
             </li>
             <li>
               <NuxtLink :to="{ path: '/Settings' }">Setting</NuxtLink>
@@ -157,7 +167,14 @@
                 >
                   <li>
                     <NuxtLink
-                      to="/Dashboard"
+                      :to="{
+                        path:
+                          !!!sessionData.subscribe && dataUser.role != 'admin'
+                            ? '/'
+                            : dataUser.role == 'admin'
+                              ? '/Dashboard/Admin'
+                              : 'Dashboard',
+                      }"
                       class="block px-4 py-2 hover:bg-gray-100"
                       >Dashboard</NuxtLink
                     >
