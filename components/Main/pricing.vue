@@ -383,8 +383,8 @@
       days: 7,
     },
     SparkleSend: {
-      price: 30000,
-      fee: 4000,
+      price: 5000,
+      fee: 0,
       pay: true,
       days: 30,
     },
@@ -501,13 +501,13 @@
             }).then((res) => {
               if (res.status == 200) {
                 window.location.replace(
-                  `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`,
-                  // `https://app.midtrans.com/snap/v4/redirection/${res._data.token}`,
+                  // `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`,
+                  `https://app.midtrans.com/snap/v4/redirection/${res._data.token}`,
                 )
                 // window.snap.pay(res._data.token, {
                 //   onSuccess: function (result) {
                 //     const param = {
-                //       user_id: parseInt(sessionData.id),
+                //       user_id: parseInt(sessionData.id),s
                 //       id_payment: result.order_id,
                 //       amount: price,
                 //       status: 'success',
