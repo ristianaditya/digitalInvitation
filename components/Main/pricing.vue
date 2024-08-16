@@ -236,10 +236,10 @@
       <MainFooter />
     </div>
     <BaseModalForm
-      :open-modal="state.isOpenForm"
+      :open-modal="subscriptionManager.state.isOpenForm"
       title-modal="Order Summary"
       desc-modal="Guest's qr code to be scanned."
-      @close="state.isOpenForm = false"
+      @close="subscriptionManager.state.isOpenForm = false"
     >
       <template #body>
         <div class="w-full text-center">
@@ -253,14 +253,22 @@
                   <dd
                     class="text-base font-medium text-gray-900 dark:text-white"
                   >
-                    Rp. {{ plans[state.type]?.price }}
+                    Rp.
+                    {{
+                      subscriptionManager.plans[subscriptionManager.state.type]
+                        ?.price
+                    }}
                   </dd>
                 </dl>
 
                 <dl class="flex items-center justify-between gap-4">
                   <dt class="text-gray-500 dark:text-gray-400">Transfer Fee</dt>
                   <dd class="text-base font-medium">
-                    Rp. {{ plans[state.type]?.fee }}
+                    Rp.
+                    {{
+                      subscriptionManager.plans[subscriptionManager.state.type]
+                        ?.fee
+                    }}
                   </dd>
                 </dl>
 
@@ -271,7 +279,7 @@
                   <dd
                     class="text-base font-medium text-gray-900 dark:text-white"
                   >
-                    {{ state.type }}
+                    {{ subscriptionManager.state.type }}
                   </dd>
                 </dl>
                 <dl class="flex items-center justify-between gap-4">
@@ -279,7 +287,11 @@
                   <dd
                     class="text-base font-medium text-gray-900 dark:text-white"
                   >
-                    {{ plans[state.type]?.days }} days
+                    {{
+                      subscriptionManager.plans[subscriptionManager.state.type]
+                        ?.days
+                    }}
+                    days
                   </dd>
                 </dl>
                 <dl class="flex items-center justify-between gap-4">
@@ -287,7 +299,7 @@
                   <dd
                     class="text-base font-medium text-gray-900 dark:text-white"
                   >
-                    {{ state.date }}
+                    {{ subscriptionManager.state.date }}
                   </dd>
                 </dl>
 
@@ -307,7 +319,13 @@
                   Total
                 </dt>
                 <dd class="text-lg font-bold text-gray-900 dark:text-white">
-                  Rp. {{ plans[state.type]?.price + plans[state.type]?.fee }}
+                  Rp.
+                  {{
+                    subscriptionManager.plans[subscriptionManager.state.type]
+                      ?.price +
+                    subscriptionManager.plans[subscriptionManager.state.type]
+                      ?.fee
+                  }}
                 </dd>
               </dl>
             </div>
@@ -316,7 +334,7 @@
               <button
                 type="button"
                 class="w-full rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-[#49479F] focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-                @click="state.isOpenForm = false"
+                @click="subscriptionManager.state.isOpenForm = false"
               >
                 Cancel
               </button>
@@ -326,9 +344,11 @@
                 class="focus:ring-primary-300 mt-4 flex w-full items-center justify-center rounded-lg bg-[#49479F] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#393880] focus:outline-none focus:ring-4 sm:mt-0"
                 @click="
                   createPaymentLink(
-                    state.type,
-                    plans[state.type]?.price,
-                    plans[state.type]?.pay,
+                    subscriptionManager.state.type,
+                    subscriptionManager.plans[subscriptionManager.state.type]
+                      ?.price,
+                    subscriptionManager.plans[subscriptionManager.state.type]
+                      ?.pay,
                   )
                 "
               >
@@ -340,10 +360,10 @@
       </template>
     </BaseModalForm>
     <BaseModalForm
-      :open-modal="state.isOpenFormAlert"
+      :open-modal="subscriptionManager.state.isOpenFormAlert"
       title-modal="Payment Successful"
       desc-modal="your subscription is now active."
-      @close="state.isOpenFormAlert = false"
+      @close="subscriptionManager.state.isOpenFormAlert = false"
     >
       <template #body>
         <img
@@ -359,238 +379,247 @@
 
 <script setup>
   import { useComplateRegis, useSessionData } from '@/store/index'
-
   import { usePostData } from '~/composables/useFetchData'
 
-  const route = useRoute()
-  const router = useRouter()
-  const complateRegis = useComplateRegis()
-  const sessionData = useSessionData()
-  const toast = useToast()
-  const { status } = useAuth()
-  const statusUser = status.value
-  const state = reactive({
-    isOpenForm: false,
-    isOpenFormAlert: false,
-    type: '',
-    date: '',
-  })
-  const plans = {
-    DigitalDazzle: {
-      price: 0,
-      fee: 0,
-      pay: false,
-      days: 7,
-    },
-    SparkleSend: {
-      price: 5000,
-      fee: 0,
-      pay: true,
-      days: 30,
-    },
-    DigitalDreamscape: {
-      price: 80000,
-      fee: 4000,
-      pay: true,
-      days: 90,
-    },
-  }
-  const paramStatus = ref(route.query.transaction_status)
-
-  function openModal(type) {
-    state.isOpenForm = true
-    state.type = type
-    const date = new Date()
-    date.setDate(date.getDate() + plans[type]?.days)
-    const days = [
-      'Minggu',
-      'Senin',
-      'Selasa',
-      'Rabu',
-      'Kamis',
-      'Jumat',
-      'Sabtu',
-    ]
-    const months = [
-      'Januari',
-      'Februari',
-      'Maret',
-      'April',
-      'Mei',
-      'Juni',
-      'Juli',
-      'Agustus',
-      'September',
-      'Oktober',
-      'November',
-      'Desember',
-    ]
-
-    const dayName = days[date.getDay()]
-    const day = date.getDate()
-    const month = months[date.getMonth()]
-    const year = date.getFullYear()
-
-    state.date = dayName + ', ' + day + ' ' + month + ' ' + year
-  }
-
-  if (paramStatus.value == 'settlement') {
-    const param = {
-      user_id: parseInt(route.query.id),
-      id_payment: route.query.order_id,
-      amount: parseInt(route.query.price),
-      status: 'success',
-      subscribe: route.query.type,
-    }
-    await usePostData('/transaction/createPayment', param).then((res) => {
-      if (res.status == 200) {
-        state.isOpenFormAlert = true
-        useGetSession('/user/getSession').then((res) => {
-          sessionData.subscribe = res.data.latest_transaction?.subscribe
-          sessionData.id = res.data.id
-          sessionData.name = res.data.name
-          sessionData.email = res.data.email
-          sessionData.phone = res.data.no_phone
-        })
+  class SubscriptionManager {
+    constructor(route, router, toast, sessionData, complateRegis, status) {
+      this.route = route
+      this.router = router
+      this.toast = toast
+      this.sessionData = sessionData
+      this.complateRegis = complateRegis
+      this.statusUser = status.value
+      this.state = reactive({
+        isOpenForm: false,
+        isOpenFormAlert: false,
+        type: '',
+        date: '',
+      })
+      this.plans = {
+        DigitalDazzle: {
+          price: 0,
+          fee: 0,
+          pay: false,
+          days: 7,
+        },
+        SparkleSend: {
+          price: 30000,
+          fee: 0,
+          pay: true,
+          days: 30,
+        },
+        DigitalDreamscape: {
+          price: 80000,
+          fee: 4000,
+          pay: true,
+          days: 90,
+        },
       }
-    })
-    navigateTo('/')
-  }
-
-  function makeid(length) {
-    let result = ''
-    const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    const charactersLength = characters.length
-    let counter = 0
-    while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength))
-      counter += 1
     }
-    return result
-  }
 
-  async function createPaymentLink(name, price, pay) {
-    const config = useRuntimeConfig()
-    if (statusUser === 'authenticated') {
-      try {
-        if (complateRegis.completion) {
-          if (pay) {
-            const parameter = {
-              transaction_details: {
-                order_id: makeid(40),
-                gross_amount: price,
-              },
-              item_detail: {
-                name,
-                price,
-                quantity: 1,
-              },
-              customer_details: {
-                first_name: sessionData.name,
-                email: sessionData.email,
-                phone: sessionData.phone,
-              },
-              callbacks: {
-                // finish: `https://f947-180-244-133-178.ngrok-free.app/?id=${sessionData.id}&type=${name}&price=${price}`,
-                finish: `${config.public.baseURL}/?id=${sessionData.id}&type=${name}&price=${price}`,
-              },
-            }
-            await usePostData(`/transaction/showToken`, {
-              detailsTransaction: parameter,
-            }).then((res) => {
-              if (res.status == 200) {
-                window.location.replace(
-                  // `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`,
-                  `https://app.midtrans.com/snap/v4/redirection/${res._data.token}`,
-                )
-                // window.snap.pay(res._data.token, {
-                //   onSuccess: function (result) {
-                //     const param = {
-                //       user_id: parseInt(sessionData.id),s
-                //       id_payment: result.order_id,
-                //       amount: price,
-                //       status: 'success',
-                //       subscribe: name,
-                //     }
-                //     usePostData('/transaction/createPayment', param).then((res) => {
-                //       if (res.status == 200) {
-                //         toast.add({
-                //           icon: 'i-heroicons-check-circle',
-                //           title: 'payment successfully',
-                //           color: 'green',
-                //           timeout: 3000,
-                //         })
-                //       }
-                //     })
-                //   },
-                //   onPending: function (result) { console.log('pending'); console.log(result); },
-                //   onError: function (result) { console.log('error'); console.log(result); },
-                // })
-              } else {
-                toast.add({
-                  icon: 'i-heroicons-exclamation-triangle',
-                  title: 'api service error',
-                  color: 'orange',
-                  timeout: 3000,
-                })
-              }
+    openModal(type) {
+      this.state.isOpenForm = true
+      this.state.type = type
+      const date = new Date()
+      date.setDate(date.getDate() + this.plans[type]?.days)
+      const days = [
+        'Minggu',
+        'Senin',
+        'Selasa',
+        'Rabu',
+        'Kamis',
+        'Jumat',
+        'Sabtu',
+      ]
+      const months = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+      ]
+      const dayName = days[date.getDay()]
+      const day = date.getDate()
+      const month = months[date.getMonth()]
+      const year = date.getFullYear()
+      this.state.date = `${dayName}, ${day} ${month} ${year}`
+    }
+
+    async handleTransactionStatus() {
+      const paramStatus = ref(this.route.query.transaction_status)
+      if (paramStatus.value == 'settlement') {
+        const param = {
+          user_id: parseInt(this.route.query.id),
+          id_payment: this.route.query.order_id,
+          amount: parseInt(this.route.query.price),
+          status: 'success',
+          subscribe: this.route.query.type,
+        }
+        await usePostData('/transaction/createPayment', param).then((res) => {
+          if (res.status == 200) {
+            this.state.isOpenFormAlert = true
+            useGetSession('/user/getSession').then((res) => {
+              this.sessionData.subscribe =
+                res.data.latest_transaction?.subscribe
+              this.sessionData.id = res.data.id
+              this.sessionData.name = res.data.name
+              this.sessionData.email = res.data.email
+              this.sessionData.phone = res.data.no_phone
             })
-          } else {
-            const param = {
-              user_id: parseInt(sessionData.id),
-              id_payment: makeid(40),
-              amount: price,
-              status: 'success',
-              subscribe: name,
+            setTimeout(() => {
+              this.state.isOpenFormAlert = false
+            }, '3000')
+          }
+        })
+        navigateTo('/')
+      }
+    }
+
+    makeId(length) {
+      let result = ''
+      const characters =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+      const charactersLength = characters.length
+      let counter = 0
+      while (counter < length) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength),
+        )
+        counter += 1
+      }
+      return result
+    }
+
+    async createPaymentLink(name, price, pay) {
+      const config = useRuntimeConfig()
+      if (this.statusUser === 'authenticated') {
+        try {
+          if (this.complateRegis.completion) {
+            if (pay) {
+              const parameter = {
+                transaction_details: {
+                  order_id: this.makeId(40),
+                  gross_amount: price,
+                },
+                item_detail: {
+                  name,
+                  price,
+                  quantity: 1,
+                },
+                customer_details: {
+                  first_name: this.sessionData.name,
+                  email: this.sessionData.email,
+                  phone: this.sessionData.phone,
+                },
+                callbacks: {
+                  // finish: `https://f947-180-244-133-178.ngrok-free.app/?id=${this.sessionData.id}&type=${name}&price=${price}`,
+                  finish: `${config.public.baseURL}/?id=${this.sessionData.id}&type=${name}&price=${price}`,
+                },
+              }
+              await usePostData(`/transaction/showToken`, {
+                detailsTransaction: parameter,
+              }).then((res) => {
+                if (res.status == 200) {
+                  window.location.replace(
+                    // `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`,
+                    `https://app.midtrans.com/snap/v4/redirection/${res._data.token}`,
+                  )
+                } else {
+                  this.toast.add({
+                    icon: 'i-heroicons-exclamation-triangle',
+                    title: 'api service error',
+                    color: 'orange',
+                    timeout: 3000,
+                  })
+                }
+              })
+            } else {
+              const param = {
+                user_id: parseInt(this.sessionData.id),
+                id_payment: this.makeId(40),
+                amount: price,
+                status: 'success',
+                subscribe: name,
+              }
+              usePostData('/transaction/createPayment', param).then((res) => {
+                if (res.status == 200) {
+                  this.state.isOpenFormAlert = true
+                  setTimeout(() => {
+                    this.state.isOpenFormAlert = false
+                  }, 3000)
+                }
+                if (res.status == 409) {
+                  this.toast.add({
+                    icon: 'i-heroicons-exclamation-triangle',
+                    title: 'DigitalDazzle has Already Claimed',
+                    color: 'orange',
+                    timeout: 3000,
+                  })
+                }
+              })
             }
-            usePostData('/transaction/createPayment', param).then((res) => {
-              if (res.status == 200) {
-                state.isOpenFormAlert = true
-                setTimeout(() => {
-                  state.isOpenFormAlert = false
-                }, '3000')
-              }
-              if (res.status == 409) {
-                toast.add({
-                  icon: 'i-heroicons-exclamation-triangle',
-                  title: 'DigitalDazzle has Already Claimed',
-                  color: 'orange',
-                  timeout: 3000,
-                })
-              }
+            this.state.isOpenForm = false
+          } else {
+            this.toast.add({
+              icon: 'i-heroicons-exclamation-triangle',
+              title: 'complete your registration',
+              color: 'orange',
+              timeout: 3000,
             })
           }
-          state.isOpenForm = false
-        } else {
-          toast.add({
+          useGetSession('/user/getSession').then((res) => {
+            this.sessionData.subscribe = res.data.latest_transaction?.subscribe
+            this.sessionData.id = res.data.id
+            this.sessionData.name = res.data.name
+            this.sessionData.email = res.data.email
+            this.sessionData.phone = res.data.no_phone
+          })
+        } catch (error) {
+          this.toast.add({
             icon: 'i-heroicons-exclamation-triangle',
-            title: 'complete your registration',
+            title: 'api service error',
             color: 'orange',
             timeout: 3000,
           })
         }
-        useGetSession('/user/getSession').then((res) => {
-          sessionData.subscribe = res.data.latest_transaction?.subscribe
-          sessionData.id = res.data.id
-          sessionData.name = res.data.name
-          sessionData.email = res.data.email
-          sessionData.phone = res.data.no_phone
-        })
-      } catch (error) {
-        toast.add({
-          icon: 'i-heroicons-exclamation-triangle',
-          title: 'api service error',
-          color: 'orange',
-          timeout: 3000,
-        })
+      } else {
+        this.router.push('/login')
       }
-    } else {
-      router.push('/login')
     }
   }
 
-  setTimeout(() => {
-    state.isOpenFormAlert = false
-  }, '3000')
+  const route = useRoute()
+  const router = useRouter()
+  const toast = useToast()
+  const complateRegis = useComplateRegis()
+  const sessionData = useSessionData()
+  const { status } = useAuth()
+
+  const subscriptionManager = new SubscriptionManager(
+    route,
+    router,
+    toast,
+    sessionData,
+    complateRegis,
+    status,
+  )
+
+  onMounted(() => {
+    subscriptionManager.handleTransactionStatus()
+  })
+
+  function openModal(type) {
+    subscriptionManager.openModal(type)
+  }
+
+  function createPaymentLink(name, price, pay) {
+    subscriptionManager.createPaymentLink(name, price, pay)
+  }
 </script>

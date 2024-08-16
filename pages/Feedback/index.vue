@@ -19,7 +19,7 @@
               <thead class="thead-light">
                 <tr>
                   <th>No</th>
-                  <th>Email</th>
+                  <th>Name</th>
                   <th>Questions 1</th>
                   <th>Questions 2</th>
                   <th>Questions 3</th>
@@ -34,7 +34,7 @@
                     {{ pageNumber++ }}
                   </td>
                   <td class="text-sm font-normal leading-normal">
-                    {{ quiz.user.email }}
+                    {{ quiz.user.name }}
                   </td>
                   <td
                     class="text-sm font-normal leading-normal"
