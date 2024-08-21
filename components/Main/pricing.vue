@@ -403,13 +403,13 @@
           days: 7,
         },
         SparkleSend: {
-          price: 30000,
+          price: 5000,
           fee: 0,
           pay: true,
           days: 30,
         },
         DigitalDreamscape: {
-          price: 80000,
+          price: 5000,
           fee: 4000,
           pay: true,
           days: 90,
