@@ -1,16 +1,16 @@
 <template>
   <BaseHeaderNavigation />
   <UContainer
-    v-if="qrScanner.stateLoad"
+    v-if="stateLoad"
     class="flex h-[80vh] items-center justify-center text-center"
   >
     <span class="loading loading-spinner loading-lg text-[#49479F]"></span>
   </UContainer>
   <div v-else class="h-[70vh] max-w-md md:w-full">
-    <p class="error">{{ qrScanner.error }}</p>
+    <p class="error">{{ error }}</p>
 
     <div
-      v-if="qrScanner.failed"
+      v-if="failed"
       role="alert"
       class="alert mb-4 w-full border-red-400 shadow-lg"
     >
@@ -20,14 +20,10 @@
       </div>
     </div>
     <div v-else>
-      <div
-        v-if="!!qrScanner.result"
-        role="alert"
-        class="alert mb-4 w-full shadow-lg"
-      >
+      <div v-if="!!result" role="alert" class="alert mb-4 w-full shadow-lg">
         <Icon name="icon-park:success" class="h-7 w-7" />
         <div>
-          <h3 class="font-bold">{{ qrScanner.result }}</h3>
+          <h3 class="font-bold">{{ result }}</h3>
         </div>
         <UBadge color="blue" variant="subtle">Registered Guests</UBadge>
       </div>
@@ -58,26 +54,22 @@
       </div>
     </div>
     <select
-      v-model="qrScanner.selectedDevice"
+      v-model="selectedDevice"
       class="select select-bordered select-sm mb-3 w-40 max-w-xs"
     >
       <option disabled selected>Select Camera</option>
-      <option
-        v-for="device in qrScanner.devices"
-        :key="device.deviceId"
-        :value="device"
-      >
+      <option v-for="device in devices" :key="device.deviceId" :value="device">
         {{ device.label }}
       </option>
     </select>
     <div class="h-[70vh] max-w-md md:w-full">
       <qrcode-stream
-        v-if="qrScanner.selectedDevice !== null"
-        :constraints="{ deviceId: qrScanner.selectedDevice.deviceId }"
-        :track="qrScanner.trackBarcode.value"
-        :formats="qrScanner.selectedBarcodeFormats"
-        @error="qrScanner.onError"
-        @detect="qrScanner.onDetect"
+        v-if="selectedDevice !== null"
+        :constraints="{ deviceId: selectedDevice.deviceId }"
+        :track="trackFunctionSelected.value"
+        :formats="selectedBarcodeFormats"
+        @error="onError"
+        @detect="onDetect"
       />
       <p v-else class="error">No cameras on this device</p>
     </div>
@@ -94,140 +86,121 @@
     middleware: 'auth',
   })
 
-  class QRScanner {
-    constructor(toast) {
-      this.toast = toast
-      this.result = ref('')
-      this.failed = ref(false)
-      this.selectedDevice = ref(null)
-      this.devices = ref([])
-      this.stateLoad = ref(true)
-      this.barcodeFormats = ref({
-        qr_code: true,
-      })
-      this.trackBarcode = ref({
-        text: 'outline',
-        value: this.paintCenterText,
-      })
-      this.error = ref('')
+  const toast = useToast()
+  const result = ref('')
+  const failed = ref(false)
+  const selectedDevice = ref(null)
+  const devices = ref([])
+  const stateLoad = ref(true)
+  const barcodeFormats = ref({
+    qr_code: true,
+  })
+  const trackFunctionSelected = ref({ text: 'outline', value: paintCenterText })
+  const selectedBarcodeFormats = computed(() => {
+    return Object.keys(barcodeFormats.value).filter(
+      (format) => barcodeFormats.value[format],
+    )
+  })
+  const error = ref('')
 
-      this.selectedBarcodeFormats = computed(() => {
-        return Object.keys(this.barcodeFormats.value).filter(
-          (format) => this.barcodeFormats.value[format],
-        )
-      })
-    }
-
-    async onDetect(detectedCodes) {
-      const valueString = detectedCodes.map((code) => code.rawValue)[0]
-      const parts = valueString.split('/')
-      this.result.value = parts[1]
-      try {
-        this.failed.value = false
-        const param = {
-          name: parts[1],
-          invite_link: parts[0],
+  async function onDetect(detectedCodes) {
+    const valueString = detectedCodes.map((code) => code.rawValue)[0]
+    const parts = valueString.split('/')
+    result.value = parts[1]
+    try {
+      failed.value = false
+      const param = {
+        name: parts[1],
+        invite_link: parts[0],
+      }
+      await usePostData(`/guest/attendance`, param).then((res) => {
+        if (res.status == 200) {
+          toast.add({
+            icon: 'i-heroicons-check-circle',
+            title: 'Guest successfully updated',
+            color: 'green',
+            timeout: 3000,
+          })
+        } else {
+          failed.value = true
+          toast.add({
+            icon: 'i-heroicons-exclamation-triangle',
+            title: 'Guest not found',
+            color: 'orange',
+            timeout: 3000,
+          })
         }
-        await usePostData(`/guest/attendance`, param).then((res) => {
-          if (res.status == 200) {
-            this.toast.add({
-              icon: 'i-heroicons-check-circle',
-              title: 'Guest successfully updated',
-              color: 'green',
-              timeout: 3000,
-            })
-          } else {
-            this.failed.value = true
-            this.toast.add({
-              icon: 'i-heroicons-exclamation-triangle',
-              title: 'Guest not found',
-              color: 'orange',
-              timeout: 3000,
-            })
-          }
-        })
-      } catch (error) {
-        this.failed.value = true
-        this.toast.add({
-          icon: 'i-heroicons-exclamation-triangle',
-          title: 'api service error',
-          color: 'orange',
-          timeout: 3000,
-        })
-      }
-    }
-
-    async initialize() {
-      this.devices.value = (
-        await navigator.mediaDevices.enumerateDevices()
-      ).filter(({ kind }) => kind === 'videoinput')
-      if (this.devices.value.length > 0) {
-        this.selectedDevice.value = this.devices.value[0]
-      }
-      this.stateLoad.value = false
-    }
-
-    paintCenterText(detectedCodes, ctx) {
-      for (const detectedCode of detectedCodes) {
-        const { boundingBox } = detectedCode
-
-        const centerX = boundingBox.x + boundingBox.width / 2
-        const centerY = boundingBox.y + boundingBox.height / 2
-
-        const fontSize = Math.max(
-          14,
-          (60 * boundingBox.width) / ctx.canvas.width,
-        )
-
-        ctx.font = `bold ${fontSize}px sans-serif`
-        ctx.textAlign = 'center'
-
-        ctx.lineWidth = 3
-        ctx.strokeStyle = '#35495e'
-        const parts = detectedCode.rawValue.split('/')
-        ctx.strokeText(parts[1], centerX, centerY)
-
-        ctx.fillStyle = '#5cb984'
-        ctx.fillText(parts[1], centerX, centerY)
-      }
-    }
-
-    onError(err) {
-      this.error.value = `[${err.name}]: `
-
-      if (err.name === 'NotAllowedError') {
-        this.error.value += 'you need to grant camera access permission'
-      } else if (err.name === 'NotFoundError') {
-        this.error.value += 'no camera on this device'
-      } else if (err.name === 'NotSupportedError') {
-        this.error.value += 'secure context required (HTTPS, localhost)'
-      } else if (err.name === 'NotReadableError') {
-        this.error.value += 'is the camera already in use?'
-      } else if (err.name === 'OverconstrainedError') {
-        this.error.value += 'installed cameras are not suitable'
-      } else if (err.name === 'StreamApiNotSupportedError') {
-        this.error.value += 'Stream API is not supported in this browser'
-      } else if (err.name === 'InsecureContextError') {
-        this.error.value +=
-          'Camera access is only permitted in secure context. Use HTTPS or localhost rather than HTTP.'
-      } else {
-        this.error.value += err.message
-      }
+      })
+    } catch (error) {
+      failed.value = true
+      toast.add({
+        icon: 'i-heroicons-exclamation-triangle',
+        title: 'api service error',
+        color: 'orange',
+        timeout: 3000,
+      })
     }
   }
 
-  const toast = useToast()
-  const qrScanner = new QRScanner(toast)
-
-  onMounted(() => {
+  onMounted(async () => {
     const activePage = useActivePage()
     activePage.page = 'QR Scanner'
     activePage.create = false
     activePage.child = ''
     activePage.export = false
-
-    qrScanner.initialize()
+    devices.value = (await navigator.mediaDevices.enumerateDevices()).filter(
+      ({ kind }) => kind === 'videoinput',
+    )
+    if (devices.value.length > 0) {
+      selectedDevice.value = devices.value[0]
+    }
+    stateLoad.value = false
   })
+
+  function paintCenterText(detectedCodes, ctx) {
+    for (const detectedCode of detectedCodes) {
+      const { boundingBox } = detectedCode
+
+      const centerX = boundingBox.x + boundingBox.width / 2
+      const centerY = boundingBox.y + boundingBox.height / 2
+
+      const fontSize = Math.max(14, (60 * boundingBox.width) / ctx.canvas.width)
+
+      ctx.font = `bold ${fontSize}px sans-serif`
+      ctx.textAlign = 'center'
+
+      ctx.lineWidth = 3
+      ctx.strokeStyle = '#35495e'
+      const parts = detectedCode.rawValue.split('/')
+      ctx.strokeText(parts[1], centerX, centerY)
+
+      ctx.fillStyle = '#5cb984'
+      ctx.fillText(parts[1], centerX, centerY)
+    }
+  }
+
+  function onError(err) {
+    error.value = `[${err.name}]: `
+
+    if (err.name === 'NotAllowedError') {
+      error.value += 'you need to grant camera access permission'
+    } else if (err.name === 'NotFoundError') {
+      error.value += 'no camera on this device'
+    } else if (err.name === 'NotSupportedError') {
+      error.value += 'secure context required (HTTPS, localhost)'
+    } else if (err.name === 'NotReadableError') {
+      error.value += 'is the camera already in use?'
+    } else if (err.name === 'OverconstrainedError') {
+      error.value += 'installed cameras are not suitable'
+    } else if (err.name === 'StreamApiNotSupportedError') {
+      error.value += 'Stream API is not supported in this browser'
+    } else if (err.name === 'InsecureContextError') {
+      error.value +=
+        'Camera access is only permitted in secure context. Use HTTPS or localhost rather than HTTP.'
+    } else {
+      error.value += err.message
+    }
+  }
 </script>
 
 <style scoped>
