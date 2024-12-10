@@ -195,7 +195,7 @@
             color: 'green',
             timeout: 2000,
           })
-          navigateTo('/login')
+          navigateTo(`/verify?email=${values.email}`)
         }
       })
     } catch (error) {
