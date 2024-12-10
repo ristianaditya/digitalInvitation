@@ -43,6 +43,26 @@ export const useGetSession = async (path: string) => {
   })
 }
 
+export const usePostOTPVerification = async (path: string, body: object) => {
+  const config = useRuntimeConfig()
+  return new Promise(async (resolve, reject) => {
+    try {
+      await $fetch(config.public.baseURLService.concat(`${path}`), {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: body,
+        onResponse({ response }) {
+          resolve(response)
+        },
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 export const usePostRegis = async (path: string, body: object) => {
   const config = useRuntimeConfig()
   return new Promise(async (resolve, reject) => {
