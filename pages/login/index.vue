@@ -113,7 +113,7 @@
                   />
                 </div>
                 <button
-                  class="btn btn-ghost mt-16 inline-flex w-full select-none items-center justify-center rounded-lg bg-[#49479F] px-6 py-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:bg-[#39387c] hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  class="btn btn-ghost mt-12 inline-flex w-full select-none items-center justify-center rounded-lg bg-[#49479F] px-6 py-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:bg-[#39387c] hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="submit"
                 >
                   <div
@@ -126,6 +126,16 @@
                   <div v-else>login</div>
                 </button>
               </form>
+              <div class="divider text-xs">or</div>
+              <button
+                class="btn btn-ghost inline-flex h-10 w-full items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none hover:bg-[#ececec] disabled:cursor-not-allowed disabled:opacity-60"
+                @click="($event) => signIn('google')"
+              >
+                <img
+                  src="https://www.svgrepo.com/show/475656/google-color.svg"
+                  class="h-[18px] w-[18px]"
+                />Continue with Google
+              </button>
             </div>
           </div>
         </span>

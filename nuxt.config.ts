@@ -61,15 +61,6 @@ export default defineNuxtConfig({
       script: [
         { src: 'https://unpkg.com/grapesjs', body: true },
         { src: 'https://unpkg.com/grapesjs-uppy', body: true },
-        {
-          type: 'text/javascript',
-          src: 'https://app.midtrans.com/snap/snap.js',
-          'data-client-key': 'Mid-client-rftm07W6eAa8iQQT',
-          async: true,
-          defer: true,
-          body: true,
-        },
-        // { src: 'https://cdn.tailwindcss.com', body: true }
       ],
     },
   },
