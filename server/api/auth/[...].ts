@@ -49,7 +49,7 @@ export default NuxtAuthHandler({
   },
   callbacks: {
     redirect: async ({ baseUrl }) => {
-      return Promise.resolve(baseUrl)
+      return Promise.resolve(process.env.BASE_URL)
     },
     jwt: async ({ token, account, user }) => {
       const isSignIn = user ? true : false
