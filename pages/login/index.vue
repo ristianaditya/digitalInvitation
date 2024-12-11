@@ -87,9 +87,7 @@
                   class="-mb-4 mt-2 rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-400"
                   role="alert"
                 >
-                  <span class="font-bold"
-                    >Your email or password is incorrect !</span
-                  >
+                  <span class="font-bold">{{ pageErrorMassage }}</span>
                 </div>
               </div>
               <form
@@ -129,7 +127,7 @@
               <div class="divider text-xs">or</div>
               <button
                 class="btn btn-ghost inline-flex h-10 w-full items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none hover:bg-[#ececec] disabled:cursor-not-allowed disabled:opacity-60"
-                @click="($event) => signIn('google')"
+                @click="onSubmitGoogle()"
               >
                 <img
                   src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -164,6 +162,7 @@
     status: false,
   })
   const pageError = ref(false)
+  const pageErrorMassage = ref('')
 
   const { handleSubmit } = useForm({
     validationSchema: yup.object({
@@ -183,6 +182,7 @@
       if (error) {
         pageError.value = true
         login.status = false
+        pageErrorMassage.value = error
       } else {
         login.status = false
         return navigateTo(config.public.baseURL, { external: true })
@@ -191,6 +191,21 @@
       console.log('message', error)
     }
   })
+
+  async function onSubmitGoogle() {
+    try {
+      const { error } = await signIn('google', { redirect: false })
+
+      if (error) {
+        pageError.value = true
+        pageErrorMassage.value = error
+      } else {
+        return navigateTo(config.public.baseURL, { external: true })
+      }
+    } catch (error) {
+      console.log('message', error)
+    }
+  }
 </script>
 
 <style scoped>

@@ -99,7 +99,7 @@ export default NuxtAuthHandler({
           }
           return dataUser
         } catch (error) {
-          throw new Error('error')
+          throw new Error('Your email or password is incorrect !')
         }
       },
     }),
@@ -136,8 +136,7 @@ export default NuxtAuthHandler({
             expires_in: userData.expires_in,
           }
         } catch (error) {
-          console.error('Google login user insert error:', error)
-          throw new Error('Failed to create/update user')
+          throw new Error('Email sudah terdaftar')
         }
       },
     }),
