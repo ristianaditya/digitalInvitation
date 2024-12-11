@@ -48,6 +48,9 @@ export default NuxtAuthHandler({
     signOut: '/login',
   },
   callbacks: {
+    redirect: async ({ baseUrl }) => {
+      return Promise.resolve(baseUrl)
+    },
     jwt: async ({ token, account, user }) => {
       const isSignIn = user ? true : false
 
@@ -104,6 +107,7 @@ export default NuxtAuthHandler({
       },
     }),
     GoogleProvider.default({
+      name: 'Google',
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       async profile(profile) {
@@ -124,7 +128,6 @@ export default NuxtAuthHandler({
               },
             },
           )
-
           return {
             id: profile.sub,
             name: profile.name,
