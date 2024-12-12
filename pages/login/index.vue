@@ -194,16 +194,17 @@
 
   async function onSubmitGoogle() {
     try {
-      const { error } = await signIn('google', { redirect: false })
+      const result = await signIn('google', {
+        redirect: true,
+        callbackUrl: config.public.baseURL,
+      })
 
-      if (error) {
+      if (result?.error) {
         pageError.value = true
-        pageErrorMassage.value = error
-      } else {
-        return navigateTo(config.public.baseURL, { external: true })
+        pageErrorMassage.value = result.error
       }
     } catch (error) {
-      console.log('message', error)
+      console.log('Login error:', error)
     }
   }
 </script>
