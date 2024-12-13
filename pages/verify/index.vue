@@ -83,7 +83,7 @@
                   </div>
                 </div>
                 <button
-                  class="btn btn-ghost mt-16 inline-flex w-full select-none items-center justify-center rounded-lg bg-[#49479F] px-6 py-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:bg-[#39387c] hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  class="btn btn-ghost mt-5 inline-flex w-full select-none items-center justify-center rounded-lg bg-[#49479F] px-6 py-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:bg-[#39387c] hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="submit"
                   :disabled="alertState.loading"
                 >
@@ -94,6 +94,28 @@
                   <div v-else>Verify OTP</div>
                 </button>
               </form>
+
+              <!-- Resend OTP Button with Countdown -->
+              <div v-if="countdown <= 0">
+                <button
+                  class="btn mt-4 w-full text-sm text-[#49479F] bg-white border border-[#49479F] rounded-lg py-2"
+                  @click="resendOtp"
+                  :disabled="alertState.loadingresend"
+                >
+                  
+                  <div v-if="alertState.loadingresend" class="align-center -mt-1 flex items-center">
+                    <span class="loading loading-spinner mr-2"></span>
+                    Resend OTP...
+                  </div>
+                  <div v-else>Resend OTP</div>
+                </button>
+              </div>
+              
+              <div v-else>
+                <span class="text-sm text-gray-500">
+                  You can resend OTP in {{ countdown }} seconds.
+                </span>
+              </div>
             </div>
           </div>
         </span>
@@ -131,7 +153,52 @@
 
   // Array to store each OTP digit
   const otpDigits = ref(Array(6).fill(''))
+  const countdown = ref(0)
+  const countdownInterval = ref(null)
+  const resendAttempts = ref(0)
+  const maxRetries = 3  // Max resend attempts
 
+  const startCountdown = () => {
+    countdown.value = 10 // Set the countdown to 60 seconds
+    countdownInterval.value = setInterval(() => {
+      if (countdown.value > 0) {
+        countdown.value -= 1
+      } else {
+        clearInterval(countdownInterval.value)
+      }
+    }, 1000)
+  }
+
+  const resendOtp = async () => {
+    alertState.loadingresend = true
+    alertState.show = false
+    try {
+      await useResendOTP('/send-otp', { email }).then((res) => {
+        
+        if (res.status === 200) {
+          toast.add({
+            icon: 'i-heroicons-check-circle',
+            title: 'OTP Resent Successfully',
+            color: 'green',
+            timeout: 2000,
+          })
+          startCountdown()
+        } else {
+          alertState.show = true
+          alertState.message = res._data.message
+        }
+      })
+    } catch (error) {
+      toast.add({
+        icon: 'i-heroicons-x-circle',
+        title: 'Failed to resend OTP',
+        color: 'red',
+        timeout: 2000,
+      })
+    } finally {
+      alertState.loadingresend = false
+    }
+  }
   const onOtpInput = (event, index) => {
     const value = event.target.value
     if (value && index < otpDigits.value.length - 1) {
@@ -186,6 +253,15 @@
     } finally {
       alertState.loading = false
     }
+  onMounted(() => {
+    startCountdown()
+  })
+
+  onUnmounted(() => {
+    if (countdownInterval.value) {
+      clearInterval(countdownInterval.value)
+    }
+  })
   })
 </script>
 
