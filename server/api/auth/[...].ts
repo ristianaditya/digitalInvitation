@@ -1,5 +1,6 @@
 import { NuxtAuthHandler } from '#auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
 
 async function refreshAccessToken(refreshToken: {
   accessToken: string
@@ -47,6 +48,9 @@ export default NuxtAuthHandler({
     signOut: '/login',
   },
   callbacks: {
+    redirect: async ({ baseUrl }) => {
+      return Promise.resolve(process.env.BASE_URL)
+    },
     jwt: async ({ token, account, user }) => {
       const isSignIn = user ? true : false
 
@@ -98,7 +102,44 @@ export default NuxtAuthHandler({
           }
           return dataUser
         } catch (error) {
-          throw new Error('error')
+          throw new Error('Your email or password is incorrect !')
+        }
+      },
+    }),
+    GoogleProvider.default({
+      name: 'Google',
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      async profile(profile) {
+        try {
+          const userData = await $fetch(
+            `${process.env.BASE_URL_API_SERVICE}/registerGoogle`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: {
+                email: profile.email,
+                name: profile.name,
+                username: profile.name,
+                googleId: profile.sub,
+                picture: profile.picture,
+              },
+            },
+          )
+          return {
+            id: profile.sub,
+            name: profile.name,
+            username: userData.data.username,
+            email: profile.email,
+            image: profile.picture,
+            accessToken: userData.access_token,
+            refreshToken: userData.access_token,
+            expires_in: userData.expires_in,
+          }
+        } catch (error) {
+          throw new Error('Email sudah terdaftar')
         }
       },
     }),
