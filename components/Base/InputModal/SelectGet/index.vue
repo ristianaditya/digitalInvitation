@@ -30,7 +30,7 @@
           <Icon name="material-symbols:add" class="text-2xl" />
         </div>
       </div>
-      <p class="mt-2 text-sm text-red-500 dark:text-red-400">
+      <p class="mt-2 text-sm text-red-500">
         {{ errorMessage }}
       </p>
     </div>
@@ -116,6 +116,6 @@
 </script>
 <style>
   div[id^='headlessui-combobox-button'] > button {
-    @apply form-input relative block w-full rounded-md border-0 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-[#49479F] disabled:cursor-not-allowed disabled:opacity-75 dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 dark:ring-gray-700 dark:focus:ring-[#49479F];
+    @apply form-input relative block w-full rounded-md border-0 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-[#49479F] disabled:cursor-not-allowed disabled:opacity-75;
   }
 </style>

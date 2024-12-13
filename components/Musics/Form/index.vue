@@ -71,9 +71,8 @@
         </Form>
       </div>
       <div class="mt-6 sm:flex sm:flex-row-reverse">
-        <UButton
-          class="w-28 justify-center bg-[#49479F] text-white hover:bg-[#2b2a61]"
-          variant="solid"
+        <button
+          class="linear active:bg-brand-700 inline-flex items-center justify-center rounded-[8px] bg-[#49479F] px-4 py-3 text-sm font-medium text-white transition duration-200 hover:bg-[#2b2a61]"
           @click="handleSubmit"
         >
           <div v-if="stateLoading">
@@ -81,15 +80,13 @@
             Saving..
           </div>
           <div v-else>Save Changes</div>
-        </UButton>
-        <UButton
-          color="blue"
-          class="mr-3 w-20 justify-center"
-          variant="soft"
+        </button>
+        <button
+          class="linear active:bg-brand-700 mr-3 inline-flex items-center justify-center rounded-[8px] bg-blue-50 px-4 py-3 text-sm font-medium text-blue-500 transition duration-200 hover:bg-blue-100"
           @click="closedModal"
         >
-          Cancel
-        </UButton>
+          <div>Cancel</div>
+        </button>
       </div>
     </div>
   </div>
