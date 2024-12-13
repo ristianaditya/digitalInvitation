@@ -60,6 +60,9 @@
                   role="alert"
                 >
                   <span class="font-bold">{{ alertState.message }}</span>
+                  <div v-if="alertState.nextAttempt" class="mt-1">
+                    You Can Try Again in {{ formatNextAttempt(alertState.nextAttempt) }}
+                  </div>
                 </div>
               </div>
               <form @submit.prevent="onSubmit" class="mb-2 mt-8 max-w-screen-lg">
@@ -142,6 +145,8 @@
     show: false,
     message: '',
     loading: false,
+    loadingresend: false,
+    nextAttempt: null,
   })
   
   const toast = useToast()
@@ -168,7 +173,21 @@
       }
     }, 1000)
   }
-
+  const formatNextAttempt = (dateString) => {
+    const nextAttemptDate = new Date(dateString)
+    const now = new Date()
+    const diffInSeconds = Math.floor((nextAttemptDate - now) / 1000)
+    
+    if (diffInSeconds <= 0) return 'now'
+    
+    const hours = Math.floor(diffInSeconds / 3600)
+    const minutes = Math.floor((diffInSeconds % 3600) / 60)
+    
+    if (hours > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''} and ${minutes} minute${minutes !== 1 ? 's' : ''}`
+    }
+    return `${minutes} minute${minutes !== 1 ? 's' : ''}`
+  }
   const resendOtp = async () => {
     alertState.loadingresend = true
     alertState.show = false
@@ -186,6 +205,7 @@
         } else {
           alertState.show = true
           alertState.message = res._data.message
+          alertState.nextAttempt = res._data.next_attempt
         }
       })
     } catch (error) {
@@ -225,6 +245,8 @@
       }
     }
   }
+
+
 
   const onSubmit = handleSubmit(async () => {
     alertState.loading = true
