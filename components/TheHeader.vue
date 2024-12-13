@@ -286,7 +286,7 @@
   const { signOut, status } = useAuth()
 
   const config = useRuntimeConfig()
-  const sessionData = useSessionData()
+  const sessionData = await useSessionData()
 
   const statusUser = status.value
   const dataUser = reactive({
@@ -297,7 +297,7 @@
   })
   const isOpen = ref(false)
 
-  const complateRegis = useComplateRegis()
+  const complateRegis = await useComplateRegis()
 
   function openModal() {
     isOpen.value = true
@@ -313,7 +313,7 @@
   }
 
   if (statusUser === 'authenticated') {
-    useGetSession('/user/getSession').then((res) => {
+    await useGetSession('/user/getSession').then((res) => {
       dataUser.name = res.data.username
       dataUser.email = res.data.email
       dataUser.picture = res.data.picture

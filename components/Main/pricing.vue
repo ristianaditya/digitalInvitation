@@ -478,7 +478,7 @@
             }, '3000')
           }
         })
-        navigateTo('/')
+        // navigateTo('/dashboard')
       }
     }
 
@@ -528,8 +528,8 @@
               }).then((res) => {
                 if (res.status == 200) {
                   window.location.replace(
-                    // `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`,
-                    `https://app.midtrans.com/snap/v4/redirection/${res._data.token}`,
+                    `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`,
+                    // `https://app.midtrans.com/snap/v4/redirection/${res._data.token}`,
                   )
                 } else {
                   this.toast.add({
@@ -548,6 +548,7 @@
                 status: 'success',
                 subscribe: name,
               }
+
               usePostData('/transaction/createPayment', param).then((res) => {
                 if (res.status == 200) {
                   this.state.isOpenFormAlert = true
@@ -598,7 +599,7 @@
   const route = useRoute()
   const router = useRouter()
   const toast = useToast()
-  const complateRegis = useComplateRegis()
+  const complateRegis = await useComplateRegis()
   const sessionData = useSessionData()
   const { status } = useAuth()
 
@@ -612,6 +613,13 @@
   )
 
   onMounted(() => {
+    useGetSession('/user/getSession').then((res) => {
+      sessionData.id = res.data.id
+      sessionData.name = res.data.name
+      sessionData.email = res.data.email
+      sessionData.phone = res.data.no_phone
+    })
+
     subscriptionManager.handleTransactionStatus()
   })
 

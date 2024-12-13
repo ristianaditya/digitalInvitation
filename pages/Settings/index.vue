@@ -116,7 +116,7 @@
           desc="Brief description for your profile. URLs are
               hyperlinked."
         />
-        <div class="grid grid-cols-2 gap-2">
+        <div class="grid grid-cols-2 gap-2 pb-4">
           <div>
             <div
               class="flex content-center items-center justify-between text-sm"
@@ -231,6 +231,7 @@
 </template>
 
 <script setup>
+  import { useComplateRegis } from '@/store/index'
   import { Form } from 'vee-validate'
   import * as yup from 'yup'
   import {
@@ -250,6 +251,8 @@
   const stateLoading = ref(false)
   const idUser = ref('')
   const fileRef = ref()
+  const userPlan = ref()
+  const complateRegis = await useComplateRegis()
   const dataUser = reactive({
     name: '',
     email: '',
@@ -267,7 +270,7 @@
 
   const schema = yup.object({
     username: yup.string().required().min(3).max(16),
-    name: yup.string().required().min(3).max(16),
+    name: yup.string().required().min(3),
     email: yup.string().required().email(),
     address: yup.string().required().min(3).max(64),
     no_phone: yup.number().required('number phone is a required field'),
@@ -362,6 +365,10 @@
           }
         },
       )
+      if (userPlan.value === null) {
+        complateRegis.completion = true
+        navigateTo('/plans')
+      }
     } catch (error) {
       toast.add({
         icon: 'i-heroicons-exclamation-triangle',
@@ -399,6 +406,7 @@
       'Desember',
     ]
     await useGetSession('/user/getSession').then((res) => {
+      userPlan.value = res.data.latest_transaction
       idUser.value = res.data.id
       ;(dataUser.name = res.data.name),
         (dataUser.username = res.data.username),

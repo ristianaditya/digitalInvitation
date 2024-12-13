@@ -118,10 +118,11 @@
 
 <script setup>
   import { useComplateRegis } from '@/store/index'
+
   definePageMeta({
     auth: false,
   })
-  const complateRegis = useComplateRegis()
+  const complateRegis = await useComplateRegis()
 
   const { status } = useAuth()
   const countFeedback = ref(1)
@@ -177,6 +178,10 @@
     useGetData('/quiz/getByIdCount').then((res) => {
       countFeedback.value = res.data
     })
+
+    if (statusUser === 'authenticated' && complateRegis.completion == false) {
+      navigateTo(`/settings`)
+    }
   })
 
   onUnmounted(() => {
