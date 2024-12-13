@@ -185,7 +185,7 @@
 
   const schema = yup.object({
     username: yup.string().required().min(3).max(16),
-    name: yup.string().required().min(3).max(16),
+    name: yup.string().required().min(3),
     email: yup.string().required().email(),
     address: yup.string().required().min(3).max(64),
     no_phone: yup.number().required('number phone is a required field'),

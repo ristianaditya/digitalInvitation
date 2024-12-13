@@ -1,6 +1,8 @@
 <template>
   <div class="bg-[#F4F0FD] font-[sans-serif] text-[#333]">
-    <div class="flex flex-col min-h-screen items-center justify-center px-4 py-6">
+    <div
+      class="flex min-h-screen flex-col items-center justify-center px-4 py-6"
+    >
       <div class="grid w-full max-w-6xl items-center gap-10 md:grid-cols-2">
         <div class="ml-auto mr-auto max-md:text-center max-[500px]:w-80">
           <div
@@ -14,11 +16,16 @@
               Welcome to Invite Plus
             </a>
           </div>
-          <h1 class="h1 col-start-1 row-start-2 mb-2 mt-2 max-w-[36rem] text-4xl font-extrabold leading-8 tracking-tight text-slate-900 sm:text-[3.7rem] xl:max-w-[50.5rem]">
+          <h1
+            class="h1 col-start-1 row-start-2 mb-2 mt-2 max-w-[36rem] text-4xl font-extrabold leading-8 tracking-tight text-slate-900 sm:text-[3.7rem] xl:max-w-[50.5rem]"
+          >
             OTP Verification
           </h1>
-          <p class="col-start-1 row-start-3 mt-4 max-w-lg font-inter text-lg font-medium leading-8">
-            Please enter the OTP sent to your email to complete your registration.
+          <p
+            class="col-start-1 row-start-3 mt-4 max-w-lg font-inter text-lg font-medium leading-8"
+          >
+            Please enter the OTP sent to your email to complete your
+            registration.
           </p>
         </div>
 
@@ -46,12 +53,18 @@
             ></rect>
           </svg>
 
-          <div class="relative w-full max-w-md space-y-6 rounded-3xl bg-white p-12 font-inter shadow-[5px_5px_0px_0px_rgb(210,198,250)] max-md:mx-auto max-[500px]:w-[21rem] max-[500px]:p-8 md:ml-auto md:mr-auto">
+          <div
+            class="relative w-full max-w-md space-y-6 rounded-3xl bg-white p-12 font-inter shadow-[5px_5px_0px_0px_rgb(210,198,250)] max-md:mx-auto max-[500px]:w-[21rem] max-[500px]:p-8 md:ml-auto md:mr-auto"
+          >
             <div class="relative flex flex-col text-black">
-              <h4 class="text-blue-gray-900 block text-3xl leading-snug tracking-normal antialiased">
+              <h4
+                class="text-blue-gray-900 block text-3xl leading-snug tracking-normal antialiased"
+              >
                 <b>Verify OTP</b>
               </h4>
-              <p class="mt-1 block font-sans text-base font-normal leading-relaxed text-gray-900 antialiased">
+              <p
+                class="mt-1 block font-sans text-base font-normal leading-relaxed text-gray-900 antialiased"
+              >
                 Enter the OTP sent to your email to complete your registration.
               </p>
               <div v-if="alertState.show">
@@ -65,8 +78,11 @@
                   </div>
                 </div>
               </div>
-              <form @submit.prevent="onSubmit" class="mb-2 mt-8 max-w-screen-lg">
-                <div class="mb-6 flex space-x-2 justify-center">
+              <form
+                @submit.prevent="onSubmit"
+                class="mb-2 mt-8 max-w-screen-lg"
+              >
+                <div class="mb-6 flex justify-center space-x-2">
                   <!-- OTP input boxes -->
                   <div
                     v-for="(digit, index) in otpDigits"
@@ -79,7 +95,7 @@
                       @keydown="onOtpKeydown($event, index)"
                       @paste="onOtpPaste($event)"
                       type="text"
-                      class="w-12 h-12 text-center text-2xl font-bold border border-gray-300 rounded-md"
+                      class="h-12 w-12 rounded-md border border-gray-300 text-center text-2xl font-bold"
                       maxlength="1"
                       :autofocus="index === 0"
                     />
@@ -90,7 +106,10 @@
                   type="submit"
                   :disabled="alertState.loading"
                 >
-                  <div v-if="alertState.loading" class="align-center -mt-1 flex items-center">
+                  <div
+                    v-if="alertState.loading"
+                    class="align-center -mt-1 flex items-center"
+                  >
                     <span class="loading loading-spinner mr-2"></span>
                     Verifying OTP...
                   </div>
@@ -148,12 +167,11 @@
     loadingresend: false,
     nextAttempt: null,
   })
-  
+
   const toast = useToast()
 
   const { handleSubmit } = useForm({
-    validationSchema: yup.object({
-    }),
+    validationSchema: yup.object({}),
   })
 
   // Array to store each OTP digit
@@ -254,21 +272,23 @@
     const otp = otpDigits.value.join('') // Join OTP digits into a single string
 
     try {
-      await usePostOTPVerification('/verify-otp', { otp, email }).then((res) => {
-        if (res.status === 200) {
-          alertState.show = false
-          toast.add({
-            icon: 'i-heroicons-check-circle',
-            title: 'OTP Verified Successfully',
-            color: 'green',
-            timeout: 2000,
-          })
-          navigateTo('/login')  // Redirect to login page or another page
-        } else {
-          alertState.show = true
-          alertState.message = 'Invalid OTP. Please try again.'
-        }
-      })
+      await usePostOTPVerification('/verify-otp', { otp, email }).then(
+        (res) => {
+          if (res.status === 200) {
+            alertState.show = false
+            toast.add({
+              icon: 'i-heroicons-check-circle',
+              title: 'OTP Verified Successfully',
+              color: 'green',
+              timeout: 2000,
+            })
+            navigateTo('/login') // Redirect to login page or another page
+          } else {
+            alertState.show = true
+            alertState.message = 'Invalid OTP. Please try again.'
+          }
+        },
+      )
     } catch (error) {
       alertState.show = true
       alertState.message = 'Something went wrong. Please try again later.'
