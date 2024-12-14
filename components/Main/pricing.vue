@@ -347,8 +347,6 @@
                     subscriptionManager.state.type,
                     subscriptionManager.plans[subscriptionManager.state.type]
                       ?.price,
-                    subscriptionManager.plans[subscriptionManager.state.type]
-                      ?.pay,
                   )
                 "
               >
@@ -399,19 +397,16 @@
         DigitalDazzle: {
           price: 0,
           fee: 0,
-          pay: false,
           days: 7,
         },
         SparkleSend: {
           price: 5000,
           fee: 0,
-          pay: true,
           days: 30,
         },
         DigitalDreamscape: {
           price: 5000,
           fee: 4000,
-          pay: true,
           days: 90,
         },
       }
@@ -452,35 +447,35 @@
       this.state.date = `${dayName}, ${day} ${month} ${year}`
     }
 
-    async handleTransactionStatus() {
-      const paramStatus = ref(this.route.query.transaction_status)
-      if (paramStatus.value == 'settlement') {
-        const param = {
-          user_id: parseInt(this.route.query.id),
-          id_payment: this.route.query.order_id,
-          amount: parseInt(this.route.query.price),
-          status: 'success',
-          subscribe: this.route.query.type,
-        }
-        await usePostData('/transaction/createPayment', param).then((res) => {
-          if (res.status == 200) {
-            this.state.isOpenFormAlert = true
-            useGetSession('/user/getSession').then((res) => {
-              this.sessionData.subscribe =
-                res.data.latest_transaction?.subscribe
-              this.sessionData.id = res.data.id
-              this.sessionData.name = res.data.name
-              this.sessionData.email = res.data.email
-              this.sessionData.phone = res.data.no_phone
-            })
-            setTimeout(() => {
-              this.state.isOpenFormAlert = false
-            }, '3000')
-          }
-        })
-        // navigateTo('/dashboard')
-      }
-    }
+    // async handleTransactionStatus() {
+    //   const paramStatus = ref(this.route.query.transaction_status)
+    //   if (paramStatus.value == 'settlement') {
+    //     const param = {
+    //       user_id: parseInt(this.route.query.id),
+    //       id_payment: this.route.query.order_id,
+    //       amount: parseInt(this.route.query.price),
+    //       status: 'success',
+    //       subscribe: this.route.query.type,
+    //     }
+    //     await usePostData('/transaction/createPayment', param).then((res) => {
+    //       if (res.status == 200) {
+    //         this.state.isOpenFormAlert = true
+    //         useGetSession('/user/getSession').then((res) => {
+    //           this.sessionData.subscribe =
+    //             res.data.latest_transaction?.subscribe
+    //           this.sessionData.id = res.data.id
+    //           this.sessionData.name = res.data.name
+    //           this.sessionData.email = res.data.email
+    //           this.sessionData.phone = res.data.no_phone
+    //         })
+    //         setTimeout(() => {
+    //           this.state.isOpenFormAlert = false
+    //         }, '3000')
+    //       }
+    //     })
+    //     // navigateTo('/dashboard')
+    //   }
+    // }
 
     makeId(length) {
       let result = ''
@@ -497,75 +492,66 @@
       return result
     }
 
-    async createPaymentLink(name, price, pay) {
+    async createPaymentLink(name, price) {
       const config = useRuntimeConfig()
       if (this.statusUser === 'authenticated') {
         try {
           if (this.complateRegis.completion) {
-            if (pay) {
-              const parameter = {
-                transaction_details: {
-                  order_id: this.makeId(40),
-                  gross_amount: price,
-                },
-                item_detail: {
-                  name,
-                  price,
-                  quantity: 1,
-                },
-                customer_details: {
-                  first_name: this.sessionData.name,
-                  email: this.sessionData.email,
-                  phone: this.sessionData.phone,
-                },
-                callbacks: {
-                  // finish: `https://f947-180-244-133-178.ngrok-free.app/?id=${this.sessionData.id}&type=${name}&price=${price}`,
-                  finish: `${config.public.baseURL}/?id=${this.sessionData.id}&type=${name}&price=${price}`,
-                },
-              }
-              await usePostData(`/transaction/showToken`, {
-                detailsTransaction: parameter,
-              }).then((res) => {
-                if (res.status == 200) {
-                  window.location.replace(
-                    `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`,
-                    // `https://app.midtrans.com/snap/v4/redirection/${res._data.token}`,
-                  )
-                } else {
-                  this.toast.add({
-                    icon: 'i-heroicons-exclamation-triangle',
-                    title: 'api service error',
-                    color: 'orange',
-                    timeout: 3000,
-                  })
-                }
-              })
-            } else {
-              const param = {
-                user_id: parseInt(this.sessionData.id),
-                id_payment: this.makeId(40),
-                amount: price,
-                status: 'success',
-                subscribe: name,
-              }
-
-              usePostData('/transaction/createPayment', param).then((res) => {
-                if (res.status == 200) {
-                  this.state.isOpenFormAlert = true
-                  setTimeout(() => {
-                    this.state.isOpenFormAlert = false
-                  }, 3000)
-                }
-                if (res.status == 409) {
-                  this.toast.add({
-                    icon: 'i-heroicons-exclamation-triangle',
-                    title: 'DigitalDazzle has Already Claimed',
-                    color: 'orange',
-                    timeout: 3000,
-                  })
-                }
-              })
+            const orderId = this.makeId(40)
+            const parameter = {
+              transaction_details: {
+                order_id: orderId,
+                gross_amount: price,
+              },
+              item_detail: {
+                name,
+                price,
+                quantity: 1,
+              },
+              customer_details: {
+                first_name: this.sessionData.name,
+                email: this.sessionData.email,
+                phone: this.sessionData.phone,
+              },
+              callbacks: {}
             }
+
+            const param = {
+              user_id: this.sessionData.id,
+              id_payment: orderId,
+              amount: parseInt(price),
+              subscribe: name,
+            }
+
+            await usePostData('/transaction/createPayment', param).then((res) => {
+              if (res.status == 200) {
+                useGetSession('/user/getSession').then((res) => {
+                  this.sessionData.subscribe = res.data.latest_transaction?.subscribe
+                  this.sessionData.id = res.data.id
+                  this.sessionData.name = res.data.name
+                  this.sessionData.email = res.data.email
+                  this.sessionData.phone = res.data.no_phone
+                })
+              }
+            })
+
+            await usePostData(`/transaction/showToken`, {
+              detailsTransaction: parameter,
+            }).then((res) => {
+              if (res.status == 200) {
+                window.location.replace(
+                  `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`
+                )
+              } else {
+                this.toast.add({
+                  icon: 'i-heroicons-exclamation-triangle',
+                  title: 'api service error',
+                  color: 'orange',
+                  timeout: 3000,
+                })
+              }
+            })
+            
             this.state.isOpenForm = false
           } else {
             this.toast.add({
@@ -575,6 +561,7 @@
               timeout: 3000,
             })
           }
+
           useGetSession('/user/getSession').then((res) => {
             this.sessionData.subscribe = res.data.latest_transaction?.subscribe
             this.sessionData.id = res.data.id
@@ -582,6 +569,7 @@
             this.sessionData.email = res.data.email
             this.sessionData.phone = res.data.no_phone
           })
+
         } catch (error) {
           this.toast.add({
             icon: 'i-heroicons-exclamation-triangle',
@@ -620,14 +608,14 @@
       sessionData.phone = res.data.no_phone
     })
 
-    subscriptionManager.handleTransactionStatus()
+    
   })
 
   function openModal(type) {
     subscriptionManager.openModal(type)
   }
 
-  function createPaymentLink(name, price, pay) {
-    subscriptionManager.createPaymentLink(name, price, pay)
+  function createPaymentLink(name, price) {
+    subscriptionManager.createPaymentLink(name, price)
   }
 </script>
