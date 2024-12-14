@@ -513,7 +513,9 @@
                 email: this.sessionData.email,
                 phone: this.sessionData.phone,
               },
-              callbacks: {}
+              callbacks: {
+                finish: `${config.public.baseURL}/Dashboard`,
+              }
             }
 
             const param = {
