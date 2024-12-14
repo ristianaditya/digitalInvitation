@@ -150,9 +150,9 @@
               class="menu dropdown-content z-[1] bg-base-100 bg-transparent"
             >
               <div
-                class="z-10 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
+                class="z-10 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow"
               >
-                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                <div class="px-4 py-3 text-sm text-gray-900">
                   <div v-if="!!dataUser.name" class="truncate text-[#49479F]">
                     {{ dataUser.name }}
                   </div>
@@ -163,7 +163,7 @@
                   <div v-else class="skeleton h-4 w-28"></div>
                 </div>
                 <ul
-                  class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                  class="py-2 text-sm text-gray-700"
                   aria-labelledby="avatarButton"
                 >
                   <li>
@@ -196,14 +196,14 @@
                   <li>
                     <NuxtLink
                       to="/settings"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white"
+                      class="block px-4 py-2 hover:bg-gray-100"
                       >Settings
                     </NuxtLink>
                   </li>
                 </ul>
                 <div class="py-1">
                   <a
-                    class="block cursor-pointer px-4 py-2 text-sm text-[#FAA6B0] hover:bg-gray-100 dark:text-gray-200 dark:hover:text-white"
+                    class="block cursor-pointer px-4 py-2 text-sm text-[#FAA6B0] hover:bg-gray-100"
                     @click="openModal"
                     >Logout</a
                   >

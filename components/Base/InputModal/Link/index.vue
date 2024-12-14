@@ -10,18 +10,16 @@
           v-model="value"
           :name="name"
           :type="type"
-          class="form-input text-md relative block w-full rounded-md border-0 bg-white px-3 py-2 ps-[90px] text-gray-900 placeholder-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-[#49479F] disabled:cursor-not-allowed disabled:opacity-75 dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 dark:ring-gray-700 dark:focus:ring-[#49479F]"
+          class="form-input text-md relative block w-full rounded-md border-0 bg-white px-3 py-2 ps-[90px] text-gray-900 placeholder-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-[#49479F] disabled:cursor-not-allowed disabled:opacity-75"
           autocomplete="off"
         />
         <span
           class="pointer-events-none absolute inset-y-0 start-0 flex items-center px-3"
         >
-          <span class="text-sm text-gray-500 dark:text-gray-400"
-            >invitePlus /
-          </span>
+          <span class="text-sm text-gray-500">invitePlus / </span>
         </span>
       </div>
-      <p class="mt-2 text-sm text-red-500 dark:text-red-400">
+      <p class="mt-2 text-sm text-red-500">
         {{ errorMessage }}
       </p>
     </div>

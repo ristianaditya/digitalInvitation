@@ -98,9 +98,8 @@
       </div>
     </Form>
     <div class="mt-10 sm:flex sm:flex-row-reverse">
-      <UButton
-        class="w-28 justify-center bg-[#49479F] text-white hover:bg-[#2b2a61]"
-        variant="solid"
+      <button
+        class="linear active:bg-brand-700 inline-flex items-center justify-center rounded-[8px] bg-[#49479F] px-4 py-3 text-sm font-medium text-white transition duration-200 hover:bg-[#2b2a61]"
         @click="handleSubmit"
       >
         <div v-if="stateLoading">
@@ -108,15 +107,13 @@
           Saving..
         </div>
         <div v-else>Save Changes</div>
-      </UButton>
-      <UButton
-        color="blue"
-        class="mr-3 w-20 justify-center"
-        variant="soft"
+      </button>
+      <button
+        class="linear active:bg-brand-700 mr-3 inline-flex items-center justify-center rounded-[8px] bg-blue-50 px-4 py-3 text-sm font-medium text-blue-500 transition duration-200 hover:bg-blue-100"
         @click="closedModal"
       >
-        Cancel
-      </UButton>
+        <div>Cancel</div>
+      </button>
     </div>
   </div>
 </template>
@@ -238,6 +235,6 @@
 </script>
 <style>
   div[id^='headlessui-combobox-button'] > button {
-    @apply form-input relative block w-full rounded-md border-0 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-[#49479F] disabled:cursor-not-allowed disabled:opacity-75 dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 dark:ring-gray-700 dark:focus:ring-[#49479F];
+    @apply form-input relative block w-full rounded-md border-0 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-[#49479F] disabled:cursor-not-allowed disabled:opacity-75;
   }
 </style>
