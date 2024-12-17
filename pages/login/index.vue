@@ -179,10 +179,14 @@
         password: values.password,
         redirect: false,
       })
-      if (error) {
+      if (error == 401) {
         pageError.value = true
         login.status = false
-        pageErrorMassage.value = error
+        pageErrorMassage.value = "Your Email or Password is incorrect"
+      } else if (error == 403) {
+        pageError.value = true
+        pageErrorMassage.value = "Your Email Its Not verified yet please verify first"
+        return navigateTo('/verify?email=' + values.email + '&error=Your Email Its Not verified yet please verify first', { external: true })
       } else {
         login.status = false
         return navigateTo(config.public.baseURL, { external: true })

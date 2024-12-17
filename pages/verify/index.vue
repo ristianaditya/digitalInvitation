@@ -1,5 +1,18 @@
 <template>
   <div class="bg-[#F4F0FD] font-[sans-serif] text-[#333]">
+    <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full"> <!-- Increased padding and max-width -->
+        <div class="flex justify-between items-center">
+          <h3 class="text-xl font-bold text-red-600">Error</h3> <!-- Increased font size -->
+          <button @click="closeModal" class="text-red-500 hover:text-red-700">
+            &times;
+          </button>
+        </div>
+        <div class="mt-4">
+          <p class="text-lg">{{ errorMessage }}</p> <!-- Increased font size -->
+        </div>
+      </div>
+    </div>
     <div
       class="flex min-h-screen flex-col items-center justify-center px-4 py-6"
     >
@@ -153,6 +166,16 @@
   import { usePostOTPVerification } from '~/composables/useFetchData'
   const route = useRoute()
   const email = route.query.email
+  const errorMessage = ref(route.query.error || '')
+  const showModal = ref(false)
+  if (errorMessage.value != '') {
+    showModal.value = true
+  }
+
+  const closeModal = () => {
+    showModal.value = false
+  }
+
   definePageMeta({
     layout: false,
     auth: {

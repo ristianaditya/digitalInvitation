@@ -80,7 +80,7 @@ export default NuxtAuthHandler({
       name: 'Credentials',
       async authorize(credentials: any) {
         try {
-          const user = await $fetch(
+          const response = await $fetch.raw(
             `${process.env.BASE_URL_API_SERVICE}/login`,
             {
               method: 'POST',
@@ -93,7 +93,18 @@ export default NuxtAuthHandler({
               },
             },
           )
+          console.log(response.status)
 
+          if (response.status === 401) {
+            
+            throw new Error('Your email or password is incorrect!')
+          } else if (response.status === 403) {
+            // Assuming you have a router instance available
+            
+            return null
+          }
+    
+          const user = response._data
           const dataUser = {
             ...user.data,
             accessToken: user.access_token,
@@ -102,7 +113,7 @@ export default NuxtAuthHandler({
           }
           return dataUser
         } catch (error) {
-          throw new Error('Your email or password is incorrect !')
+          throw new Error(error.status)
         }
       },
     }),
