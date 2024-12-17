@@ -109,6 +109,12 @@
                     placeholder="*************"
                     icon="mdi:password"
                   />
+                  <NuxtLink
+                    to="/forgot-password"
+                    class="text-x text-blue-700 hover:underline"
+                  >
+                    Forgot Password?
+                  </NuxtLink>
                 </div>
                 <button
                   class="btn btn-ghost mt-12 inline-flex w-full select-none items-center justify-center rounded-lg bg-[#49479F] px-6 py-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:bg-[#39387c] hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
