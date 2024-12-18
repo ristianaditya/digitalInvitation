@@ -181,7 +181,7 @@
     try {
       login.status = true
       const { error } = await signIn('credentials', {
-        email: values.email,
+        email: values.email.toLowerCase(),
         password: values.password,
         redirect: false,
       })

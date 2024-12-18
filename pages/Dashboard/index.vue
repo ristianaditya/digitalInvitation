@@ -1,5 +1,9 @@
 <template>
   <BaseHeaderNavigation @open="isOpen = true" />
+  <DashboardInformation
+    :projectCount="state.projectCount"
+    :plans="sessionData"
+  />
   <div v-if="stateLoad">
     <div class="z-20 grid grid-cols-1 gap-8 md:grid-cols-4">
       <div class="card card-compact flex h-full w-full flex-col gap-4">
@@ -242,6 +246,7 @@
     idProjectModal: '',
     isOpenDelete: false,
     idItems: '',
+    projectCount: 0,
   })
 
   function converter(params) {
@@ -326,6 +331,7 @@
     await usePostData('/project/getByUserId').then((res) => {
       if (res.status == 200) {
         project.value = res._data.projects
+        state.projectCount = res._data.projects.length
       }
     })
     stateLoad.value = false

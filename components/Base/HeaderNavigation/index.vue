@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex justify-between">
     <div
       tabindex="0"
       role="button"
@@ -25,10 +25,11 @@
     </p>
     <div
       v-show="activePage.create"
-      class="btn btn-circle btn-sm -mt-[6px] ml-3 bg-[#F8D075] hover:bg-[#ccaa5a]"
+      class="btn btn-sm -mt-[6px] ml-3 bg-[#F8D075] text-slate-800 hover:bg-[#ccaa5a]"
       @click="openModal()"
     >
-      <Icon name="material-symbols:add" class="text-2xl" />
+      <Icon name="material-symbols:add" class="mr-1 text-xl" />
+      Add Project
     </div>
     <div
       v-if="sessionData.role === 'admin'"
@@ -182,11 +183,45 @@
   import { NAVIGATION_MENU } from '~/common/constant/navigation'
   import { useActivePage, useSessionData } from '@/store/index'
 
+  const { signOut, status } = useAuth()
+
+  const statusUser = status.value
+  const dataUser = reactive({
+    name: '',
+    email: '',
+    picture: '',
+    role: 'user',
+  })
+
   const sessionData = useSessionData()
   const activePage = useActivePage()
   const isOpen = ref(false)
   const emit = defineEmits(['open'])
   function openModal() {
     emit('open')
+  }
+
+  if (statusUser === 'authenticated') {
+    await useGetSession('/user/getSession').then((res) => {
+      dataUser.name = res.data.username
+      dataUser.email = res.data.email
+      dataUser.picture = res.data.picture
+      dataUser.role = res.data.role
+      sessionData.subscribe = res.data.latest_transaction?.subscribe
+
+      if (
+        !!res.data.username &&
+        !!res.data.email &&
+        !!res.data.name &&
+        !!res.data.no_phone &&
+        !!res.data.gender &&
+        !!res.data.address
+      ) {
+        sessionData.id = res.data.id
+        sessionData.name = res.data.name
+        sessionData.email = res.data.email
+        sessionData.phone = res.data.no_phone
+      }
+    })
   }
 </script>

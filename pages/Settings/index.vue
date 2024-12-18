@@ -273,6 +273,7 @@
     name: yup.string().required().min(3),
     email: yup.string().required().email(),
     address: yup.string().required().min(3).max(64),
+    gender: yup.string().required(),
     no_phone: yup.number().required('number phone is a required field'),
   })
 
