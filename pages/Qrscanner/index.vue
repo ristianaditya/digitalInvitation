@@ -179,7 +179,7 @@
                   </div>
 
                   <!-- Success State -->
-                  <div
+                  <!-- <div
                     v-else-if="!!result"
                     class="absolute inset-0 z-20 flex items-center justify-center bg-black/90"
                   >
@@ -191,7 +191,7 @@
                       <h3 class="text-2xl font-bold">{{ result }}</h3>
                       <p class="mt-2">Successfully scanned!</p>
                     </div>
-                  </div>
+                  </div> -->
 
                   <!-- Camera Stream -->
                   <div v-else class="h-full w-full">
@@ -284,6 +284,7 @@
     const valueString = detectedCodes.map((code) => code.rawValue)[0]
     const parts = valueString.split('/')
     result.value = parts[1]
+
     try {
       failed.value = false
       const param = {
@@ -300,7 +301,6 @@
             timeout: 3000,
           })
           setTimeout(() => {
-            isOpen.value = false
             result.value = ''
           }, 2000)
         } else {
