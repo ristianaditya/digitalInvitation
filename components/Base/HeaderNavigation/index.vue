@@ -23,14 +23,15 @@
     <p class="-mt-2 mb-7 text-[22px] font-[600] text-slate-800">
       {{ activePage.page }}{{ activePage.child }}
     </p>
-    <div
+    <button
       v-show="activePage.create"
-      class="btn btn-sm -mt-[6px] ml-3 bg-[#F8D075] text-slate-800 hover:bg-[#ccaa5a]"
+      class="btn btn-sm -mt-[6px] ml-3 bg-[#F8D075] text-slate-800 hover:bg-[#ccaa5a] disabled:cursor-not-allowed"
       @click="openModal()"
+      :disabled="!sessionData.enabled"
     >
       <Icon name="material-symbols:add" class="mr-1 text-xl" />
       Add Project
-    </div>
+    </button>
     <div
       v-if="sessionData.role === 'admin'"
       v-show="activePage.export"
@@ -208,6 +209,7 @@
       dataUser.picture = res.data.picture
       dataUser.role = res.data.role
       sessionData.subscribe = res.data.latest_transaction?.subscribe
+      sessionData.enabled = res.data.enabled
 
       if (
         !!res.data.username &&

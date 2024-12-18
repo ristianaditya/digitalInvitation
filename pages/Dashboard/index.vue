@@ -91,6 +91,7 @@
           </p>
           <div class="card-actions mt-2 flex justify-end">
             <NuxtLink
+              v-if="sessionData.enabled"
               :to="`Builder?id=${projects_data.id}`"
               class="btn btn-sm rounded-xl bg-[#F8D075] hover:bg-[#c5a24f]"
             >
@@ -98,6 +99,15 @@
                 class="i-heroicons-pencil-square relative h-5 w-5 flex-shrink-0 text-[#705a27]"
               ></span>
             </NuxtLink>
+            <button
+              v-else
+              disabled
+              class="btn btn-sm cursor-not-allowed rounded-xl bg-[#F8D075] opacity-50"
+            >
+              <span
+                class="i-heroicons-pencil-square relative h-5 w-5 flex-shrink-0 text-[#705a27]"
+              ></span>
+            </button>
             <Menu as="div" class="z-50">
               <div>
                 <MenuButton
@@ -129,6 +139,7 @@
                           'group flex w-full items-center rounded-md px-2 py-2 text-sm text-black',
                         ]"
                         @click="modalSetting(projects_data.id)"
+                        :disabled="!sessionData.enabled"
                       >
                         <span
                           class="i-heroicons-wrench-screwdriver relative mr-2 h-5 w-5 flex-shrink-0 text-[#49479F]"
@@ -248,6 +259,7 @@
     idItems: '',
     projectCount: 0,
   })
+  const sessionData = useSessionData()
 
   function converter(params) {
     const utcTime = new Date(params)
@@ -317,7 +329,6 @@
 
   onMounted(async () => {
     const activePage = useActivePage()
-    const sessionData = useSessionData()
     activePage.page = 'Dashboard'
     if (sessionData.role === 'admin') {
       activePage.create = false

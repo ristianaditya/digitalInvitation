@@ -14,6 +14,7 @@ export const useSessionData = defineStore('session-data', {
       email: '',
       phone: '',
       subscribe: '',
+      enabled: '',
       role: 'user',
     }
   },

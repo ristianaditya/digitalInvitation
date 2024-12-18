@@ -175,23 +175,35 @@
                       name="material-symbols:error-outline"
                       class="mb-4 h-16 w-16 text-red-500"
                     />
-                    <p class="text-lg text-white">{{ error }}</p>
-                  </div>
+                    <p class="mb-4 text-lg text-white">{{ error }}</p>
 
-                  <!-- Success State -->
-                  <!-- <div
-                    v-else-if="!!result"
-                    class="absolute inset-0 z-20 flex items-center justify-center bg-black/90"
-                  >
-                    <div class="text-center text-white">
-                      <Icon
-                        name="icon-park:success"
-                        class="mb-4 h-16 w-16 text-green-500"
-                      />
-                      <h3 class="text-2xl font-bold">{{ result }}</h3>
-                      <p class="mt-2">Successfully scanned!</p>
+                    <!-- Camera Permission Button -->
+                    <UButton
+                      v-if="error.includes('camera access permission')"
+                      size="lg"
+                      color="white"
+                      @click="requestCameraPermission"
+                      class="mt-4"
+                    >
+                      <Icon name="heroicons:camera" class="mr-2 h-5 w-5" />
+                      Enable Camera Access
+                    </UButton>
+
+                    <!-- Instructions for enabling camera -->
+                    <div
+                      v-if="error.includes('camera access permission')"
+                      class="mt-6 max-w-md text-sm text-gray-400"
+                    >
+                      <p class="mb-2">To enable camera access:</p>
+                      <ol class="list-decimal space-y-1 pl-5 text-left">
+                        <li>
+                          Click the camera icon in your browser's address bar
+                        </li>
+                        <li>Select "Allow" for camera access</li>
+                        <li>Refresh the page</li>
+                      </ol>
                     </div>
-                  </div> -->
+                  </div>
 
                   <!-- Camera Stream -->
                   <div v-else class="h-full w-full">
@@ -264,7 +276,6 @@
 
   const toast = useToast()
   const isOpen = ref(false)
-  const result = ref('')
   const failed = ref(false)
   const selectedDevice = ref(null)
   const devices = ref([])
@@ -280,11 +291,26 @@
   })
   const error = ref('')
 
+  async function requestCameraPermission() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      error.value = ''
+      stream.getTracks().forEach((track) => track.stop())
+    } catch (err) {
+      toast.add({
+        icon: 'i-heroicons-exclamation-triangle',
+        title: 'Camera Access Required',
+        description:
+          'Please enable camera access in your browser settings to use the QR scanner',
+        color: 'orange',
+        timeout: 5000,
+      })
+    }
+  }
+
   async function onDetect(detectedCodes) {
     const valueString = detectedCodes.map((code) => code.rawValue)[0]
     const parts = valueString.split('/')
-    result.value = parts[1]
-
     try {
       failed.value = false
       const param = {
@@ -295,19 +321,17 @@
         if (res.status == 200) {
           toast.add({
             icon: 'i-heroicons-check-circle',
-            title: 'Guest successfully updated',
+            title: 'Guest Check-in Success',
             description: `${parts[1]} has been checked in`,
             color: 'green',
             timeout: 3000,
           })
-          setTimeout(() => {
-            result.value = ''
-          }, 2000)
         } else {
           failed.value = true
           toast.add({
             icon: 'i-heroicons-exclamation-triangle',
-            title: 'Guest not found',
+            title: 'Guest Check-in Failed',
+            description: 'Guest not found in the system',
             color: 'orange',
             timeout: 3000,
           })
@@ -317,7 +341,8 @@
       failed.value = true
       toast.add({
         icon: 'i-heroicons-exclamation-triangle',
-        title: 'API service error',
+        title: 'Check-in Error',
+        description: 'Failed to process check-in. Please try again.',
         color: 'red',
         timeout: 3000,
       })
@@ -345,6 +370,42 @@
     }
   })
 
+  function onError(err) {
+    error.value = ''
+
+    if (err.name === 'NotAllowedError') {
+      error.value = 'Please grant camera access permission'
+      toast.add({
+        icon: 'i-heroicons-camera',
+        title: 'Camera Access Required',
+        description: 'Please enable camera access to scan QR codes',
+        color: 'orange',
+        timeout: 5000,
+      })
+    } else if (err.name === 'NotFoundError') {
+      error.value = 'No camera found on this device'
+      toast.add({
+        icon: 'i-heroicons-exclamation-triangle',
+        title: 'No Camera Found',
+        description: 'Please ensure your device has a working camera',
+        color: 'red',
+        timeout: 5000,
+      })
+    } else if (err.name === 'NotSupportedError') {
+      error.value = 'Secure context required (HTTPS, localhost)'
+    } else if (err.name === 'NotReadableError') {
+      error.value = 'Is the camera already in use?'
+    } else if (err.name === 'OverconstrainedError') {
+      error.value = 'Installed cameras are not suitable'
+    } else if (err.name === 'StreamApiNotSupportedError') {
+      error.value = 'Stream API is not supported in this browser'
+    } else if (err.name === 'InsecureContextError') {
+      error.value = 'Please use HTTPS or localhost'
+    } else {
+      error.value = err.message
+    }
+  }
+
   function paintCenterText(detectedCodes, ctx) {
     for (const detectedCode of detectedCodes) {
       const { boundingBox } = detectedCode
@@ -360,28 +421,6 @@
       ctx.strokeText(parts[1], centerX, centerY)
       ctx.fillStyle = '#5cb984'
       ctx.fillText(parts[1], centerX, centerY)
-    }
-  }
-
-  function onError(err) {
-    error.value = ''
-
-    if (err.name === 'NotAllowedError') {
-      error.value = 'Please grant camera access permission'
-    } else if (err.name === 'NotFoundError') {
-      error.value = 'No camera found on this device'
-    } else if (err.name === 'NotSupportedError') {
-      error.value = 'Secure context required (HTTPS, localhost)'
-    } else if (err.name === 'NotReadableError') {
-      error.value = 'Is the camera already in use?'
-    } else if (err.name === 'OverconstrainedError') {
-      error.value = 'Installed cameras are not suitable'
-    } else if (err.name === 'StreamApiNotSupportedError') {
-      error.value = 'Stream API is not supported in this browser'
-    } else if (err.name === 'InsecureContextError') {
-      error.value = 'Please use HTTPS or localhost'
-    } else {
-      error.value = err.message
     }
   }
 </script>
@@ -429,5 +468,14 @@
     background-repeat: no-repeat;
     background-size: 1.5em 1.5em;
     padding-right: 2.5rem;
+  }
+
+  /* List styling */
+  .list-decimal {
+    @apply text-gray-300;
+  }
+
+  .list-decimal li {
+    @apply mb-2;
   }
 </style>

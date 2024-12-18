@@ -10,7 +10,7 @@
       <div class="relative">
         <div class="mb-4 flex items-center justify-between">
           <div
-            class="rounded-2xl bg-gradient-to-r from-[#49479F] to-[#F9DC94] p-3 shadow-lg"
+            class="rounded-2xl bg-gradient-to-r from-[#F9DC94] to-[#F9DC94] p-3 shadow-lg"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@
       <div class="relative">
         <div class="mb-4 flex items-center justify-between">
           <div
-            class="rounded-2xl bg-gradient-to-r from-[#49479F] to-[#F9DC94] p-3 shadow-lg"
+            class="rounded-2xl bg-gradient-to-r from-[#F9DC94] to-[#F9DC94] p-3 shadow-lg"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -77,6 +77,13 @@
         <h2 class="text-1xl mb-2 font-bold text-gray-700">Payment Status</h2>
         <div class="flex items-center justify-between">
           <p class="text-2xl font-bold text-[#49479F]">{{ paymentStatus }}</p>
+          <button
+            v-if="paymentStatus !== 'success'"
+            @click="handlePayment"
+            class="rounded-lg bg-red-600 px-3 py-1 text-sm font-medium text-white hover:bg-red-700"
+          >
+            Pay Now
+          </button>
         </div>
       </div>
     </div>
@@ -91,7 +98,7 @@
       <div class="relative">
         <div class="mb-4 flex items-center justify-between">
           <div
-            class="rounded-2xl bg-gradient-to-r from-[#49479F] to-[#F9DC94] p-3 shadow-lg"
+            class="rounded-2xl bg-gradient-to-r from-[#F9DC94] to-[#F9DC94] p-3 shadow-lg"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -135,4 +142,8 @@
     plans.value = res.data.latest_transaction?.subscribe
     paymentStatus.value = res.data.latest_transaction?.status
   })
+
+  const handlePayment = () => {
+    // window.location.href = '/payment'
+  }
 </script>
