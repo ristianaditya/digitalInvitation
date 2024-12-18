@@ -518,29 +518,28 @@
               }
             }
 
-            const param = {
-              user_id: this.sessionData.id,
-              id_payment: orderId,
-              amount: parseInt(price),
-              subscribe: name,
-            }
-
-            await usePostData('/transaction/createPayment', param).then((res) => {
-              if (res.status == 200) {
-                useGetSession('/user/getSession').then((res) => {
-                  this.sessionData.subscribe = res.data.latest_transaction?.subscribe
-                  this.sessionData.id = res.data.id
-                  this.sessionData.name = res.data.name
-                  this.sessionData.email = res.data.email
-                  this.sessionData.phone = res.data.no_phone
-                })
-              }
-            })
-
             await usePostData(`/transaction/showToken`, {
               detailsTransaction: parameter,
-            }).then((res) => {
+            }).then(async (res) => {
               if (res.status == 200) {
+                const param = {
+                  user_id: this.sessionData.id,
+                  id_payment: orderId,
+                  amount: parseInt(price),
+                  subscribe: name,
+                  midtrans_token: res._data.token,
+                }
+                await usePostData('/transaction/createPayment', param).then((res) => {
+                  if (res.status == 200) {
+                    useGetSession('/user/getSession').then((res) => {
+                      this.sessionData.subscribe = res.data.latest_transaction?.subscribe
+                      this.sessionData.id = res.data.id
+                      this.sessionData.name = res.data.name
+                      this.sessionData.email = res.data.email
+                      this.sessionData.phone = res.data.no_phone
+                    })
+                  }
+                })
                 window.location.replace(
                   `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`
                 )
