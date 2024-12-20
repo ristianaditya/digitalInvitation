@@ -16,6 +16,7 @@
         class="toggle toggle-primary"
         :name="name"
         type="checkbox"
+        :disabled="disabled"
       />
     </div>
   </div>
@@ -27,6 +28,7 @@
     name: String,
     label: String,
     desc: String,
+    disabled: Boolean,
   })
   const { value } = useField(() => props.name)
 </script>

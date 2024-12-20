@@ -255,8 +255,9 @@
                   >
                     Rp.
                     {{
-                      subscriptionManager.plans[subscriptionManager.state.type]
-                        ?.price
+                      subscriptionManager.planLists[
+                        subscriptionManager.state.type
+                      ]?.price
                     }}
                   </dd>
                 </dl>
@@ -266,8 +267,9 @@
                   <dd class="text-base font-medium">
                     Rp.
                     {{
-                      subscriptionManager.plans[subscriptionManager.state.type]
-                        ?.fee
+                      subscriptionManager.planLists[
+                        subscriptionManager.state.type
+                      ]?.fee
                     }}
                   </dd>
                 </dl>
@@ -288,8 +290,9 @@
                     class="text-base font-medium text-gray-900 dark:text-white"
                   >
                     {{
-                      subscriptionManager.plans[subscriptionManager.state.type]
-                        ?.days
+                      subscriptionManager.planLists[
+                        subscriptionManager.state.type
+                      ]?.days
                     }}
                     days
                   </dd>
@@ -321,10 +324,12 @@
                 <dd class="text-lg font-bold text-gray-900 dark:text-white">
                   Rp.
                   {{
-                    subscriptionManager.plans[subscriptionManager.state.type]
-                      ?.price +
-                    subscriptionManager.plans[subscriptionManager.state.type]
-                      ?.fee
+                    subscriptionManager.planLists[
+                      subscriptionManager.state.type
+                    ]?.price +
+                    subscriptionManager.planLists[
+                      subscriptionManager.state.type
+                    ]?.fee
                   }}
                 </dd>
               </dl>
@@ -345,8 +350,9 @@
                 @click="
                   createPaymentLink(
                     subscriptionManager.state.type,
-                    subscriptionManager.plans[subscriptionManager.state.type]
-                      ?.price,
+                    subscriptionManager.planLists[
+                      subscriptionManager.state.type
+                    ]?.price,
                   )
                 "
               >
@@ -376,16 +382,25 @@
 </template>
 
 <script setup>
-  import { useComplateRegis, useSessionData } from '@/store/index'
+  import { useComplateRegis, useSessionData, usePlanLists } from '@/store/index'
   import { usePostData } from '~/composables/useFetchData'
 
   class SubscriptionManager {
-    constructor(route, router, toast, sessionData, complateRegis, status) {
+    constructor(
+      route,
+      router,
+      toast,
+      sessionData,
+      complateRegis,
+      planLists,
+      status,
+    ) {
       this.route = route
       this.router = router
       this.toast = toast
       this.sessionData = sessionData
       this.complateRegis = complateRegis
+      this.planLists = planLists
       this.statusUser = status.value
       this.state = reactive({
         isOpenForm: false,
@@ -393,30 +408,13 @@
         type: '',
         date: '',
       })
-      this.plans = {
-        DigitalDazzle: {
-          price: 0,
-          fee: 0,
-          days: 7,
-        },
-        SparkleSend: {
-          price: 5000,
-          fee: 0,
-          days: 30,
-        },
-        DigitalDreamscape: {
-          price: 5000,
-          fee: 4000,
-          days: 90,
-        },
-      }
     }
 
     openModal(type) {
       this.state.isOpenForm = true
       this.state.type = type
       const date = new Date()
-      date.setDate(date.getDate() + this.plans[type]?.days)
+      date.setDate(date.getDate() + this.planLists[type]?.days)
       const days = [
         'Minggu',
         'Senin',
@@ -515,7 +513,7 @@
               },
               callbacks: {
                 finish: `${config.public.baseURL}/Dashboard`,
-              }
+              },
             }
 
             await usePostData(`/transaction/showToken`, {
@@ -529,19 +527,22 @@
                   subscribe: name,
                   midtrans_token: res._data.token,
                 }
-                await usePostData('/transaction/createPayment', param).then((res) => {
-                  if (res.status == 200) {
-                    useGetSession('/user/getSession').then((res) => {
-                      this.sessionData.subscribe = res.data.latest_transaction?.subscribe
-                      this.sessionData.id = res.data.id
-                      this.sessionData.name = res.data.name
-                      this.sessionData.email = res.data.email
-                      this.sessionData.phone = res.data.no_phone
-                    })
-                  }
-                })
+                await usePostData('/transaction/createPayment', param).then(
+                  (res) => {
+                    if (res.status == 200) {
+                      useGetSession('/user/getSession').then((res) => {
+                        this.sessionData.subscribe =
+                          res.data.latest_transaction?.subscribe
+                        this.sessionData.id = res.data.id
+                        this.sessionData.name = res.data.name
+                        this.sessionData.email = res.data.email
+                        this.sessionData.phone = res.data.no_phone
+                      })
+                    }
+                  },
+                )
                 window.location.replace(
-                  `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`
+                  `https://app.sandbox.midtrans.com/snap/v4/redirection/${res._data.token}`,
                 )
               } else {
                 this.toast.add({
@@ -552,7 +553,7 @@
                 })
               }
             })
-            
+
             this.state.isOpenForm = false
           } else {
             this.toast.add({
@@ -570,7 +571,6 @@
             this.sessionData.email = res.data.email
             this.sessionData.phone = res.data.no_phone
           })
-
         } catch (error) {
           this.toast.add({
             icon: 'i-heroicons-exclamation-triangle',
@@ -590,6 +590,7 @@
   const toast = useToast()
   const complateRegis = await useComplateRegis()
   const sessionData = useSessionData()
+  const planLists = usePlanLists()
   const { status } = useAuth()
 
   const subscriptionManager = new SubscriptionManager(
@@ -598,6 +599,7 @@
     toast,
     sessionData,
     complateRegis,
+    planLists,
     status,
   )
 
@@ -608,8 +610,6 @@
       sessionData.email = res.data.email
       sessionData.phone = res.data.no_phone
     })
-
-    
   })
 
   function openModal(type) {

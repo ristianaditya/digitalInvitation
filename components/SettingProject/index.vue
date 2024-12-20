@@ -94,6 +94,7 @@
           name="status"
           label="Publish Invitation "
           desc="publish the invitation for your friends to see."
+          :disabled="sessionData.subscribe_status !== 'success'"
         />
       </div>
     </Form>
@@ -119,6 +120,7 @@
 </template>
 <script setup>
   import { Form } from 'vee-validate'
+  import { useSessionData } from '@/store/index'
   import * as yup from 'yup'
 
   const props = defineProps({
@@ -127,7 +129,7 @@
       default: '',
     },
   })
-
+  const sessionData = useSessionData()
   const submitForm = ref()
   const pageLoad = ref(true)
   const stateLoading = ref(false)

@@ -210,7 +210,7 @@
       dataUser.role = res.data.role
       sessionData.subscribe = res.data.latest_transaction?.subscribe
       sessionData.enabled = res.data.enabled
-
+      sessionData.subscribe_status = res.data.latest_transaction?.status
       if (
         !!res.data.username &&
         !!res.data.email &&
