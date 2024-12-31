@@ -1,36 +1,38 @@
 <template>
-  <div class="body h-screen w-full flex flex-col items-center justify-center">
+  <div class="body flex h-screen w-full flex-col items-center justify-center">
     <button
-      @click="togglePlaying"
-      class="fixed top-4 right-4 z-50 px-4 py-2 min-w-[120px] group"
+      class="group fixed right-4 top-4 z-50 min-w-[120px] px-4 py-2"
       :class="[
         isPlaying ? 'bg-[#545F30]' : 'bg-[#3D4522]',
-        'rounded-full transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg transform hover:-translate-y-0.5'
+        'transform rounded-full transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:scale-105 hover:shadow-lg',
       ]"
+      @click="togglePlaying"
     >
       <!-- Music Icon with Animation -->
       <div class="flex items-center gap-3">
-        <Icon 
-          name="ph:music-note-simple-bold" 
-          class="text-white h-5 w-5 transition-transform duration-300"
+        <Icon
+          name="ph:music-note-simple-bold"
+          class="h-5 w-5 text-white transition-transform duration-300"
           :class="isPlaying ? 'rotate-[360deg]' : 'rotate-0'"
         />
-        
+
         <div class="flex items-center gap-2">
           <!-- Toggle Switch -->
-          <div class="relative w-[40px] h-[24px] bg-[#5B703F] rounded-full overflow-hidden">
+          <div
+            class="relative h-[24px] w-[40px] overflow-hidden rounded-full bg-[#5B703F]"
+          >
             <div
-              class="absolute top-[2px] w-[20px] h-[20px] bg-white rounded-full shadow-md transition-all duration-500 hover:scale-90"
+              class="absolute top-[2px] h-[20px] w-[20px] rounded-full bg-white shadow-md transition-all duration-500 hover:scale-90"
               :class="[
                 isPlaying ? 'translate-x-[18px]' : 'translate-x-[2px]',
-                'transform ease-[cubic-bezier(0.4,0,0.2,1)]'
+                'transform ease-[cubic-bezier(0.4,0,0.2,1)]',
               ]"
             />
           </div>
-          
+
           <!-- Text Label -->
-          <span 
-            class="text-white text-sm font-medium transition-all duration-300"
+          <span
+            class="text-sm font-medium text-white transition-all duration-300"
             :class="isPlaying ? 'opacity-100' : 'opacity-80'"
           >
             {{ isPlaying ? 'On' : 'Off' }}
@@ -38,79 +40,87 @@
         </div>
       </div>
     </button>
-    <img 
+    <img
       src="/thema/primeYellow/daun_top_left_opening.png"
-      class="fixed top-0 left-[300px] z-5 w-[300px] animate-leaf-left"
+      class="z-5 animate-leaf-left w-300-responsive daun-left fixed top-0"
     />
-    <img 
+    <img
       src="/thema/primeYellow/top_left_opening.png"
-      class="fixed top-0 left-0 z-10 w-[800px]"
+      class="w-opening-border fixed left-0 top-0 z-10"
     />
-    <img 
+    <img
       src="/thema/primeYellow/blue_birds_opening.png"
-      class="fixed top-0 z-20 w-[350px] left-[20px] bird-container"
+      class="bird-container fixed left-[20px] top-0 z-20 w-[350px]"
     />
-    <img 
+    <img
       src="/thema/primeYellow/white_birds_opening.png"
-      class="fixed top-[270px] z-15 w-[270px] right-[110px] animate-birds-entry"
+      class="z-15 animate-birds-entry fixed right-[110px] top-[270px] w-[270px]"
     />
-    <img 
+    <img
       src="/thema/primeYellow/daun_top_right_opening.png"
-      class="fixed top-[30px] right-[140px] z-5 w-[250px] animate-leaf-right"
+      class="z-5 animate-leaf-right fixed right-[140px] top-[30px] w-[250px]"
     />
-    <img 
+    <img
       src="/thema/primeYellow/top_right_opening.png"
-      class="fixed top-0 right-0 z-10 w-[800px]"
+      class="w-opening-border fixed right-0 top-0 z-10"
     />
     <div class="text-container fixed z-30 text-center">
       <p class="invitation-text mb-16">
-        Dengan ini kami mengundang bapak/ibu<br/>
+        Dengan ini kami mengundang bapak/ibu<br />
         Menghadiri Pernikahan
       </p>
       <div class="border-container flex items-center justify-center">
         <div class="absolute">
-          <div class="photo-frame-container flex items-center relative">  
-            <div class="absolute left-1/2 -translate-x-1/2 top-36 z-30">
-              <img 
+          <div class="photo-frame-container relative flex items-center">
+            <div class="absolute left-1/2 top-36 z-30 -translate-x-1/2">
+              <img
                 src="/thema/primeYellow/and_opening.png"
                 class="w-[100px] animate-wiggle-more"
                 alt="and"
               />
             </div>
-            
-            <div class="relative mr-10 text-center flex flex-col items-center"> 
-              <div class="relative w-[265px] h-[400px] ">
-                <img 
+
+            <div class="relative mr-10 flex flex-col items-center text-center">
+              <div class="relative h-[400px] w-[265px]">
+                <img
                   src="/thema/primeYellow/laki_opening.png"
-                  class="absolute w-[300px] h-[401px] object-cover z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  class="w-300-responsive absolute left-1/2 top-1/2 z-10 h-[401px] -translate-x-1/2 -translate-y-1/2 transform object-cover"
                 />
-                <img 
+                <img
                   src="/thema/primeYellow/frame_photo_opening.png"
-                  class="absolute w-full h-full z-20 top-0 left-0"
+                  class="absolute left-0 top-0 z-20 h-full w-full"
                   alt="frame"
                 />
               </div>
-              <div class="mt-2 text-[#2C5530] text-2xl font-medium font-serif bg-[#FFF7F1] rounded-xl px-7 py-2">Mamat Komarudin</div>
+              <div
+                class="mt-2 rounded-xl bg-[#FFF7F1] px-7 py-2 font-serif text-2xl font-medium text-[#2C5530]"
+              >
+                Mamat Komarudin
+              </div>
             </div>
 
-            <div class="relative text-center flex flex-col items-center">
-              <div class="relative w-[265px] h-[400px]">
-                <img 
+            <div class="relative flex flex-col items-center text-center">
+              <div class="relative h-[400px] w-[265px]">
+                <img
                   src="/thema/primeYellow/cewe_opening.png"
-                  class="absolute w-[300px] h-[401px] object-cover z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  class="w-300-responsive absolute left-1/2 top-1/2 z-10 h-[401px] -translate-x-1/2 -translate-y-1/2 transform object-cover"
                   alt="bride"
                 />
-                <img 
+                <img
                   src="/thema/primeYellow/frame_photo_opening.png"
-                  class="absolute w-full h-full z-20 top-0 left-0"
+                  class="absolute left-0 top-0 z-20 h-full w-full"
                   alt="frame"
                 />
               </div>
-              <div class="mt-2 text-[#2C5530] text-2xl font-medium font-serif bg-[#FFF7F1] rounded-xl px-7 py-2">Mamat Komarudin</div>
+              <div
+                class="mt-2 rounded-xl bg-[#FFF7F1] px-7 py-2 font-serif text-2xl font-medium text-[#2C5530]"
+              >
+                Mamat Komarudin
+              </div>
             </div>
           </div>
         </div>
-        <img 
+        <img
           src="/thema/primeYellow/border_form_opening.png"
           class="w-[1200px]"
           alt="border"
@@ -118,34 +128,36 @@
       </div>
     </div>
     <div class="fixed bottom-20 z-30">
-      <button class="buka-undangan-btn px-6 py-3 rounded-lg flex items-center gap-2 mx-auto">
+      <button
+        class="buka-undangan-btn mx-auto flex items-center gap-2 rounded-lg px-6 py-3"
+      >
         <span class="icon-envelope">✉️</span>
         <span>Buka Undangan</span>
       </button>
     </div>
-    <img 
+    <img
       src="/thema/primeYellow/daun_gold_left_opening.png"
-      class="fixed bottom-60 left-20 z-10 w-[300px]"
+      class="w-300-responsive fixed bottom-60 left-20 z-10"
     />
-    <img 
+    <img
       src="/thema/primeYellow/daun_gold_right_opening.png"
-      class="fixed bottom-60 right-20 z-10 w-[300px]"
+      class="w-300-responsive fixed bottom-60 right-20 z-10"
     />
-    <img 
+    <img
       src="/thema/primeYellow/daun_left_bottom_opening.png"
-      class="fixed -bottom-[30px] -left-[5px] z-10 w-[300px] animate-leaf-left-bottom"
+      class="animate-leaf-left-bottom w-300-responsive fixed -bottom-[30px] -left-[5px] z-10"
     />
-    <img 
+    <img
       src="/thema/primeYellow/daun_left_bottom_opening_2.png"
       class="fixed bottom-0 left-48 z-10 w-[260px]"
     />
-    <img 
+    <img
       src="/thema/primeYellow/daun_right_bottom_opening.png"
-      class="fixed -bottom-[30px] -right-[5px] z-10 w-[300px]"
+      class="w-300-responsive fixed -bottom-[30px] -right-[5px] z-10"
     />
-    <img 
+    <img
       src="/thema/primeYellow/daun_right_bottom_opening_2.png"
-      class="fixed  bottom-0 right-56 z-10 w-[260px]"
+      class="fixed bottom-0 right-56 z-10 w-[260px]"
     />
   </div>
 </template>
@@ -156,8 +168,8 @@
   })
   const isPlaying = ref(false)
   const togglePlaying = () => {
-  isPlaying.value = !isPlaying.value
-  };
+    isPlaying.value = !isPlaying.value
+  }
 </script>
 <style scoped>
   .body {
@@ -166,24 +178,34 @@
     background-position: center;
   }
   @keyframes swaying {
-    0% { transform: rotate(0deg); }
-    20% { transform: rotate(4deg) translateY(-6px); }
-    50% { transform: rotate(-3deg) translateY(4px); }
-    80% { transform: rotate(3deg) translateY(-4px); }
-    100% { transform: rotate(0deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    20% {
+      transform: rotate(4deg) translateY(-6px);
+    }
+    50% {
+      transform: rotate(-3deg) translateY(4px);
+    }
+    80% {
+      transform: rotate(3deg) translateY(-4px);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
   }
   .animate-leaf-left {
-    animation: swaying 8s cubic-bezier(0.42, 0, 0.58, 1) infinite; 
+    animation: swaying 8s cubic-bezier(0.42, 0, 0.58, 1) infinite;
     transform-origin: left 20%;
     will-change: transform;
   }
   .animate-leaf-left-bottom {
-    animation: swaying 8s cubic-bezier(0.42, 0, 0.58, 1) infinite; 
+    animation: swaying 8s cubic-bezier(0.42, 0, 0.58, 1) infinite;
     transform-origin: left bottom;
     will-change: transform;
   }
   .animate-leaf-right {
-    animation: swaying 8s cubic-bezier(0.42, 0, 0.58, 1) infinite; 
+    animation: swaying 8s cubic-bezier(0.42, 0, 0.58, 1) infinite;
     transform-origin: right 20%;
     will-change: transform;
   }
@@ -224,23 +246,23 @@
     width: 100%;
   }
   .invitation-text {
-    font-family: 'Lora', serif; 
+    font-family: 'Lora', serif;
     font-size: 1.75rem;
-    color: #5B5B5B;
+    color: #5b5b5b;
     line-height: 1.6;
     letter-spacing: 0.5px;
   }
   .buka-undangan-btn {
-    background-color: #4A5C3B;
+    background-color: #4a5c3b;
     color: white;
     font-family: 'Lora', serif;
     font-size: 1.1rem;
     transition: all 0.3s ease;
-    border: 2px solid #4A5C3B;
+    border: 2px solid #4a5c3b;
   }
   .buka-undangan-btn:hover {
     background-color: transparent;
-    color: #4A5C3B;
+    color: #4a5c3b;
   }
   .photo-frame-container {
     position: relative;
@@ -250,5 +272,134 @@
   }
   .group:hover .music-icon {
     transform: scale(1.1);
+  }
+
+  @media (max-width: 2880px) {
+    .w-opening-border {
+      width: 1100px;
+    }
+    .w-300-responsive {
+      width: 350px;
+    }
+    .daun-left {
+      left: 420px;
+    }
+  }
+
+  /* Desktop large screens */
+  @media (max-width: 2400px) {
+    .w-opening-border {
+      width: 900px;
+    }
+    .w-300-responsive {
+      width: 320px;
+    }
+    .daun-left {
+      left: 350px;
+    }
+  }
+
+  /* Desktop medium screens */
+  @media (max-width: 2150px) {
+    .w-opening-border {
+      width: 800px;
+    }
+    .w-300-responsive {
+      width: 300px;
+    }
+    .daun-left {
+      left: 300px;
+    }
+  }
+
+  /* Desktop standard screens */
+  @media (max-width: 1920px) {
+    .w-opening-border {
+      width: 700px;
+    }
+    .w-300-responsive {
+      width: 250px;
+    }
+    .daun-left {
+      left: 250px;
+    }
+  }
+
+  /* Desktop small screens */
+  @media (max-width: 1600px) {
+    .w-opening-border {
+      width: 600px;
+    }
+    .w-300-responsive {
+      width: 200px;
+    }
+    .daun-left {
+      left: 200px;
+    }
+  }
+
+  /* Laptop screens */
+  @media (max-width: 1366px) {
+    .w-opening-border {
+      width: 500px;
+    }
+    .w-300-responsive {
+      width: 180px;
+    }
+    .daun-left {
+      left: 180px;
+    }
+  }
+
+  /* Tablet landscape */
+  @media (max-width: 1024px) {
+    .w-opening-border {
+      width: 400px;
+    }
+    .w-300-responsive {
+      width: 150px;
+    }
+    .daun-left {
+      left: 150px;
+    }
+  }
+
+  /* Tablet portrait */
+  @media (max-width: 768px) {
+    .w-opening-border {
+      width: 300px;
+    }
+    .w-300-responsive {
+      width: 120px;
+    }
+    .daun-left {
+      left: 120px;
+    }
+  }
+
+  /* Mobile landscape */
+  @media (max-width: 576px) {
+    .w-opening-border {
+      width: 250px;
+    }
+    .w-300-responsive {
+      width: 100px;
+    }
+    .daun-left {
+      left: 100px;
+    }
+  }
+
+  /* Mobile portrait */
+  @media (max-width: 375px) {
+    .w-opening-border {
+      width: 200px;
+    }
+    .w-300-responsive {
+      width: 80px;
+    }
+    .daun-left {
+      left: 80px;
+    }
   }
 </style>
