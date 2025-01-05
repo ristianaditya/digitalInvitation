@@ -1,7 +1,7 @@
 <template>
   <div class="body flex h-screen w-full flex-col items-center justify-center">
     <button
-      class="group fixed right-4 top-4 z-50 min-w-[120px] px-4 py-2"
+      class="group fixed right-[1vw] top-[2vh] z-50 min-w-[5vw] px-[1vw] py-[1vh]"
       :class="[
         isPlaying ? 'bg-[#545F30]' : 'bg-[#3D4522]',
         'transform rounded-full transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:scale-105 hover:shadow-lg',
@@ -12,19 +12,19 @@
       <div class="flex items-center gap-3">
         <Icon
           name="ph:music-note-simple-bold"
-          class="h-5 w-5 text-white transition-transform duration-300"
+          class="h-[2vh] w-[1vw] text-white transition-transform duration-300"
           :class="isPlaying ? 'rotate-[360deg]' : 'rotate-0'"
         />
 
         <div class="flex items-center gap-2">
           <!-- Toggle Switch -->
           <div
-            class="relative h-[24px] w-[40px] overflow-hidden rounded-full bg-[#5B703F]"
+            class="relative h-[2.6vh] w-[2.05vw] overflow-hidden rounded-full bg-[#5B703F]"
           >
             <div
-              class="absolute top-[2px] h-[20px] w-[20px] rounded-full bg-white shadow-md transition-all duration-500 hover:scale-90"
+              class="absolute top-[0.2vh] h-[2.2vh] w-[1vw] rounded-full bg-white shadow-md transition-all duration-500 hover:scale-90"
               :class="[
-                isPlaying ? 'translate-x-[18px]' : 'translate-x-[2px]',
+                isPlaying ? 'translate-x-[0.9vw]' : 'translate-x-[2px]',
                 'transform ease-[cubic-bezier(0.4,0,0.2,1)]',
               ]"
             />
@@ -32,7 +32,7 @@
 
           <!-- Text Label -->
           <span
-            class="text-sm font-medium text-white transition-all duration-300"
+            class="text-[1vmin] font-medium text-white transition-all duration-300"
             :class="isPlaying ? 'opacity-100' : 'opacity-80'"
           >
             {{ isPlaying ? 'On' : 'Off' }}
@@ -42,7 +42,7 @@
     </button>
     <img
       src="/thema/primeYellow/daun_top_left_opening.png"
-      class="z-5 animate-leaf-left w-300-responsive daun-left fixed top-0"
+      class="z-5 animate-leaf-left w-300-responsive leaf-left fixed top-0"
     />
     <img
       src="/thema/primeYellow/top_left_opening.png"
@@ -50,41 +50,43 @@
     />
     <img
       src="/thema/primeYellow/blue_birds_opening.png"
-      class="bird-container fixed left-[20px] top-0 z-20 w-[350px]"
+      class="bird-container bird-left fixed top-0 z-20"
     />
     <img
       src="/thema/primeYellow/white_birds_opening.png"
-      class="z-15 animate-birds-entry fixed right-[110px] top-[270px] w-[270px]"
+      class="z-15 animate-birds-entry bird-right fixed"
     />
     <img
       src="/thema/primeYellow/daun_top_right_opening.png"
-      class="z-5 animate-leaf-right fixed right-[140px] top-[30px] w-[250px]"
+      class="z-5 animate-leaf-right leaf-right fixed"
     />
     <img
       src="/thema/primeYellow/top_right_opening.png"
       class="w-opening-border fixed right-0 top-0 z-10"
     />
     <div class="text-container fixed z-30 text-center">
-      <p class="invitation-text mb-16">
+      <p class="invitation-text mb-[5vh]">
         Dengan ini kami mengundang bapak/ibu<br />
         Menghadiri Pernikahan
       </p>
       <div class="border-container flex items-center justify-center">
         <div class="absolute">
           <div class="photo-frame-container relative flex items-center">
-            <div class="absolute left-1/2 top-36 z-30 -translate-x-1/2">
+            <div class="absolute left-1/2 top-[13vh] z-30 -translate-x-1/2">
               <img
                 src="/thema/primeYellow/and_opening.png"
-                class="w-[100px] animate-wiggle-more"
+                class="w-[6vw] animate-wiggle-more"
                 alt="and"
               />
             </div>
 
-            <div class="relative mr-10 flex flex-col items-center text-center">
-              <div class="relative h-[400px] w-[265px]">
+            <div
+              class="relative mr-[2vw] flex flex-col items-center text-center"
+            >
+              <div class="relative h-[39vh] w-[12.3vw]">
                 <img
                   src="/thema/primeYellow/laki_opening.png"
-                  class="w-300-responsive absolute left-1/2 top-1/2 z-10 h-[401px] -translate-x-1/2 -translate-y-1/2 transform object-cover"
+                  class="w-300-responsive absolute left-1/2 top-1/2 z-10 h-[40vh] -translate-x-1/2 -translate-y-1/2 transform object-cover"
                 />
                 <img
                   src="/thema/primeYellow/frame_photo_opening.png"
@@ -93,18 +95,17 @@
                 />
               </div>
               <div
-                class="mt-2 rounded-xl bg-[#FFF7F1] px-7 py-2 font-serif text-2xl font-medium text-[#2C5530]"
+                class="mt-[1.5vmin] rounded-xl bg-[#FFF7F1] px-[1.3vw] py-[0.7vh] font-serif text-[2.5vmin] font-medium text-[#2C5530]"
               >
                 Mamat Komarudin
               </div>
             </div>
 
             <div class="relative flex flex-col items-center text-center">
-              <div class="relative h-[400px] w-[265px]">
+              <div class="relative h-[39vh] w-[12.3vw]">
                 <img
                   src="/thema/primeYellow/cewe_opening.png"
-                  class="w-300-responsive absolute left-1/2 top-1/2 z-10 h-[401px] -translate-x-1/2 -translate-y-1/2 transform object-cover"
-                  alt="bride"
+                  class="w-300-responsive absolute left-1/2 top-1/2 z-10 h-[40vh] -translate-x-1/2 -translate-y-1/2 transform object-cover"
                 />
                 <img
                   src="/thema/primeYellow/frame_photo_opening.png"
@@ -113,7 +114,7 @@
                 />
               </div>
               <div
-                class="mt-2 rounded-xl bg-[#FFF7F1] px-7 py-2 font-serif text-2xl font-medium text-[#2C5530]"
+                class="mt-[1.5vmin] rounded-xl bg-[#FFF7F1] px-[1.3vw] py-[0.7vh] font-serif text-[2.5vmin] font-medium text-[#2C5530]"
               >
                 Mamat Komarudin
               </div>
@@ -122,14 +123,14 @@
         </div>
         <img
           src="/thema/primeYellow/border_form_opening.png"
-          class="w-[1200px]"
+          class="border-gold-center"
           alt="border"
         />
       </div>
     </div>
-    <div class="fixed bottom-20 z-30">
+    <div class="fixed bottom-[6vh] z-30">
       <button
-        class="buka-undangan-btn mx-auto flex items-center gap-2 rounded-lg px-6 py-3"
+        class="buka-undangan-btn mx-auto flex items-center gap-2 rounded-lg px-[2vw] py-[1.3vh]"
       >
         <span class="icon-envelope">✉️</span>
         <span>Buka Undangan</span>
@@ -137,27 +138,27 @@
     </div>
     <img
       src="/thema/primeYellow/daun_gold_left_opening.png"
-      class="w-300-responsive fixed bottom-60 left-20 z-10"
+      class="w-300-responsive leaf-gold-left fixed z-10"
     />
     <img
       src="/thema/primeYellow/daun_gold_right_opening.png"
-      class="w-300-responsive fixed bottom-60 right-20 z-10"
+      class="w-300-responsive leaf-gold-right fixed z-10"
     />
     <img
       src="/thema/primeYellow/daun_left_bottom_opening.png"
-      class="animate-leaf-left-bottom w-300-responsive fixed -bottom-[30px] -left-[5px] z-10"
+      class="animate-leaf-left-bottom w-300-responsive leaf-bottom-left fixed z-10"
     />
     <img
       src="/thema/primeYellow/daun_left_bottom_opening_2.png"
-      class="fixed bottom-0 left-48 z-10 w-[260px]"
+      class="leaf-bottom-left-two fixed bottom-0 z-10"
     />
     <img
       src="/thema/primeYellow/daun_right_bottom_opening.png"
-      class="w-300-responsive fixed -bottom-[30px] -right-[5px] z-10"
+      class="w-300-responsive leaf-bottom-right fixed z-10"
     />
     <img
       src="/thema/primeYellow/daun_right_bottom_opening_2.png"
-      class="fixed bottom-0 right-56 z-10 w-[260px]"
+      class="leaf-bottom-right-two fixed z-10"
     />
   </div>
 </template>
@@ -239,6 +240,7 @@
     transform-origin: top right;
     animation: rotateAroundZ 2s ease-in-out forwards alternate;
   }
+
   .text-container {
     top: 45%;
     left: 50%;
@@ -247,16 +249,16 @@
   }
   .invitation-text {
     font-family: 'Lora', serif;
-    font-size: 1.75rem;
+    font-size: 2.75vmin;
     color: #5b5b5b;
     line-height: 1.6;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.1vmin;
   }
   .buka-undangan-btn {
     background-color: #4a5c3b;
     color: white;
     font-family: 'Lora', serif;
-    font-size: 1.1rem;
+    font-size: 2vmin;
     transition: all 0.3s ease;
     border: 2px solid #4a5c3b;
   }
@@ -274,70 +276,59 @@
     transform: scale(1.1);
   }
 
-  @media (max-width: 2880px) {
-    .w-opening-border {
-      width: 1100px;
-    }
-    .w-300-responsive {
-      width: 350px;
-    }
-    .daun-left {
-      left: 420px;
-    }
+  .w-opening-border {
+    width: 40vw;
   }
-
-  /* Desktop large screens */
-  @media (max-width: 2400px) {
-    .w-opening-border {
-      width: 900px;
-    }
-    .w-300-responsive {
-      width: 320px;
-    }
-    .daun-left {
-      left: 350px;
-    }
+  .w-300-responsive {
+    width: 12vw;
   }
-
-  /* Desktop medium screens */
-  @media (max-width: 2150px) {
-    .w-opening-border {
-      width: 800px;
-    }
-    .w-300-responsive {
-      width: 300px;
-    }
-    .daun-left {
-      left: 300px;
-    }
+  .leaf-left {
+    left: 16vw;
   }
-
-  /* Desktop standard screens */
-  @media (max-width: 1920px) {
-    .w-opening-border {
-      width: 700px;
-    }
-    .w-300-responsive {
-      width: 250px;
-    }
-    .daun-left {
-      left: 250px;
-    }
+  .bird-left {
+    left: 2vw;
+    width: 16vw;
   }
-
-  /* Desktop small screens */
-  @media (max-width: 1600px) {
-    .w-opening-border {
-      width: 600px;
-    }
-    .w-300-responsive {
-      width: 200px;
-    }
-    .daun-left {
-      left: 200px;
-    }
+  .bird-right {
+    right: 4vw;
+    width: 12vw;
+    top: 30vh;
   }
-
+  .leaf-right {
+    right: 6vw;
+    top: 6vh;
+    width: 11vw;
+  }
+  .leaf-gold-left {
+    bottom: 23vh;
+    left: 4vw;
+  }
+  .leaf-gold-right {
+    bottom: 20vh;
+    right: 3vw;
+  }
+  .leaf-bottom-left {
+    bottom: -5vh;
+    left: -0.2vw;
+  }
+  .leaf-bottom-left-two {
+    width: 11vw;
+    left: 9vw;
+    bottom: -4vh;
+  }
+  .leaf-bottom-right {
+    bottom: -4vh;
+    right: -2vw;
+  }
+  .leaf-bottom-right-two {
+    bottom: -2vh;
+    right: 9vw;
+    width: 10vw;
+  }
+  .border-gold-center {
+    height: 60vmin;
+    width: 60vw;
+  }
   /* Laptop screens */
   @media (max-width: 1366px) {
     .w-opening-border {
@@ -346,7 +337,7 @@
     .w-300-responsive {
       width: 180px;
     }
-    .daun-left {
+    .leaf-left {
       left: 180px;
     }
   }
@@ -359,7 +350,7 @@
     .w-300-responsive {
       width: 150px;
     }
-    .daun-left {
+    .leaf-left {
       left: 150px;
     }
   }
@@ -372,7 +363,7 @@
     .w-300-responsive {
       width: 120px;
     }
-    .daun-left {
+    .leaf-left {
       left: 120px;
     }
   }
@@ -385,7 +376,7 @@
     .w-300-responsive {
       width: 100px;
     }
-    .daun-left {
+    .leaf-left {
       left: 100px;
     }
   }
@@ -398,7 +389,7 @@
     .w-300-responsive {
       width: 80px;
     }
-    .daun-left {
+    .leaf-left {
       left: 80px;
     }
   }
