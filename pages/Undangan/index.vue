@@ -72,21 +72,20 @@
       <div class="border-container flex items-center justify-center">
         <div class="absolute">
           <div class="photo-frame-container relative flex items-center">
-            <div class="absolute left-1/2 top-[13vh] z-30 -translate-x-1/2">
+            <div class="absolute left-1/2 top-[14vh] z-30 -translate-x-1/2">
               <img
                 src="/thema/primeYellow/and_opening.png"
                 class="w-[6vw] animate-wiggle-more"
                 alt="and"
               />
             </div>
-
             <div
               class="relative mr-[2vw] flex flex-col items-center text-center"
             >
-              <div class="relative h-[39vh] w-[12.3vw]">
+              <div class="relative h-[39vh] w-[26vh]">
                 <img
                   src="/thema/primeYellow/laki_opening.png"
-                  class="w-300-responsive absolute left-1/2 top-1/2 z-10 h-[40vh] -translate-x-1/2 -translate-y-1/2 transform object-cover"
+                  class="absolute left-1/2 top-1/2 z-10 h-[40vh] w-[26vh] -translate-x-1/2 -translate-y-1/2 transform object-cover"
                 />
                 <img
                   src="/thema/primeYellow/frame_photo_opening.png"
@@ -102,10 +101,10 @@
             </div>
 
             <div class="relative flex flex-col items-center text-center">
-              <div class="relative h-[39vh] w-[12.3vw]">
+              <div class="relative h-[39vh] w-[26vh]">
                 <img
                   src="/thema/primeYellow/cewe_opening.png"
-                  class="w-300-responsive absolute left-1/2 top-1/2 z-10 h-[40vh] -translate-x-1/2 -translate-y-1/2 transform object-cover"
+                  class="absolute left-1/2 top-1/2 z-10 h-[40vh] w-[26vh] -translate-x-1/2 -translate-y-1/2 transform object-cover"
                 />
                 <img
                   src="/thema/primeYellow/frame_photo_opening.png"
@@ -328,31 +327,6 @@
   .border-gold-center {
     height: 60vmin;
     width: 60vw;
-  }
-  /* Laptop screens */
-  @media (max-width: 1366px) {
-    .w-opening-border {
-      width: 500px;
-    }
-    .w-300-responsive {
-      width: 180px;
-    }
-    .leaf-left {
-      left: 180px;
-    }
-  }
-
-  /* Tablet landscape */
-  @media (max-width: 1024px) {
-    .w-opening-border {
-      width: 400px;
-    }
-    .w-300-responsive {
-      width: 150px;
-    }
-    .leaf-left {
-      left: 150px;
-    }
   }
 
   /* Tablet portrait */

@@ -31,7 +31,6 @@ async function refreshAccessToken(refreshToken: {
   } catch (error) {
     const cookie = useCookie('next-auth.session-token')
     cookie.value = null
-    console.log(error.message)
 
     return {
       ...refreshToken,
@@ -96,14 +95,13 @@ export default NuxtAuthHandler({
           console.log(response.status)
 
           if (response.status === 401) {
-            
             throw new Error('Your email or password is incorrect!')
           } else if (response.status === 403) {
             // Assuming you have a router instance available
-            
+
             return null
           }
-    
+
           const user = response._data
           const dataUser = {
             ...user.data,
