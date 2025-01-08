@@ -1,7 +1,7 @@
 <template>
   <div class="body flex h-screen w-full flex-col items-center justify-center">
     <button
-      class="group fixed right-[1vw] top-[2vh] z-50 min-w-[5vw] px-[1vw] py-[1vh]"
+      class="group fixed right-[1vw] top-[2vh] z-50 min-w-[11vmin] px-[1.5vmin] py-[1vmin]"
       :class="[
         isPlaying ? 'bg-[#545F30]' : 'bg-[#3D4522]',
         'transform rounded-full transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:scale-105 hover:shadow-lg',
@@ -12,19 +12,19 @@
       <div class="flex items-center gap-3">
         <Icon
           name="ph:music-note-simple-bold"
-          class="h-[2vh] w-[1vw] text-white transition-transform duration-300"
+          class="mr-[-0.2vmin] h-[2vmin] w-[1.4vmin] text-white transition-transform duration-300"
           :class="isPlaying ? 'rotate-[360deg]' : 'rotate-0'"
         />
 
         <div class="flex items-center gap-2">
           <!-- Toggle Switch -->
           <div
-            class="relative h-[2.6vh] w-[2.05vw] overflow-hidden rounded-full bg-[#5B703F]"
+            class="relative h-[2vmin] w-[4vmin] overflow-hidden rounded-full bg-[#5B703F]"
           >
             <div
-              class="absolute top-[0.2vh] h-[2.2vh] w-[1vw] rounded-full bg-white shadow-md transition-all duration-500 hover:scale-90"
+              class="absolute top-[0.3vmin] h-[1.4vmin] w-[1.4vmin] rounded-full bg-white shadow-md transition-all duration-500 hover:scale-90"
               :class="[
-                isPlaying ? 'translate-x-[0.9vw]' : 'translate-x-[2px]',
+                isPlaying ? 'translate-x-[2.2vmin]' : 'translate-x-[0.1vmin]',
                 'transform ease-[cubic-bezier(0.4,0,0.2,1)]',
               ]"
             />
@@ -32,7 +32,7 @@
 
           <!-- Text Label -->
           <span
-            class="text-[1vmin] font-medium text-white transition-all duration-300"
+            class="ml-[0.1vmin] text-[1.3vmin] font-medium text-white transition-all duration-300"
             :class="isPlaying ? 'opacity-100' : 'opacity-80'"
           >
             {{ isPlaying ? 'On' : 'Off' }}
@@ -72,20 +72,22 @@
       <div class="border-container flex items-center justify-center">
         <div class="absolute">
           <div class="photo-frame-container relative flex items-center">
-            <div class="absolute left-1/2 top-[14vh] z-30 -translate-x-1/2">
+            <div
+              class="and-icon-container absolute left-1/2 top-[14vh] z-30 -translate-x-1/2"
+            >
               <img
                 src="/thema/primeYellow/and_opening.png"
-                class="w-[6vw] animate-wiggle-more"
+                class="and-icon w-[6vw] animate-wiggle-more"
                 alt="and"
               />
             </div>
             <div
               class="relative mr-[2vw] flex flex-col items-center text-center"
             >
-              <div class="relative h-[39vh] w-[26vh]">
+              <div class="wedding-container relative h-[39vh] w-[26vh]">
                 <img
                   src="/thema/primeYellow/laki_opening.png"
-                  class="absolute left-1/2 top-1/2 z-10 h-[40vh] w-[26vh] -translate-x-1/2 -translate-y-1/2 transform object-cover"
+                  class="wedding-photo-person absolute left-1/2 top-1/2 z-10 h-[40vh] w-[26vh] -translate-x-1/2 -translate-y-1/2 transform object-cover"
                 />
                 <img
                   src="/thema/primeYellow/frame_photo_opening.png"
@@ -101,10 +103,10 @@
             </div>
 
             <div class="relative flex flex-col items-center text-center">
-              <div class="relative h-[39vh] w-[26vh]">
+              <div class="wedding-container relative h-[39vh] w-[26vh]">
                 <img
                   src="/thema/primeYellow/cewe_opening.png"
-                  class="absolute left-1/2 top-1/2 z-10 h-[40vh] w-[26vh] -translate-x-1/2 -translate-y-1/2 transform object-cover"
+                  class="wedding-photo-person absolute left-1/2 top-1/2 z-10 h-[40vh] w-[26vh] -translate-x-1/2 -translate-y-1/2 transform object-cover"
                 />
                 <img
                   src="/thema/primeYellow/frame_photo_opening.png"
@@ -153,7 +155,7 @@
     />
     <img
       src="/thema/primeYellow/daun_right_bottom_opening.png"
-      class="w-300-responsive leaf-bottom-right fixed z-10"
+      class="animate-leaf-right-bottom w-300-responsive leaf-bottom-right fixed z-10"
     />
     <img
       src="/thema/primeYellow/daun_right_bottom_opening_2.png"
@@ -182,7 +184,7 @@
       transform: rotate(0deg);
     }
     20% {
-      transform: rotate(4deg) translateY(-6px);
+      transform: rotate(3deg) translateY(-5px);
     }
     50% {
       transform: rotate(-3deg) translateY(4px);
@@ -202,6 +204,11 @@
   .animate-leaf-left-bottom {
     animation: swaying 8s cubic-bezier(0.42, 0, 0.58, 1) infinite;
     transform-origin: left bottom;
+    will-change: transform;
+  }
+  .animate-leaf-right-bottom {
+    animation: swaying 8s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    transform-origin: right bottom;
     will-change: transform;
   }
   .animate-leaf-right {
@@ -329,42 +336,79 @@
     width: 60vw;
   }
 
-  /* Tablet portrait */
-  @media (max-width: 768px) {
-    .w-opening-border {
-      width: 300px;
-    }
-    .w-300-responsive {
-      width: 120px;
-    }
-    .leaf-left {
-      left: 120px;
-    }
-  }
-
   /* Mobile landscape */
   @media (max-width: 576px) {
+    .wedding-container {
+      height: 23vh;
+      width: 15vh;
+    }
+    .wedding-photo-person {
+      height: 23vh;
+      width: 18vh;
+    }
+    .border-gold-center {
+      height: 70vmin;
+      width: 80vw;
+    }
+    .and-icon-container {
+      top: 10vh;
+    }
+    .and-icon {
+      width: 9vw;
+    }
+    .invitation-text {
+      font-family: 'Lora', serif;
+      font-size: 3.6vmin;
+      color: #5b5b5b;
+      line-height: 1.6;
+      letter-spacing: 0.1vmin;
+    }
     .w-opening-border {
-      width: 250px;
+      width: 70vw;
     }
     .w-300-responsive {
-      width: 100px;
+      width: 30vw;
     }
     .leaf-left {
-      left: 100px;
+      left: 23vw;
     }
-  }
-
-  /* Mobile portrait */
-  @media (max-width: 375px) {
-    .w-opening-border {
-      width: 200px;
+    .bird-left {
+      left: 2vw;
+      width: 31vw;
     }
-    .w-300-responsive {
-      width: 80px;
+    .bird-right {
+      right: 4vw;
+      width: 17vw;
+      top: 24vh;
     }
-    .leaf-left {
-      left: 80px;
+    .leaf-right {
+      right: 5vw;
+      top: 4vh;
+      width: 26vw;
+    }
+    .leaf-gold-left {
+      display: none;
+    }
+    .leaf-gold-right {
+      display: none;
+    }
+    .leaf-bottom-left {
+      bottom: -5vh;
+      left: -0.2vw;
+    }
+    .leaf-bottom-left-two {
+      width: 31vw;
+      left: 16vw;
+      bottom: -6vh;
+    }
+    .leaf-bottom-right {
+      bottom: -4vh;
+      right: -2vw;
+    }
+    .leaf-bottom-right-two {
+      bottom: -6vh;
+      right: 16vw;
+      width: 31vw;
     }
   }
 </style>
