@@ -129,13 +129,8 @@
         />
       </div>
     </div>
-    <div class="fixed bottom-[6vh] z-30">
-      <button
-        class="buka-undangan-btn mx-auto flex items-center gap-2 rounded-lg px-[2vw] py-[1.3vh]"
-      >
-        <span class="icon-envelope">✉️</span>
-        <span>Buka Undangan</span>
-      </button>
+    <div class="botton-open fixed bottom-[4vh] z-30 flex w-full justify-center">
+      <ThemaButtonOpen />
     </div>
     <img
       src="/thema/primeYellow/daun_gold_left_opening.png"
@@ -259,18 +254,6 @@
     color: #5b5b5b;
     line-height: 1.6;
     letter-spacing: 0.1vmin;
-  }
-  .buka-undangan-btn {
-    background-color: #4a5c3b;
-    color: white;
-    font-family: 'Lora', serif;
-    font-size: 2vmin;
-    transition: all 0.3s ease;
-    border: 2px solid #4a5c3b;
-  }
-  .buka-undangan-btn:hover {
-    background-color: transparent;
-    color: #4a5c3b;
   }
   .photo-frame-container {
     position: relative;
@@ -403,7 +386,7 @@
     }
     .leaf-bottom-right {
       bottom: -4vh;
-      right: -2vw;
+      right: -3vw;
     }
     .leaf-bottom-right-two {
       bottom: -6vh;
